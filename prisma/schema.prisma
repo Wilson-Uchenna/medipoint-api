@@ -1,0 +1,271 @@
+generator client {
+  provider = "prisma-client"
+  output = "../src/generated/prisma"
+  moduleFormat = "cjs"
+  
+}
+
+datasource db {
+  provider = "postgresql"
+  
+}
+
+enum UserRole {
+  PATIENT
+  DOCTOR
+  PHARMACIST
+  ADMIN
+}
+
+enum UserStatus {
+  PENDING_VERIFICATION
+  ACTIVE
+  SUSPENDED
+}
+
+enum ProfessionalType {
+  DOCTOR
+  PHARMACIST
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ConsultationType {
+  VIRTUAL
+  PHYSICAL
+}
+
+enum ConsultationStatus {
+  PENDING_PAYMENT
+  PAID
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  RESCHEDULED
+}
+
+enum PaymentMethod {
+  CARD
+  BANK_TRANSFER
+  MOBILE_MONEY
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum NotificationType {
+  EMAIL_VERIFICATION
+  APPOINTMENT_BOOKING
+  PAYMENT_CONFIRMATION
+  APPOINTMENT_ACCEPTANCE
+  APPOINTMENT_RESCHEDULE
+  APPOINTMENT_COMPLETION
+  FOLLOW_UP_REMINDER
+  PROFESSIONAL_APPROVAL
+  ACCOUNT_SUSPENSION
+}
+
+model User {
+  id              String     @id @default(uuid())
+  email           String     @unique
+  passwordHash    String     @map("password_hash")
+  firstName       String     @map("first_name")
+  lastName        String     @map("last_name")
+  phoneNumber     String     @map("phone_number")
+  role            UserRole
+  status          UserStatus @default(PENDING_VERIFICATION)
+  emailVerified   Boolean    @default(false) @map("email_verified")
+  createdAt       DateTime   @default(now()) @map("created_at")
+  updatedAt       DateTime   @updatedAt @map("updated_at")
+
+  patient                  Patient?
+  healthcareProfessional   HealthcareProfessional?
+  approvedProfessionals    HealthcareProfessional[] @relation("ApprovedBy")
+  adminActions             AdminAction[]
+  notifications            Notification[]
+  sentNotifications        Notification[] @relation("SentBy")
+  emailVerifications       EmailVerification[]
+  passwordResets           PasswordReset[]
+
+  @@map("users")
+}
+
+model Patient {
+  id                           String   @id @default(uuid())
+  userId                       String   @unique @map("user_id")
+  profilePicUrl                String?  @map("profile_pic_url")
+  dateOfBirth                  DateTime? @map("date_of_birth")
+  gender                       String?
+  address                      String?
+  occupation                   String?
+  bloodGroup                   String?  @map("blood_group")
+  genotype                     String?
+  height                       Float?
+  weight                       Float?
+  emergencyContactName         String?  @map("emergency_contact_name")
+  emergencyContactRelationship String?  @map("emergency_contact_relationship")
+  emergencyContactPhone        String?  @map("emergency_contact_phone")
+  createdAt                    DateTime @default(now()) @map("created_at")
+  updatedAt                    DateTime @updatedAt @map("updated_at")
+
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  consultations Consultation[]
+
+  @@map("patients")
+}
+
+model HealthcareProfessional {
+  id                  String             @id @default(uuid())
+  userId              String             @unique @map("user_id")
+  professionalType    ProfessionalType   @map("professional_type")
+  licenseNumber       String             @map("license_number")
+  specialty           String?
+  verificationStatus  VerificationStatus @default(PENDING) @map("verification_status")
+  bio                 String?
+  yearsOfExperience   Int?               @map("years_of_experience")
+  approvedBy          String?            @map("approved_by")
+  approvedAt          DateTime?          @map("approved_at")
+  createdAt           DateTime           @default(now()) @map("created_at")
+  updatedAt           DateTime           @updatedAt @map("updated_at")
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  approver      User?          @relation("ApprovedBy", fields: [approvedBy], references: [id])
+  consultations Consultation[]
+
+  @@map("healthcare_professionals")
+}
+
+model Consultation {
+  id                    String             @id @default(uuid())
+  patientId             String             @map("patient_id")
+  professionalId        String             @map("professional_id")
+  consultationType      ConsultationType   @map("consultation_type")
+  reasonForConsultation String             @map("reason_for_consultation")
+  preferredDate         DateTime           @map("preferred_date")
+  preferredTime         String             @map("preferred_time")
+  status                ConsultationStatus @default(PENDING_PAYMENT)
+  amount                Decimal            @db.Decimal(10, 2)
+  currency              String             @default("NGN")
+  paymentReference      String?            @map("payment_reference")
+  paymentMethod         PaymentMethod?     @map("payment_method")
+  paymentStatus         PaymentStatus?     @map("payment_status")
+  paidAt                DateTime?          @map("paid_at")
+  acceptedAt            DateTime?          @map("accepted_at")
+  completedAt           DateTime?          @map("completed_at")
+  cancelledAt           DateTime?          @map("cancelled_at")
+  cancellationReason    String?            @map("cancellation_reason")
+  createdAt             DateTime           @default(now()) @map("created_at")
+  updatedAt             DateTime           @updatedAt @map("updated_at")
+
+  patient  Patient            @relation(fields: [patientId], references: [id])
+  professional HealthcareProfessional @relation(fields: [professionalId], references: [id])
+  notes    ConsultationNote?
+  payment  Payment?
+
+  @@map("consultations")
+}
+
+model ConsultationNote {
+  id           String    @id @default(uuid())
+  consultationId String  @unique @map("consultation_id")
+  symptoms     String?
+  diagnosis    String?
+  prescription String?
+  notes        String?
+  followUpDate DateTime? @map("follow_up_date")
+  createdBy    String    @map("created_by")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+
+  @@map("consultation_notes")
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  consultationId String       @unique @map("consultation_id")
+  amount        Decimal       @db.Decimal(10, 2)
+  currency      String        @default("NGN")
+  method        PaymentMethod
+  status        PaymentStatus @default(PENDING)
+  reference     String        @unique
+  providerRef   String?       @map("provider_ref")
+  metadata      Json?
+  paidAt        DateTime?     @map("paid_at")
+  failedAt      DateTime?     @map("failed_at")
+  failureReason String?       @map("failure_reason")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+
+  consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String           @map("user_id")
+  type      NotificationType
+  title     String
+  message   String
+  isRead    Boolean          @default(false) @map("is_read")
+  data      Json?
+  sentBy    String?          @map("sent_by")
+  createdAt DateTime         @default(now()) @map("created_at")
+
+  user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sender User? @relation("SentBy", fields: [sentBy], references: [id])
+
+  @@map("notifications")
+}
+
+model AdminAction {
+  id         String   @id @default(uuid())
+  adminId    String   @map("admin_id")
+  actionType String   @map("action_type")
+  targetType String   @map("target_type")
+  targetId   String   @map("target_id")
+  reason     String?
+  metadata   Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  admin User @relation(fields: [adminId], references: [id])
+
+  @@map("admin_actions")
+}
+
+model EmailVerification {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("email_verifications")
+}
+
+model PasswordReset {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("password_resets")
+}

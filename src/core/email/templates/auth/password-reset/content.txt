@@ -1,0 +1,28 @@
+Password Reset Request
+
+Hello {{name}},
+
+You requested a password reset for your HR platform account.
+
+Reset your password: {{resetUrl}}
+
+⚠️ Security Notice:
+• This link expires in {{expiryHours}} hours
+• If you didn't request this reset, please ignore this email
+• Never share this link with anyone
+• For your security, this link can only be used once
+
+🛡️ Security Tips:
+• Choose a strong password with at least 8 characters
+• Use a mix of uppercase, lowercase, numbers, and symbols
+• Don't reuse passwords from other accounts
+• Consider using a password manager
+
+If you're having trouble with the link above, copy and paste this URL into your browser:
+{{resetUrl}}
+
+{{#if supportEmail}}
+Need help? Contact our support team at {{supportEmail}}.
+{{else}}
+Need help? Visit our support center.
+{{/if}}

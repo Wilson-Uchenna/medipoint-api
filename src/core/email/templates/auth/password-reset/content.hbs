@@ -1,0 +1,36 @@
+{{#> layouts/base 
+    title="Reset Your Password"
+    headerIcon="🔐" 
+    headerTitle="Password Reset Request"
+    headerColor="#dc2626"
+    buttonColor="#dc2626"
+}}
+
+<div class="card">
+    <h2>Hello {{name}},</h2>
+    <p>You requested a password reset for your HR platform account.</p>
+    
+    {{> button url=resetUrl text="Reset Your Password" arrow=true}}
+    
+    <div class="warning">
+        <p><strong>⚠️ Security Notice:</strong></p>
+        <ul>
+            <li>This link expires in <strong>{{expiryHours}} hours</strong></li>
+            <li>If you didn't request this reset, please ignore this email</li>
+            <li>Never share this link with anyone</li>
+            <li>For your security, this link can only be used once</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card">
+    <h3>🛡️ Security Tips:</h3>
+    <ul>
+        <li>Choose a strong password with at least 8 characters</li>
+        <li>Use a mix of uppercase, lowercase, numbers, and symbols</li>
+        <li>Don't reuse passwords from other accounts</li>
+        <li>Consider using a password manager</li>
+    </ul>
+</div>
+
+{{/layouts/base}}

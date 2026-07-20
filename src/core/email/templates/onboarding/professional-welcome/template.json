@@ -1,0 +1,30 @@
+{
+  "name": "provider-welcome",
+  "description": "Welcome email sent to newly credentialed healthcare professionals and medical staff when their portal account is created",
+  "category": "onboarding",
+  "tags": ["welcome", "provider", "account", "medical-staff", "credentialing"],
+  "version": "1.0.0",
+  "subject": "Welcome to {{organizationName}} - Your Provider Portal Account is Active! 🩺",
+  "requiredVariables": [
+    "providerName",
+    "organizationName",
+    "loginUrl",
+    "currentYear"
+  ],
+  "optionalVariables": [
+    "npiNumber",
+    "activationDeadline",
+    "companyName",
+    "supportEmail",
+    "supportUrl",
+    "unsubscribeUrl",
+    "customFooter"
+  ],
+  "defaultData": {
+    "headerIcon": "🩺",
+    "headerColor": "#0f766e",
+    "buttonColor": "#0f766e",
+    "currentYear": "{{currentYear}}",
+    "supportUrl": "https://medicalorg.com"
+  }
+}

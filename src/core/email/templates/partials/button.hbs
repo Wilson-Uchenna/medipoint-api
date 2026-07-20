@@ -1,0 +1,8 @@
+{{#if url}}
+    <div class="text-center mt-4">
+        <a href="{{url}}" class="btn {{#if secondary}}btn-secondary{{/if}}" 
+           {{#if trackingParams}}data-tracking="{{trackingParams}}"{{/if}}>
+            {{#if icon}}{{icon}} {{/if}}{{text}}{{#if arrow}} →{{/if}}
+        </a>
+    </div>
+{{/if}}

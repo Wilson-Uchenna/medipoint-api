@@ -1,0 +1,29 @@
+Verify Your Email Address
+
+Hello {{name}},
+
+Please verify your email address to complete your account setup.
+
+Verify your email: {{verificationUrl}}
+
+📧 Almost done!
+• This verification link expires in {{expiryHours}} hours
+• Click the link above to confirm your email address  
+• Once verified, you'll have full access to your account
+
+🔐 Why verify your email?
+• Secure your account and enable password recovery
+• Receive important notifications about your account
+• Get updates about new features and improvements
+• Ensure you can access all platform features
+
+If you're having trouble with the link above, copy and paste this URL into your browser:
+{{verificationUrl}}
+
+{{#if supportEmail}}
+Need help? Contact our support team at {{supportEmail}}.
+{{else}}
+Need help? Visit our support center.
+{{/if}}
+
+© {{currentYear}} {{#if companyName}}{{companyName}}{{else}}HoomansHr{{/if}}. All rights reserved.

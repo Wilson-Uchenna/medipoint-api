@@ -1,0 +1,40 @@
+Welcome to {{organizationName}}!
+
+Hello {{patientName}},
+
+Welcome to {{organizationName}}! We are committed to providing you with high-quality, personalized healthcare.
+
+Your secure patient portal account is ready! You can now log in to manage your health information, view appointments, and communicate with your care team from anywhere.
+
+Get Started:
+1. Log in to your account: {{loginUrl}}
+2. Complete your health history: Fill out your medical intake forms and update your allergies or medications.
+3. Verify your insurance: Upload your current insurance card and billing preferences.
+{{#if primaryCareProvider}}4. Meet your provider: Your care team, led by {{primaryCareProvider}}, is ready to support your health journey.{{/if}}
+
+What you can do in your patient portal:
+• Appointments: Schedule, reschedule, or view upcoming visits.
+• Secure Messaging: Send direct questions to your doctors and care team.
+• Medical Records: Access your lab results, imaging reports, and visit summaries.
+• Prescriptions: Request refills and view your active medications.
+• Billing & Payments: View your statements and pay bills securely online.
+
+{{#if appointmentDate}}Upcoming Appointment: {{formatDate appointmentDate 'MMMM Do, YYYY'}}{{#if appointmentTime}} at {{appointmentTime}}{{/if}}
+
+We look forward to partnering with you in your health!{{/if}}
+
+Access your patient portal here: {{loginUrl}}
+
+{{#if supportEmail}}
+Need help? Contact our patient support team at {{supportEmail}}.
+{{else}}
+Need help? Visit our patient support center at {{supportUrl}}.
+{{/if}}
+
+{{#if customFooter}}
+{{customFooter}}
+{{else}}
+For urgent medical matters, please call our office directly. If you are experiencing a life-threatening medical emergency, please contact emergency services immediately.
+{{/if}}
+
+© {{currentYear}} {{#if companyName}}{{companyName}}{{else}}{{organizationName}}{{/if}}.{{#if unsubscribeUrl}} Unsubscribe: {{unsubscribeUrl}}{{/if}} All rights reserved.

@@ -1,0 +1,24 @@
+{
+  "name": "email-verification",
+  "description": "Email verification for new accounts",
+  "category": "auth",
+  "tags": ["security", "email", "verification", "authentication"],
+  "version": "1.0.0",
+  "subject": "Verify Your Email Address ✅",
+  "requiredVariables": [
+    "name",
+    "verificationUrl",
+    "expiryHours"
+  ],
+  "optionalVariables": [
+    "companyName",
+    "supportEmail",
+    "supportUrl"
+  ],
+  "defaultData": {
+    "headerIcon": "✅",
+    "headerColor": "#059669",
+    "buttonColor": "#059669",
+    "expiryHours": 48
+  }
+}

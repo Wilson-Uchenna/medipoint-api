@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: medipoint-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: medipoint_user
+      POSTGRES_PASSWORD: medipoint_password
+      POSTGRES_DB: medipoint_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

@@ -1,0 +1,31 @@
+{
+  "name": "patient-welcome",
+  "description": "Welcome email sent to new patients when their portal account is created",
+  "category": "onboarding",
+  "tags": ["welcome", "patient", "account", "healthcare"],
+  "version": "1.0.0",
+  "subject": "Welcome to {{organizationName}} - Your Patient Portal is Ready! 🏥",
+  "requiredVariables": [
+    "patientName",
+    "organizationName",
+    "loginUrl",
+    "currentYear"
+  ],
+  "optionalVariables": [
+    "primaryCareProvider",
+    "appointmentDate",
+    "appointmentTime",
+    "companyName",
+    "supportEmail",
+    "supportUrl",
+    "unsubscribeUrl",
+    "customFooter"
+  ],
+  "defaultData": {
+    "headerIcon": "🏥",
+    "headerColor": "#0284c7",
+    "buttonColor": "#0284c7",
+    "currentYear": "{{currentYear}}",
+    "supportUrl": "https://ourclinic.com"
+  }
+}

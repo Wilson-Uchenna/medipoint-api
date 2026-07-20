@@ -1,0 +1,25 @@
+<div class="footer">
+    {{#if customFooter}}
+        {{{customFooter}}}
+    {{else}}
+        <p>
+            {{#if companyName}}{{companyName}}{{else}}HoomansHr{{/if}} - 
+            Making HR management simple and effective
+        </p>
+        <p>
+            {{#if supportEmail}}
+                Need help? Contact us at <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>
+            {{else}}
+                Need help? Visit our <a href="{{supportUrl}}">support center</a>
+            {{/if}}
+        </p>
+        <p style="margin-top: 16px; font-size: 12px; opacity: 0.7;">
+            © {{currentYear}} {{#if companyName}}{{companyName}}{{else}}HoomansHr{{/if}}. All rights reserved.
+        </p>
+        {{#if unsubscribeUrl}}
+        <p style="margin-top: 8px; font-size: 12px;">
+            <a href="{{unsubscribeUrl}}" style="color: #9ca3af;">Unsubscribe</a>
+        </p>
+        {{/if}}
+    {{/if}}
+</div>

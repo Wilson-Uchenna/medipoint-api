@@ -1,0 +1,35 @@
+{{#> layouts/base 
+    title="Verify Your Email"
+    headerIcon="✅" 
+    headerTitle="Verify Your Email"
+    headerColor="#059669"
+    buttonColor="#059669"
+}}
+
+<div class="card">
+    <h2>Hello {{name}},</h2>
+    <p>Please verify your email address to complete your account setup.</p>
+    
+    {{> button url=verificationUrl text="Verify Email Address" arrow=true}}
+    
+    <div class="success">
+        <p><strong>📧 Almost done!</strong></p>
+        <ul>
+            <li>This verification link expires in <strong>{{expiryHours}} hours</strong></li>
+            <li>Click the button above to confirm your email address</li>
+            <li>Once verified, you'll have full access to your account</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card">
+    <h3>🔐 Why verify your email?</h3>
+    <ul>
+        <li>Secure your account and enable password recovery</li>
+        <li>Receive important notifications about your account</li>
+        <li>Get updates about new features and improvements</li>
+        <li>Ensure you can access all platform features</li>
+    </ul>
+</div>
+
+{{/layouts/base}}
