@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsOptional, IsEnum, IsInt, Min } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ProfessionalType } from '@prisma/client';
+import { ProfessionalType } from 'src/generated/prisma/enums';
 
 export class CreateProfessionalProfileDto {
   @ApiProperty({ enum: ProfessionalType, example: ProfessionalType.DOCTOR })

@@ -8,7 +8,7 @@ import {
   ConsultationStatus,
   PaymentMethod,
   PaymentStatus,
-} from '@prisma/client';
+} from '../../generated/prisma/client';
 
 @Injectable()
 export class PaymentsService {

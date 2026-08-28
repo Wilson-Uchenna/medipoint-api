@@ -1,4 +1,4 @@
-import { UserRole } from '@prisma/client';
+import { UserRole } from '../../generated/prisma/client';
 import { UserStatus } from 'src/common/enums/status.enum';
 
 export interface UserProfileDto {

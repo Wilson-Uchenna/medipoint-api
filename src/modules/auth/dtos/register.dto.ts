@@ -8,7 +8,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { UserRole } from '@prisma/client';
+import { UserRole } from '../../../generated/prisma/client';
 import { ProfessionalType } from 'src/generated/prisma/enums';
 
 class PatientDataDto {

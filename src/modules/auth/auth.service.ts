@@ -10,7 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../../prisma/prisma.service';
-import { UserRole, UserStatus } from '@prisma/client';
+import { UserRole, UserStatus } from '../../generated/prisma/client';
 import { RegisterDto } from './dtos/register.dto';
 import { LoginDto } from './dtos/login.dto';
 import { TokenPayload } from './interfaces/token.interface';
@@ -24,7 +24,7 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private emailService: EmailService, // ← INJECTED
-    private readonly logger = new Logger(),
+    // private readonly logger = new Logger(),
   ) {}
 
   async register(dto: RegisterDto) {
@@ -122,7 +122,7 @@ export class AuthService {
         48, // → maps to {{expiryHours}}
       );
     } catch (error) {
-      this.logger.error('Failed to send verification email', error);
+      // this.logger.error('Failed to send verification email', error);
       // Don't fail registration if email fails — user can resend
     }
 

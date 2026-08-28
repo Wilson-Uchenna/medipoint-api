@@ -1,6 +1,6 @@
 import { IsEnum, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { PaymentMethod } from '@prisma/client';
+import { PaymentMethod } from 'src/generated/prisma/enums';
 
 export class InitializePaymentDto {
   @ApiProperty({ enum: PaymentMethod, example: PaymentMethod.CARD })

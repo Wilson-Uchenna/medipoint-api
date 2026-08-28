@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsEnum, IsNumber, IsPositive, IsOptional } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ConsultationType } from '@prisma/client';
+import { ConsultationType } from 'src/generated/prisma/enums';
 
 export class CreateBookingDto {
   @ApiProperty({ example: 'prof-uuid-here' })
