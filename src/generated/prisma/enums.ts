@@ -13,6 +13,8 @@ export const UserRole = {
   PATIENT: 'PATIENT',
   DOCTOR: 'DOCTOR',
   PHARMACIST: 'PHARMACIST',
+  DIETITIAN: 'DIETITIAN',
+  OPTOMETRIST: 'OPTOMETRIST',
   ADMIN: 'ADMIN'
 } as const
 
@@ -30,7 +32,9 @@ export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
 export const ProfessionalType = {
   DOCTOR: 'DOCTOR',
-  PHARMACIST: 'PHARMACIST'
+  PHARMACIST: 'PHARMACIST',
+  DIETITIAN: 'DIETITIAN',
+  OPTOMETRIST: 'OPTOMETRIST'
 } as const
 
 export type ProfessionalType = (typeof ProfessionalType)[keyof typeof ProfessionalType]

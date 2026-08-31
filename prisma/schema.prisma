@@ -14,6 +14,8 @@ enum UserRole {
   PATIENT
   DOCTOR
   PHARMACIST
+  DIETITIAN
+  OPTOMETRIST
   ADMIN
 }
 
@@ -26,6 +28,8 @@ enum UserStatus {
 enum ProfessionalType {
   DOCTOR
   PHARMACIST
+  DIETITIAN
+  OPTOMETRIST
 }
 
 enum VerificationStatus {

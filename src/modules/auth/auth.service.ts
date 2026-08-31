@@ -81,7 +81,10 @@ export class AuthService {
         }
 
         if (
-          (dto.role === UserRole.DOCTOR || dto.role === UserRole.PHARMACIST) &&
+          (dto.role === UserRole.DOCTOR ||
+            dto.role === UserRole.PHARMACIST ||
+            dto.role === UserRole.DIETITIAN ||
+            dto.role === UserRole.OPTOMETRIST) &&
           dto.professionalData
         ) {
           await tx.healthcareProfessional.create({
@@ -92,7 +95,7 @@ export class AuthService {
               specialty: dto.professionalData.specialty,
               yearsOfExperience: dto.professionalData.yearsOfExperience,
               bio: dto.professionalData.bio,
-              verificationStatus: 'PENDING', // Needs admin approval
+              verificationStatus: 'PENDING',
             },
           });
         }
@@ -159,18 +162,37 @@ export class AuthService {
       }
     }
 
-    if (dto.role === UserRole.DOCTOR || dto.role === UserRole.PHARMACIST) {
+    const professionalRoles: UserRole[] = [
+      UserRole.DOCTOR,
+      UserRole.PHARMACIST,
+      UserRole.DIETITIAN,
+      UserRole.OPTOMETRIST,
+    ];
+
+    if (professionalRoles.includes(dto.role)) {
       if (!dto.professionalData) {
         throw new BadRequestException(
           'Professional data is required for provider registration',
         );
       }
-      // Map role to professional type if not provided
       if (!dto.professionalData.professionalType) {
-        dto.professionalData.professionalType =
-          dto.role === UserRole.DOCTOR
-            ? ProfessionalType.DOCTOR
-            : ProfessionalType.PHARMACIST;
+        const roleToTypeMap: Partial<Record<UserRole, ProfessionalType>> = {
+          [UserRole.DOCTOR]: ProfessionalType.DOCTOR,
+          [UserRole.PHARMACIST]: ProfessionalType.PHARMACIST,
+          [UserRole.DIETITIAN]: ProfessionalType.DIETITIAN,
+          [UserRole.OPTOMETRIST]: ProfessionalType.OPTOMETRIST,
+        };
+
+        const mappedType = roleToTypeMap[dto.role];
+        if (!mappedType) {
+          // dto.role is one of the professionalRoles, so this should be unreachable —
+          // but keeps TypeScript satisfied and guards against future map/array drift
+          throw new BadRequestException(
+            'Unable to determine professional type for this role',
+          );
+        }
+
+        dto.professionalData.professionalType = mappedType;
       }
     }
 
@@ -311,7 +333,7 @@ export class AuthService {
 
     return { message: 'Verification email sent' };
   }
-  
+
   async forgotPassword(email: string) {
     const user = await this.prisma.user.findUnique({ where: { email } });
     if (!user) {
