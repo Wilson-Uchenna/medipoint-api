@@ -1,11 +1,12 @@
-import { Controller, Get, Post, Body, Param, Query, UseGuards, Headers } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Param, Query, UseGuards, Headers, HttpStatus } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth, ApiOperation, ApiBody, ApiResponse } from '@nestjs/swagger';
 import { PaymentsService } from './payments.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { ActiveUser, CurrentUser } from '../auth/decorators/current-user.decorator';
 import { UserRole, PaymentMethod } from '../../generated/prisma/client';
+import { InitializePaymentDto } from './dtos/initialize-payment.dto';
 
 @ApiTags('Payments')
 @ApiBearerAuth()
@@ -16,7 +17,12 @@ export class PaymentsController {
 
   @Post('consultations/:consultationId/pay')
   @Roles(UserRole.PATIENT)
-  @ApiOperation({ summary: 'Initialize payment for consultation' })
+  @ApiOperation({ summary: 'Initialize payment for consultation', description: "Creates a payment record for a patient" })
+  @ApiBody({
+    type: InitializePaymentDto
+  })
+  @ApiResponse({ status: HttpStatus.OK, description: "Payment record created successfully"})
+  @ApiResponse({ status: 400, description: "Details provided are invalid"})
   async initializePayment(
     @ActiveUser() userId: string,
     @Param('consultationId') consultationId: string,
@@ -43,7 +49,8 @@ export class PaymentsController {
 
   @Get('history')
   @Roles(UserRole.PATIENT)
-  @ApiOperation({ summary: 'Get payment history' })
+  @ApiOperation({ summary: 'Get payment history', description: "Get payment records" })
+  @ApiResponse({status: 200, description: "Payment record has been retrieved successfully"})
   async getHistory(@ActiveUser() userId: string) {
     return this.paymentsService.getPaymentHistory(userId);
   }

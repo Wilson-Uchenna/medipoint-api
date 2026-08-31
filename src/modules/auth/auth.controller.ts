@@ -7,7 +7,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dtos/register.dto';
 import { LoginDto } from './dtos/login.dto';
@@ -20,6 +20,19 @@ export class AuthController {
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Register a new user' })
+  @ApiBody({
+    type: RegisterDto,
+    examples: {
+      example1: {
+        summary: 'Create User',
+        value: {
+          name: 'John Doe',
+          email: 'user@example.com',
+          password: 'password123',
+        },
+      },
+    },
+  })
   @ApiResponse({ status: 201, description: 'User registered successfully' })
   @ApiResponse({ status: 409, description: 'Email already exists' })
   async register(@Body() dto: RegisterDto) {
@@ -28,8 +41,31 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'User login' })
-  @ApiResponse({ status: 200, description: 'Login successful' })
+  @ApiOperation({
+    summary: 'User login',
+    description:
+      'Authenticate with email/password. Returns tokens and minimal user info. Use GET /me/organizations for full org list.',
+  })
+  @ApiBody({
+    type: LoginDto,
+    examples: {
+      example1: {
+        summary: 'Login',
+        value: { email: 'user@example.com', password: 'password123' },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Login successful',
+    schema: {
+      example: {
+        accessToken: 'eyJhbG...',
+        refreshToken: 'eyJhbG...',
+        user: { id: 'uuid', name: 'John Doe', email: 'user@example.com' },
+      },
+    },
+  })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   async login(@Body() dto: LoginDto) {
     return this.authService.login(dto);

@@ -34,23 +34,25 @@ export class UsersService {
   }
 
   async updateProfile(userId: string, dto: UpdateProfileDto) {
-    return this.prisma.user.update({
-      where: { id: userId },
-      data: {
-        firstName: dto.firstName,
-        lastName: dto.lastName,
-        phoneNumber: dto.phoneNumber,
-      },
-      select: {
-        id: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        phoneNumber: true,
-        updatedAt: true,
-      },
-    });
-  }
+  return this.prisma.user.update({
+    where: { id: userId },
+    data: {
+      firstName: dto.firstName,
+      lastName: dto.lastName,
+      phoneNumber: dto.phoneNumber,
+    },
+    select: {
+      id: true,
+      email: true,
+      firstName: true,
+      lastName: true,
+      phoneNumber: true,
+      role: true,
+      status: true,
+      updatedAt: true,
+    },
+  });
+}
 
   async changePassword(userId: string, oldPassword: string, newPassword: string) {
     // TODO: Implement password change logic

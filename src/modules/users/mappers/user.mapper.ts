@@ -1,12 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { User, UserRole } from '../../../generated/prisma/client';
+import { UserRole } from '../../../generated/prisma/client';
 import { UserProfileResponse } from '../dtos/user-profileResponse.dto';
 import { UserStatus } from '../../../common/enums/status.enum';
+
+type UserForProfile = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: UserRole;
+  status: string;
+};
 
 @Injectable()
 export class UserMapper {
 
-    toProfileResponse(user: User): UserProfileResponse {
+    toProfileResponse(user: UserForProfile): UserProfileResponse {
         return {
             user: {
                 id: user.id,
