@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsOptional, IsString } from 'class-validator';
 
 @Injectable()
 export class UsersService {
@@ -61,7 +63,27 @@ export class UsersService {
 }
 
 export class UpdateProfileDto {
+  @ApiPropertyOptional({
+    description: "User's first name",
+    example: 'Jane',
+  })
+  @IsOptional()
+  @IsString()
   firstName?: string;
+
+  @ApiPropertyOptional({
+    description: "User's last name",
+    example: 'Doe',
+  })
+  @IsOptional()
+  @IsString()
   lastName?: string;
+
+  @ApiPropertyOptional({
+    description: "User's phone number",
+    example: '+1234567890',
+  })
+  @IsOptional()
+  @IsString()
   phoneNumber?: string;
 }
