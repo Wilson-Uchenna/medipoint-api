@@ -113,7 +113,7 @@ export class ConsultationsService {
 
 export class CreateBookingDto {
   professionalId!: string;
-  consultationType!: 'VIRTUAL' | 'PHYSICAL';
+  consultationType!: 'VIRTUAL';
   reasonForConsultation!: string;
   preferredDate!: string;
   preferredTime!: string;
