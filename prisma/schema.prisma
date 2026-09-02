@@ -40,7 +40,6 @@ enum VerificationStatus {
 
 enum ConsultationType {
   VIRTUAL
-  PHYSICAL
 }
 
 enum ConsultationStatus {
