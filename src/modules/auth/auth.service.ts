@@ -130,7 +130,7 @@ export class AuthService {
     }
 
     // 7. If provider, notify admins for approval
-    if (dto.role === UserRole.DOCTOR || dto.role === UserRole.PHARMACIST) {
+    if (dto.role === UserRole.DOCTOR || dto.role === UserRole.PHARMACIST || dto.role === UserRole.DIETITIAN || dto.role === UserRole.OPTOMETRIST) {
       // TODO: Send admin notification email
       // await this.emailService.sendProfessionalApprovalPendingEmail(...);
     }

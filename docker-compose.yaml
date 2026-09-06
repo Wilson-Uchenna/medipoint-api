@@ -13,6 +13,16 @@ services:
       - "5433:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-
+  api:
+    build: .
+    container_name: medipoint-api
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: "postgresql://medipoint_user:medipoint_password@db:5432/medipoint_db?schema=public"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
 volumes:
   postgres-data:

@@ -283,12 +283,12 @@ export class EmailService {
         subject: rendered.subject,
         html: rendered.html,
         text: rendered.text,
-        tags: ['onboarding', 'employee-welcome'],
+        tags: ['onboarding', 'patient-welcome'],
         priority: 'high' as EmailPriority,
       });
     } catch (error) {
       this.logger.warn(
-        'Employee welcome email template failed, skipping',
+        'Patient welcome email template failed, skipping',
         error,
       );
       throw error;
