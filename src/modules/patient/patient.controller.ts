@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Put, Body, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { PatientsService, CreatePatientProfileDto, UpdatePatientProfileDto } from './patient.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -16,19 +16,40 @@ export class PatientsController {
   constructor(private patientsService: PatientsService) {}
 
   @Post('profile')
-  @Roles(UserRole.PATIENT)
-  @ApiOperation({
-    summary: 'Create patient profile',
-    description:
-      'Creates the patient-specific profile (medical details, emergency contact, etc.) for the ' +
-      'currently authenticated user. A user must already be registered with the PATIENT role. ' +
-      'Each user can only have one patient profile.',
-  })
-  @ApiResponse({ status: 201, description: 'Patient profile created successfully.' })
-  @ApiResponse({ status: 400, description: 'Validation failed on one or more fields.' })
-  @ApiResponse({ status: 401, description: 'Missing, invalid, or expired access token.' })
-  @ApiResponse({ status: 403, description: 'Authenticated user does not have the PATIENT role.' })
-  @ApiResponse({ status: 409, description: 'A patient profile already exists for this user.' })
+@Roles(UserRole.PATIENT)
+@ApiOperation({
+  summary: 'Create patient profile',
+  description:
+    'Creates the patient-specific profile (medical details, emergency contact, etc.) for the ' +
+    'currently authenticated user. A user must already be registered with the PATIENT role. ' +
+    'Each user can only have one patient profile.',
+})
+@ApiBody({
+  type: CreatePatientProfileDto,
+  examples: {
+    example1: {
+      summary: 'Create patient profile',
+      value: {
+        dateOfBirth: '1990-05-15',
+        gender: 'MALE',
+        address: '123 Main St, Lagos',
+        occupation: 'Software Engineer',
+        bloodGroup: 'O+',
+        genotype: 'AA',
+        height: 175.5,
+        weight: 70.0,
+        emergencyContactName: 'Jane Doe',
+        emergencyContactRelationship: 'Sister',
+        emergencyContactPhone: '+2348098765432',
+      },
+    },
+  },
+})
+@ApiResponse({ status: 201, description: 'Patient profile created successfully.' })
+@ApiResponse({ status: 400, description: 'Validation failed on one or more fields.' })
+@ApiResponse({ status: 401, description: 'Missing, invalid, or expired access token.' })
+@ApiResponse({ status: 403, description: 'Authenticated user does not have the PATIENT role.' })
+@ApiResponse({ status: 409, description: 'A patient profile already exists for this user.' })
   async createProfile(
     @ActiveUser() currentUser: ActiveUserData,
     @Body() dto: CreatePatientProfileDto,
