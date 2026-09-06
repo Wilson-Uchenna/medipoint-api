@@ -15,7 +15,7 @@ export class HealthcareProfessionalsController {
   constructor(private professionalsService: HealthcareProfessionalsService) {}
 
   @Post('profile')
-  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST)
+  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST, UserRole.OPTOMETRIST, UserRole.DIETITIAN)
   @ApiOperation({ summary: 'Create professional profile' })
   async createProfile(
     @ActiveUser() userId: string,
@@ -25,14 +25,14 @@ export class HealthcareProfessionalsController {
   }
 
   @Get('profile')
-  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST)
+  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST, UserRole.OPTOMETRIST, UserRole.DIETITIAN)
   @ApiOperation({ summary: 'Get professional profile' })
   async getProfile(@ActiveUser() userId: string) {
     return this.professionalsService.getProfile(userId);
   }
 
   @Get('appointments')
-  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST)
+  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST, UserRole.OPTOMETRIST, UserRole.DIETITIAN)
   @ApiOperation({ summary: 'Get assigned appointments' })
   async getAppointments(@ActiveUser() userId: string) {
     const professional = await this.professionalsService.getProfile(userId);
@@ -40,7 +40,7 @@ export class HealthcareProfessionalsController {
   }
 
   @Get('patients/:patientId/history')
-  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST)
+  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST, UserRole.OPTOMETRIST, UserRole.DIETITIAN)
   @ApiOperation({ summary: 'View patient medical history' })
   async getPatientHistory(
     @ActiveUser() userId: string,
@@ -51,7 +51,7 @@ export class HealthcareProfessionalsController {
   }
 
   @Post('consultations/:id/accept')
-  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST)
+  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST, UserRole.OPTOMETRIST, UserRole.DIETITIAN)
   @ApiOperation({ summary: 'Accept a consultation' })
   async acceptConsultation(
     @ActiveUser() userId: string,
@@ -62,7 +62,7 @@ export class HealthcareProfessionalsController {
   }
 
   @Post('consultations/:id/complete')
-  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST)
+  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST, UserRole.OPTOMETRIST, UserRole.DIETITIAN)
   @ApiOperation({ summary: 'Mark consultation as complete' })
   async completeConsultation(
     @ActiveUser() userId: string,
