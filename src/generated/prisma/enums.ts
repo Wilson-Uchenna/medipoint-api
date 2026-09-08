@@ -50,8 +50,7 @@ export type VerificationStatus = (typeof VerificationStatus)[keyof typeof Verifi
 
 
 export const ConsultationType = {
-  VIRTUAL: 'VIRTUAL',
-  PHYSICAL: 'PHYSICAL'
+  VIRTUAL: 'VIRTUAL'
 } as const
 
 export type ConsultationType = (typeof ConsultationType)[keyof typeof ConsultationType]
@@ -102,3 +101,13 @@ export const NotificationType = {
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
+
+export const VideoSessionStatus = {
+  CREATED: 'CREATED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+} as const
+
+export type VideoSessionStatus = (typeof VideoSessionStatus)[keyof typeof VideoSessionStatus]

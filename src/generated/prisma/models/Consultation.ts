@@ -39,7 +39,6 @@ export type ConsultationMinAggregateOutputType = {
   patientId: string | null
   professionalId: string | null
   consultationType: $Enums.ConsultationType | null
-  reasonForConsultation: string | null
   preferredDate: Date | null
   preferredTime: string | null
   status: $Enums.ConsultationStatus | null
@@ -62,7 +61,6 @@ export type ConsultationMaxAggregateOutputType = {
   patientId: string | null
   professionalId: string | null
   consultationType: $Enums.ConsultationType | null
-  reasonForConsultation: string | null
   preferredDate: Date | null
   preferredTime: string | null
   status: $Enums.ConsultationStatus | null
@@ -85,7 +83,6 @@ export type ConsultationCountAggregateOutputType = {
   patientId: number
   professionalId: number
   consultationType: number
-  reasonForConsultation: number
   preferredDate: number
   preferredTime: number
   status: number
@@ -118,7 +115,6 @@ export type ConsultationMinAggregateInputType = {
   patientId?: true
   professionalId?: true
   consultationType?: true
-  reasonForConsultation?: true
   preferredDate?: true
   preferredTime?: true
   status?: true
@@ -141,7 +137,6 @@ export type ConsultationMaxAggregateInputType = {
   patientId?: true
   professionalId?: true
   consultationType?: true
-  reasonForConsultation?: true
   preferredDate?: true
   preferredTime?: true
   status?: true
@@ -164,7 +159,6 @@ export type ConsultationCountAggregateInputType = {
   patientId?: true
   professionalId?: true
   consultationType?: true
-  reasonForConsultation?: true
   preferredDate?: true
   preferredTime?: true
   status?: true
@@ -274,7 +268,6 @@ export type ConsultationGroupByOutputType = {
   patientId: string
   professionalId: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date
   preferredTime: string
   status: $Enums.ConsultationStatus
@@ -320,7 +313,6 @@ export type ConsultationWhereInput = {
   patientId?: Prisma.StringFilter<"Consultation"> | string
   professionalId?: Prisma.StringFilter<"Consultation"> | string
   consultationType?: Prisma.EnumConsultationTypeFilter<"Consultation"> | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFilter<"Consultation"> | string
   preferredDate?: Prisma.DateTimeFilter<"Consultation"> | Date | string
   preferredTime?: Prisma.StringFilter<"Consultation"> | string
   status?: Prisma.EnumConsultationStatusFilter<"Consultation"> | $Enums.ConsultationStatus
@@ -340,6 +332,7 @@ export type ConsultationWhereInput = {
   professional?: Prisma.XOR<Prisma.HealthcareProfessionalScalarRelationFilter, Prisma.HealthcareProfessionalWhereInput>
   notes?: Prisma.XOR<Prisma.ConsultationNoteNullableScalarRelationFilter, Prisma.ConsultationNoteWhereInput> | null
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
+  videoSession?: Prisma.XOR<Prisma.VideoSessionNullableScalarRelationFilter, Prisma.VideoSessionWhereInput> | null
 }
 
 export type ConsultationOrderByWithRelationInput = {
@@ -347,7 +340,6 @@ export type ConsultationOrderByWithRelationInput = {
   patientId?: Prisma.SortOrder
   professionalId?: Prisma.SortOrder
   consultationType?: Prisma.SortOrder
-  reasonForConsultation?: Prisma.SortOrder
   preferredDate?: Prisma.SortOrder
   preferredTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -367,6 +359,7 @@ export type ConsultationOrderByWithRelationInput = {
   professional?: Prisma.HealthcareProfessionalOrderByWithRelationInput
   notes?: Prisma.ConsultationNoteOrderByWithRelationInput
   payment?: Prisma.PaymentOrderByWithRelationInput
+  videoSession?: Prisma.VideoSessionOrderByWithRelationInput
 }
 
 export type ConsultationWhereUniqueInput = Prisma.AtLeast<{
@@ -377,7 +370,6 @@ export type ConsultationWhereUniqueInput = Prisma.AtLeast<{
   patientId?: Prisma.StringFilter<"Consultation"> | string
   professionalId?: Prisma.StringFilter<"Consultation"> | string
   consultationType?: Prisma.EnumConsultationTypeFilter<"Consultation"> | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFilter<"Consultation"> | string
   preferredDate?: Prisma.DateTimeFilter<"Consultation"> | Date | string
   preferredTime?: Prisma.StringFilter<"Consultation"> | string
   status?: Prisma.EnumConsultationStatusFilter<"Consultation"> | $Enums.ConsultationStatus
@@ -397,6 +389,7 @@ export type ConsultationWhereUniqueInput = Prisma.AtLeast<{
   professional?: Prisma.XOR<Prisma.HealthcareProfessionalScalarRelationFilter, Prisma.HealthcareProfessionalWhereInput>
   notes?: Prisma.XOR<Prisma.ConsultationNoteNullableScalarRelationFilter, Prisma.ConsultationNoteWhereInput> | null
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
+  videoSession?: Prisma.XOR<Prisma.VideoSessionNullableScalarRelationFilter, Prisma.VideoSessionWhereInput> | null
 }, "id">
 
 export type ConsultationOrderByWithAggregationInput = {
@@ -404,7 +397,6 @@ export type ConsultationOrderByWithAggregationInput = {
   patientId?: Prisma.SortOrder
   professionalId?: Prisma.SortOrder
   consultationType?: Prisma.SortOrder
-  reasonForConsultation?: Prisma.SortOrder
   preferredDate?: Prisma.SortOrder
   preferredTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -435,7 +427,6 @@ export type ConsultationScalarWhereWithAggregatesInput = {
   patientId?: Prisma.StringWithAggregatesFilter<"Consultation"> | string
   professionalId?: Prisma.StringWithAggregatesFilter<"Consultation"> | string
   consultationType?: Prisma.EnumConsultationTypeWithAggregatesFilter<"Consultation"> | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringWithAggregatesFilter<"Consultation"> | string
   preferredDate?: Prisma.DateTimeWithAggregatesFilter<"Consultation"> | Date | string
   preferredTime?: Prisma.StringWithAggregatesFilter<"Consultation"> | string
   status?: Prisma.EnumConsultationStatusWithAggregatesFilter<"Consultation"> | $Enums.ConsultationStatus
@@ -456,7 +447,6 @@ export type ConsultationScalarWhereWithAggregatesInput = {
 export type ConsultationCreateInput = {
   id?: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -476,6 +466,7 @@ export type ConsultationCreateInput = {
   professional: Prisma.HealthcareProfessionalCreateNestedOneWithoutConsultationsInput
   notes?: Prisma.ConsultationNoteCreateNestedOneWithoutConsultationInput
   payment?: Prisma.PaymentCreateNestedOneWithoutConsultationInput
+  videoSession?: Prisma.VideoSessionCreateNestedOneWithoutConsultationInput
 }
 
 export type ConsultationUncheckedCreateInput = {
@@ -483,7 +474,6 @@ export type ConsultationUncheckedCreateInput = {
   patientId: string
   professionalId: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -501,12 +491,12 @@ export type ConsultationUncheckedCreateInput = {
   updatedAt?: Date | string
   notes?: Prisma.ConsultationNoteUncheckedCreateNestedOneWithoutConsultationInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutConsultationInput
+  videoSession?: Prisma.VideoSessionUncheckedCreateNestedOneWithoutConsultationInput
 }
 
 export type ConsultationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -526,6 +516,7 @@ export type ConsultationUpdateInput = {
   professional?: Prisma.HealthcareProfessionalUpdateOneRequiredWithoutConsultationsNestedInput
   notes?: Prisma.ConsultationNoteUpdateOneWithoutConsultationNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutConsultationNestedInput
+  videoSession?: Prisma.VideoSessionUpdateOneWithoutConsultationNestedInput
 }
 
 export type ConsultationUncheckedUpdateInput = {
@@ -533,7 +524,6 @@ export type ConsultationUncheckedUpdateInput = {
   patientId?: Prisma.StringFieldUpdateOperationsInput | string
   professionalId?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -551,6 +541,7 @@ export type ConsultationUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.ConsultationNoteUncheckedUpdateOneWithoutConsultationNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutConsultationNestedInput
+  videoSession?: Prisma.VideoSessionUncheckedUpdateOneWithoutConsultationNestedInput
 }
 
 export type ConsultationCreateManyInput = {
@@ -558,7 +549,6 @@ export type ConsultationCreateManyInput = {
   patientId: string
   professionalId: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -579,7 +569,6 @@ export type ConsultationCreateManyInput = {
 export type ConsultationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -602,7 +591,6 @@ export type ConsultationUncheckedUpdateManyInput = {
   patientId?: Prisma.StringFieldUpdateOperationsInput | string
   professionalId?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -620,6 +608,11 @@ export type ConsultationUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type ConsultationScalarRelationFilter = {
+  is?: Prisma.ConsultationWhereInput
+  isNot?: Prisma.ConsultationWhereInput
+}
+
 export type ConsultationListRelationFilter = {
   every?: Prisma.ConsultationWhereInput
   some?: Prisma.ConsultationWhereInput
@@ -635,7 +628,6 @@ export type ConsultationCountOrderByAggregateInput = {
   patientId?: Prisma.SortOrder
   professionalId?: Prisma.SortOrder
   consultationType?: Prisma.SortOrder
-  reasonForConsultation?: Prisma.SortOrder
   preferredDate?: Prisma.SortOrder
   preferredTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -662,7 +654,6 @@ export type ConsultationMaxOrderByAggregateInput = {
   patientId?: Prisma.SortOrder
   professionalId?: Prisma.SortOrder
   consultationType?: Prisma.SortOrder
-  reasonForConsultation?: Prisma.SortOrder
   preferredDate?: Prisma.SortOrder
   preferredTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -685,7 +676,6 @@ export type ConsultationMinOrderByAggregateInput = {
   patientId?: Prisma.SortOrder
   professionalId?: Prisma.SortOrder
   consultationType?: Prisma.SortOrder
-  reasonForConsultation?: Prisma.SortOrder
   preferredDate?: Prisma.SortOrder
   preferredTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -707,9 +697,18 @@ export type ConsultationSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
 }
 
-export type ConsultationScalarRelationFilter = {
-  is?: Prisma.ConsultationWhereInput
-  isNot?: Prisma.ConsultationWhereInput
+export type ConsultationCreateNestedOneWithoutVideoSessionInput = {
+  create?: Prisma.XOR<Prisma.ConsultationCreateWithoutVideoSessionInput, Prisma.ConsultationUncheckedCreateWithoutVideoSessionInput>
+  connectOrCreate?: Prisma.ConsultationCreateOrConnectWithoutVideoSessionInput
+  connect?: Prisma.ConsultationWhereUniqueInput
+}
+
+export type ConsultationUpdateOneRequiredWithoutVideoSessionNestedInput = {
+  create?: Prisma.XOR<Prisma.ConsultationCreateWithoutVideoSessionInput, Prisma.ConsultationUncheckedCreateWithoutVideoSessionInput>
+  connectOrCreate?: Prisma.ConsultationCreateOrConnectWithoutVideoSessionInput
+  upsert?: Prisma.ConsultationUpsertWithoutVideoSessionInput
+  connect?: Prisma.ConsultationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ConsultationUpdateToOneWithWhereWithoutVideoSessionInput, Prisma.ConsultationUpdateWithoutVideoSessionInput>, Prisma.ConsultationUncheckedUpdateWithoutVideoSessionInput>
 }
 
 export type ConsultationCreateNestedManyWithoutPatientInput = {
@@ -848,10 +847,121 @@ export type ConsultationUpdateOneRequiredWithoutPaymentNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ConsultationUpdateToOneWithWhereWithoutPaymentInput, Prisma.ConsultationUpdateWithoutPaymentInput>, Prisma.ConsultationUncheckedUpdateWithoutPaymentInput>
 }
 
+export type ConsultationCreateWithoutVideoSessionInput = {
+  id?: string
+  consultationType: $Enums.ConsultationType
+  preferredDate: Date | string
+  preferredTime: string
+  status?: $Enums.ConsultationStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentReference?: string | null
+  paymentMethod?: $Enums.PaymentMethod | null
+  paymentStatus?: $Enums.PaymentStatus | null
+  paidAt?: Date | string | null
+  acceptedAt?: Date | string | null
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  cancellationReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  patient: Prisma.PatientCreateNestedOneWithoutConsultationsInput
+  professional: Prisma.HealthcareProfessionalCreateNestedOneWithoutConsultationsInput
+  notes?: Prisma.ConsultationNoteCreateNestedOneWithoutConsultationInput
+  payment?: Prisma.PaymentCreateNestedOneWithoutConsultationInput
+}
+
+export type ConsultationUncheckedCreateWithoutVideoSessionInput = {
+  id?: string
+  patientId: string
+  professionalId: string
+  consultationType: $Enums.ConsultationType
+  preferredDate: Date | string
+  preferredTime: string
+  status?: $Enums.ConsultationStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentReference?: string | null
+  paymentMethod?: $Enums.PaymentMethod | null
+  paymentStatus?: $Enums.PaymentStatus | null
+  paidAt?: Date | string | null
+  acceptedAt?: Date | string | null
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  cancellationReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  notes?: Prisma.ConsultationNoteUncheckedCreateNestedOneWithoutConsultationInput
+  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutConsultationInput
+}
+
+export type ConsultationCreateOrConnectWithoutVideoSessionInput = {
+  where: Prisma.ConsultationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ConsultationCreateWithoutVideoSessionInput, Prisma.ConsultationUncheckedCreateWithoutVideoSessionInput>
+}
+
+export type ConsultationUpsertWithoutVideoSessionInput = {
+  update: Prisma.XOR<Prisma.ConsultationUpdateWithoutVideoSessionInput, Prisma.ConsultationUncheckedUpdateWithoutVideoSessionInput>
+  create: Prisma.XOR<Prisma.ConsultationCreateWithoutVideoSessionInput, Prisma.ConsultationUncheckedCreateWithoutVideoSessionInput>
+  where?: Prisma.ConsultationWhereInput
+}
+
+export type ConsultationUpdateToOneWithWhereWithoutVideoSessionInput = {
+  where?: Prisma.ConsultationWhereInput
+  data: Prisma.XOR<Prisma.ConsultationUpdateWithoutVideoSessionInput, Prisma.ConsultationUncheckedUpdateWithoutVideoSessionInput>
+}
+
+export type ConsultationUpdateWithoutVideoSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
+  preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+  paymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  patient?: Prisma.PatientUpdateOneRequiredWithoutConsultationsNestedInput
+  professional?: Prisma.HealthcareProfessionalUpdateOneRequiredWithoutConsultationsNestedInput
+  notes?: Prisma.ConsultationNoteUpdateOneWithoutConsultationNestedInput
+  payment?: Prisma.PaymentUpdateOneWithoutConsultationNestedInput
+}
+
+export type ConsultationUncheckedUpdateWithoutVideoSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  patientId?: Prisma.StringFieldUpdateOperationsInput | string
+  professionalId?: Prisma.StringFieldUpdateOperationsInput | string
+  consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
+  preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+  paymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.ConsultationNoteUncheckedUpdateOneWithoutConsultationNestedInput
+  payment?: Prisma.PaymentUncheckedUpdateOneWithoutConsultationNestedInput
+}
+
 export type ConsultationCreateWithoutPatientInput = {
   id?: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -870,13 +980,13 @@ export type ConsultationCreateWithoutPatientInput = {
   professional: Prisma.HealthcareProfessionalCreateNestedOneWithoutConsultationsInput
   notes?: Prisma.ConsultationNoteCreateNestedOneWithoutConsultationInput
   payment?: Prisma.PaymentCreateNestedOneWithoutConsultationInput
+  videoSession?: Prisma.VideoSessionCreateNestedOneWithoutConsultationInput
 }
 
 export type ConsultationUncheckedCreateWithoutPatientInput = {
   id?: string
   professionalId: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -894,6 +1004,7 @@ export type ConsultationUncheckedCreateWithoutPatientInput = {
   updatedAt?: Date | string
   notes?: Prisma.ConsultationNoteUncheckedCreateNestedOneWithoutConsultationInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutConsultationInput
+  videoSession?: Prisma.VideoSessionUncheckedCreateNestedOneWithoutConsultationInput
 }
 
 export type ConsultationCreateOrConnectWithoutPatientInput = {
@@ -930,7 +1041,6 @@ export type ConsultationScalarWhereInput = {
   patientId?: Prisma.StringFilter<"Consultation"> | string
   professionalId?: Prisma.StringFilter<"Consultation"> | string
   consultationType?: Prisma.EnumConsultationTypeFilter<"Consultation"> | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFilter<"Consultation"> | string
   preferredDate?: Prisma.DateTimeFilter<"Consultation"> | Date | string
   preferredTime?: Prisma.StringFilter<"Consultation"> | string
   status?: Prisma.EnumConsultationStatusFilter<"Consultation"> | $Enums.ConsultationStatus
@@ -951,7 +1061,6 @@ export type ConsultationScalarWhereInput = {
 export type ConsultationCreateWithoutProfessionalInput = {
   id?: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -970,13 +1079,13 @@ export type ConsultationCreateWithoutProfessionalInput = {
   patient: Prisma.PatientCreateNestedOneWithoutConsultationsInput
   notes?: Prisma.ConsultationNoteCreateNestedOneWithoutConsultationInput
   payment?: Prisma.PaymentCreateNestedOneWithoutConsultationInput
+  videoSession?: Prisma.VideoSessionCreateNestedOneWithoutConsultationInput
 }
 
 export type ConsultationUncheckedCreateWithoutProfessionalInput = {
   id?: string
   patientId: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -994,6 +1103,7 @@ export type ConsultationUncheckedCreateWithoutProfessionalInput = {
   updatedAt?: Date | string
   notes?: Prisma.ConsultationNoteUncheckedCreateNestedOneWithoutConsultationInput
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutConsultationInput
+  videoSession?: Prisma.VideoSessionUncheckedCreateNestedOneWithoutConsultationInput
 }
 
 export type ConsultationCreateOrConnectWithoutProfessionalInput = {
@@ -1025,7 +1135,6 @@ export type ConsultationUpdateManyWithWhereWithoutProfessionalInput = {
 export type ConsultationCreateWithoutNotesInput = {
   id?: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -1044,6 +1153,7 @@ export type ConsultationCreateWithoutNotesInput = {
   patient: Prisma.PatientCreateNestedOneWithoutConsultationsInput
   professional: Prisma.HealthcareProfessionalCreateNestedOneWithoutConsultationsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutConsultationInput
+  videoSession?: Prisma.VideoSessionCreateNestedOneWithoutConsultationInput
 }
 
 export type ConsultationUncheckedCreateWithoutNotesInput = {
@@ -1051,7 +1161,6 @@ export type ConsultationUncheckedCreateWithoutNotesInput = {
   patientId: string
   professionalId: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -1068,6 +1177,7 @@ export type ConsultationUncheckedCreateWithoutNotesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutConsultationInput
+  videoSession?: Prisma.VideoSessionUncheckedCreateNestedOneWithoutConsultationInput
 }
 
 export type ConsultationCreateOrConnectWithoutNotesInput = {
@@ -1089,7 +1199,6 @@ export type ConsultationUpdateToOneWithWhereWithoutNotesInput = {
 export type ConsultationUpdateWithoutNotesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -1108,6 +1217,7 @@ export type ConsultationUpdateWithoutNotesInput = {
   patient?: Prisma.PatientUpdateOneRequiredWithoutConsultationsNestedInput
   professional?: Prisma.HealthcareProfessionalUpdateOneRequiredWithoutConsultationsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutConsultationNestedInput
+  videoSession?: Prisma.VideoSessionUpdateOneWithoutConsultationNestedInput
 }
 
 export type ConsultationUncheckedUpdateWithoutNotesInput = {
@@ -1115,7 +1225,6 @@ export type ConsultationUncheckedUpdateWithoutNotesInput = {
   patientId?: Prisma.StringFieldUpdateOperationsInput | string
   professionalId?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -1132,12 +1241,12 @@ export type ConsultationUncheckedUpdateWithoutNotesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutConsultationNestedInput
+  videoSession?: Prisma.VideoSessionUncheckedUpdateOneWithoutConsultationNestedInput
 }
 
 export type ConsultationCreateWithoutPaymentInput = {
   id?: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -1156,6 +1265,7 @@ export type ConsultationCreateWithoutPaymentInput = {
   patient: Prisma.PatientCreateNestedOneWithoutConsultationsInput
   professional: Prisma.HealthcareProfessionalCreateNestedOneWithoutConsultationsInput
   notes?: Prisma.ConsultationNoteCreateNestedOneWithoutConsultationInput
+  videoSession?: Prisma.VideoSessionCreateNestedOneWithoutConsultationInput
 }
 
 export type ConsultationUncheckedCreateWithoutPaymentInput = {
@@ -1163,7 +1273,6 @@ export type ConsultationUncheckedCreateWithoutPaymentInput = {
   patientId: string
   professionalId: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -1180,6 +1289,7 @@ export type ConsultationUncheckedCreateWithoutPaymentInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   notes?: Prisma.ConsultationNoteUncheckedCreateNestedOneWithoutConsultationInput
+  videoSession?: Prisma.VideoSessionUncheckedCreateNestedOneWithoutConsultationInput
 }
 
 export type ConsultationCreateOrConnectWithoutPaymentInput = {
@@ -1201,7 +1311,6 @@ export type ConsultationUpdateToOneWithWhereWithoutPaymentInput = {
 export type ConsultationUpdateWithoutPaymentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -1220,6 +1329,7 @@ export type ConsultationUpdateWithoutPaymentInput = {
   patient?: Prisma.PatientUpdateOneRequiredWithoutConsultationsNestedInput
   professional?: Prisma.HealthcareProfessionalUpdateOneRequiredWithoutConsultationsNestedInput
   notes?: Prisma.ConsultationNoteUpdateOneWithoutConsultationNestedInput
+  videoSession?: Prisma.VideoSessionUpdateOneWithoutConsultationNestedInput
 }
 
 export type ConsultationUncheckedUpdateWithoutPaymentInput = {
@@ -1227,7 +1337,6 @@ export type ConsultationUncheckedUpdateWithoutPaymentInput = {
   patientId?: Prisma.StringFieldUpdateOperationsInput | string
   professionalId?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -1244,13 +1353,13 @@ export type ConsultationUncheckedUpdateWithoutPaymentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.ConsultationNoteUncheckedUpdateOneWithoutConsultationNestedInput
+  videoSession?: Prisma.VideoSessionUncheckedUpdateOneWithoutConsultationNestedInput
 }
 
 export type ConsultationCreateManyPatientInput = {
   id?: string
   professionalId: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -1271,7 +1380,6 @@ export type ConsultationCreateManyPatientInput = {
 export type ConsultationUpdateWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -1290,13 +1398,13 @@ export type ConsultationUpdateWithoutPatientInput = {
   professional?: Prisma.HealthcareProfessionalUpdateOneRequiredWithoutConsultationsNestedInput
   notes?: Prisma.ConsultationNoteUpdateOneWithoutConsultationNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutConsultationNestedInput
+  videoSession?: Prisma.VideoSessionUpdateOneWithoutConsultationNestedInput
 }
 
 export type ConsultationUncheckedUpdateWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   professionalId?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -1314,13 +1422,13 @@ export type ConsultationUncheckedUpdateWithoutPatientInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.ConsultationNoteUncheckedUpdateOneWithoutConsultationNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutConsultationNestedInput
+  videoSession?: Prisma.VideoSessionUncheckedUpdateOneWithoutConsultationNestedInput
 }
 
 export type ConsultationUncheckedUpdateManyWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   professionalId?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -1342,7 +1450,6 @@ export type ConsultationCreateManyProfessionalInput = {
   id?: string
   patientId: string
   consultationType: $Enums.ConsultationType
-  reasonForConsultation: string
   preferredDate: Date | string
   preferredTime: string
   status?: $Enums.ConsultationStatus
@@ -1363,7 +1470,6 @@ export type ConsultationCreateManyProfessionalInput = {
 export type ConsultationUpdateWithoutProfessionalInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -1382,13 +1488,13 @@ export type ConsultationUpdateWithoutProfessionalInput = {
   patient?: Prisma.PatientUpdateOneRequiredWithoutConsultationsNestedInput
   notes?: Prisma.ConsultationNoteUpdateOneWithoutConsultationNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutConsultationNestedInput
+  videoSession?: Prisma.VideoSessionUpdateOneWithoutConsultationNestedInput
 }
 
 export type ConsultationUncheckedUpdateWithoutProfessionalInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   patientId?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -1406,13 +1512,13 @@ export type ConsultationUncheckedUpdateWithoutProfessionalInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.ConsultationNoteUncheckedUpdateOneWithoutConsultationNestedInput
   payment?: Prisma.PaymentUncheckedUpdateOneWithoutConsultationNestedInput
+  videoSession?: Prisma.VideoSessionUncheckedUpdateOneWithoutConsultationNestedInput
 }
 
 export type ConsultationUncheckedUpdateManyWithoutProfessionalInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   patientId?: Prisma.StringFieldUpdateOperationsInput | string
   consultationType?: Prisma.EnumConsultationTypeFieldUpdateOperationsInput | $Enums.ConsultationType
-  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConsultationStatusFieldUpdateOperationsInput | $Enums.ConsultationStatus
@@ -1437,7 +1543,6 @@ export type ConsultationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   patientId?: boolean
   professionalId?: boolean
   consultationType?: boolean
-  reasonForConsultation?: boolean
   preferredDate?: boolean
   preferredTime?: boolean
   status?: boolean
@@ -1457,6 +1562,7 @@ export type ConsultationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   professional?: boolean | Prisma.HealthcareProfessionalDefaultArgs<ExtArgs>
   notes?: boolean | Prisma.Consultation$notesArgs<ExtArgs>
   payment?: boolean | Prisma.Consultation$paymentArgs<ExtArgs>
+  videoSession?: boolean | Prisma.Consultation$videoSessionArgs<ExtArgs>
 }, ExtArgs["result"]["consultation"]>
 
 export type ConsultationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1464,7 +1570,6 @@ export type ConsultationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   patientId?: boolean
   professionalId?: boolean
   consultationType?: boolean
-  reasonForConsultation?: boolean
   preferredDate?: boolean
   preferredTime?: boolean
   status?: boolean
@@ -1489,7 +1594,6 @@ export type ConsultationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   patientId?: boolean
   professionalId?: boolean
   consultationType?: boolean
-  reasonForConsultation?: boolean
   preferredDate?: boolean
   preferredTime?: boolean
   status?: boolean
@@ -1514,7 +1618,6 @@ export type ConsultationSelectScalar = {
   patientId?: boolean
   professionalId?: boolean
   consultationType?: boolean
-  reasonForConsultation?: boolean
   preferredDate?: boolean
   preferredTime?: boolean
   status?: boolean
@@ -1532,12 +1635,13 @@ export type ConsultationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ConsultationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "patientId" | "professionalId" | "consultationType" | "reasonForConsultation" | "preferredDate" | "preferredTime" | "status" | "amount" | "currency" | "paymentReference" | "paymentMethod" | "paymentStatus" | "paidAt" | "acceptedAt" | "completedAt" | "cancelledAt" | "cancellationReason" | "createdAt" | "updatedAt", ExtArgs["result"]["consultation"]>
+export type ConsultationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "patientId" | "professionalId" | "consultationType" | "preferredDate" | "preferredTime" | "status" | "amount" | "currency" | "paymentReference" | "paymentMethod" | "paymentStatus" | "paidAt" | "acceptedAt" | "completedAt" | "cancelledAt" | "cancellationReason" | "createdAt" | "updatedAt", ExtArgs["result"]["consultation"]>
 export type ConsultationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
   professional?: boolean | Prisma.HealthcareProfessionalDefaultArgs<ExtArgs>
   notes?: boolean | Prisma.Consultation$notesArgs<ExtArgs>
   payment?: boolean | Prisma.Consultation$paymentArgs<ExtArgs>
+  videoSession?: boolean | Prisma.Consultation$videoSessionArgs<ExtArgs>
 }
 export type ConsultationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
@@ -1555,13 +1659,13 @@ export type $ConsultationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     professional: Prisma.$HealthcareProfessionalPayload<ExtArgs>
     notes: Prisma.$ConsultationNotePayload<ExtArgs> | null
     payment: Prisma.$PaymentPayload<ExtArgs> | null
+    videoSession: Prisma.$VideoSessionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     patientId: string
     professionalId: string
     consultationType: $Enums.ConsultationType
-    reasonForConsultation: string
     preferredDate: Date
     preferredTime: string
     status: $Enums.ConsultationStatus
@@ -1975,6 +2079,7 @@ export interface Prisma__ConsultationClient<T, Null = never, ExtArgs extends run
   professional<T extends Prisma.HealthcareProfessionalDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HealthcareProfessionalDefaultArgs<ExtArgs>>): Prisma.Prisma__HealthcareProfessionalClient<runtime.Types.Result.GetResult<Prisma.$HealthcareProfessionalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   notes<T extends Prisma.Consultation$notesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Consultation$notesArgs<ExtArgs>>): Prisma.Prisma__ConsultationNoteClient<runtime.Types.Result.GetResult<Prisma.$ConsultationNotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payment<T extends Prisma.Consultation$paymentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Consultation$paymentArgs<ExtArgs>>): Prisma.Prisma__PaymentClient<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  videoSession<T extends Prisma.Consultation$videoSessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Consultation$videoSessionArgs<ExtArgs>>): Prisma.Prisma__VideoSessionClient<runtime.Types.Result.GetResult<Prisma.$VideoSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2008,7 +2113,6 @@ export interface ConsultationFieldRefs {
   readonly patientId: Prisma.FieldRef<"Consultation", 'String'>
   readonly professionalId: Prisma.FieldRef<"Consultation", 'String'>
   readonly consultationType: Prisma.FieldRef<"Consultation", 'ConsultationType'>
-  readonly reasonForConsultation: Prisma.FieldRef<"Consultation", 'String'>
   readonly preferredDate: Prisma.FieldRef<"Consultation", 'DateTime'>
   readonly preferredTime: Prisma.FieldRef<"Consultation", 'String'>
   readonly status: Prisma.FieldRef<"Consultation", 'ConsultationStatus'>
@@ -2460,6 +2564,25 @@ export type Consultation$paymentArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.PaymentInclude<ExtArgs> | null
   where?: Prisma.PaymentWhereInput
+}
+
+/**
+ * Consultation.videoSession
+ */
+export type Consultation$videoSessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the VideoSession
+   */
+  select?: Prisma.VideoSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the VideoSession
+   */
+  omit?: Prisma.VideoSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VideoSessionInclude<ExtArgs> | null
+  where?: Prisma.VideoSessionWhereInput
 }
 
 /**

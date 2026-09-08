@@ -51,6 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  VideoSession: 'VideoSession',
   User: 'User',
   Patient: 'Patient',
   HealthcareProfessional: 'HealthcareProfessional',
@@ -77,6 +78,22 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const VideoSessionScalarFieldEnum = {
+  id: 'id',
+  consultationId: 'consultationId',
+  roomSid: 'roomSid',
+  roomName: 'roomName',
+  status: 'status',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  recordingEnabled: 'recordingEnabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VideoSessionScalarFieldEnum = (typeof VideoSessionScalarFieldEnum)[keyof typeof VideoSessionScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -141,7 +158,6 @@ export const ConsultationScalarFieldEnum = {
   patientId: 'patientId',
   professionalId: 'professionalId',
   consultationType: 'consultationType',
-  reasonForConsultation: 'reasonForConsultation',
   preferredDate: 'preferredDate',
   preferredTime: 'preferredTime',
   status: 'status',
@@ -165,6 +181,7 @@ export type ConsultationScalarFieldEnum = (typeof ConsultationScalarFieldEnum)[k
 export const ConsultationNoteScalarFieldEnum = {
   id: 'id',
   consultationId: 'consultationId',
+  reasonForConsultation: 'reasonForConsultation',
   symptoms: 'symptoms',
   diagnosis: 'diagnosis',
   prescription: 'prescription',

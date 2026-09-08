@@ -7,7 +7,6 @@ export class ConsultationsService {
   constructor(private prisma: PrismaService) {}
 
   async createBooking(patientId: string, dto: CreateBookingDto) {
-    // Verify professional exists and is approved
     const professional = await this.prisma.healthcareProfessional.findUnique({
       where: { id: dto.professionalId },
       include: { user: true },
@@ -22,13 +21,19 @@ export class ConsultationsService {
         patientId,
         professionalId: dto.professionalId,
         consultationType: dto.consultationType,
-        reasonForConsultation: dto.reasonForConsultation,
         preferredDate: new Date(dto.preferredDate),
         preferredTime: dto.preferredTime,
         amount: dto.amount,
         currency: dto.currency || 'NGN',
         status: ConsultationStatus.PENDING_PAYMENT,
+        notes: {
+          create: {
+            reasonForConsultation: dto.reasonForConsultation,
+            createdBy: patientId,
+          },
+        },
       },
+      include: { notes: true },
     });
 
     return consultation;
@@ -39,11 +44,17 @@ export class ConsultationsService {
 
     if (userRole === UserRole.PATIENT) {
       const patient = await this.prisma.patient.findUnique({ where: { userId } });
-      where.patientId = patient?.id;
-    } else if (userRole === UserRole.DOCTOR || userRole === UserRole.PHARMACIST) {
+      if (!patient) throw new ForbiddenException('No patient profile found for this user');
+      where.patientId = patient.id;
+    } else if (userRole === UserRole.DOCTOR || userRole === UserRole.PHARMACIST || userRole === UserRole.OPTOMETRIST || userRole === UserRole.DIETITIAN) {
       const professional = await this.prisma.healthcareProfessional.findUnique({ where: { userId } });
-      where.professionalId = professional?.id;
+      if (!professional) throw new ForbiddenException('No professional profile found for this user');
+      where.professionalId = professional.id;
     }
+    // Note: ADMIN (and any other role not matched above) falls through with only
+    // `where: { id: consultationId }` — no ownership filter at all. Confirm that's
+    // intentional (i.e. admins should be able to view any consultation); if not,
+    // add an explicit else-branch that throws or restricts access.
 
     const consultation = await this.prisma.consultation.findFirst({
       where,
@@ -62,11 +73,15 @@ export class ConsultationsService {
 
   async cancelConsultation(consultationId: string, userId: string, reason?: string) {
     const patient = await this.prisma.patient.findUnique({ where: { userId } });
-    
+
+    if (!patient) {
+      throw new ForbiddenException('Cannot cancel this consultation');
+    }
+
     const consultation = await this.prisma.consultation.findFirst({
       where: {
         id: consultationId,
-        patientId: patient?.id,
+        patientId: patient.id,
         status: { in: [ConsultationStatus.PENDING_PAYMENT, ConsultationStatus.PAID, ConsultationStatus.ACCEPTED] },
       },
     });
@@ -87,11 +102,15 @@ export class ConsultationsService {
 
   async rescheduleConsultation(consultationId: string, userId: string, dto: RescheduleDto) {
     const patient = await this.prisma.patient.findUnique({ where: { userId } });
-    
+
+    if (!patient) {
+      throw new ForbiddenException('Cannot reschedule this consultation');
+    }
+
     const consultation = await this.prisma.consultation.findFirst({
       where: {
         id: consultationId,
-        patientId: patient?.id,
+        patientId: patient.id,
         status: { notIn: [ConsultationStatus.COMPLETED, ConsultationStatus.CANCELLED] },
       },
     });

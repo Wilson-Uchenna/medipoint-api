@@ -384,6 +384,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  VideoSession: 'VideoSession',
   User: 'User',
   Patient: 'Patient',
   HealthcareProfessional: 'HealthcareProfessional',
@@ -409,10 +410,84 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "patient" | "healthcareProfessional" | "consultation" | "consultationNote" | "payment" | "notification" | "adminAction" | "emailVerification" | "passwordReset"
+    modelProps: "videoSession" | "user" | "patient" | "healthcareProfessional" | "consultation" | "consultationNote" | "payment" | "notification" | "adminAction" | "emailVerification" | "passwordReset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    VideoSession: {
+      payload: Prisma.$VideoSessionPayload<ExtArgs>
+      fields: Prisma.VideoSessionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VideoSessionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoSessionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VideoSessionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoSessionPayload>
+        }
+        findFirst: {
+          args: Prisma.VideoSessionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoSessionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VideoSessionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoSessionPayload>
+        }
+        findMany: {
+          args: Prisma.VideoSessionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoSessionPayload>[]
+        }
+        create: {
+          args: Prisma.VideoSessionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoSessionPayload>
+        }
+        createMany: {
+          args: Prisma.VideoSessionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.VideoSessionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoSessionPayload>[]
+        }
+        delete: {
+          args: Prisma.VideoSessionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoSessionPayload>
+        }
+        update: {
+          args: Prisma.VideoSessionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoSessionPayload>
+        }
+        deleteMany: {
+          args: Prisma.VideoSessionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VideoSessionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.VideoSessionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoSessionPayload>[]
+        }
+        upsert: {
+          args: Prisma.VideoSessionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoSessionPayload>
+        }
+        aggregate: {
+          args: Prisma.VideoSessionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVideoSession>
+        }
+        groupBy: {
+          args: Prisma.VideoSessionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VideoSessionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VideoSessionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VideoSessionCountAggregateOutputType> | number
+        }
+      }
+    }
     User: {
       payload: Prisma.$UserPayload<ExtArgs>
       fields: Prisma.UserFieldRefs
@@ -1192,6 +1267,22 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const VideoSessionScalarFieldEnum = {
+  id: 'id',
+  consultationId: 'consultationId',
+  roomSid: 'roomSid',
+  roomName: 'roomName',
+  status: 'status',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  recordingEnabled: 'recordingEnabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VideoSessionScalarFieldEnum = (typeof VideoSessionScalarFieldEnum)[keyof typeof VideoSessionScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -1254,7 +1345,6 @@ export const ConsultationScalarFieldEnum = {
   patientId: 'patientId',
   professionalId: 'professionalId',
   consultationType: 'consultationType',
-  reasonForConsultation: 'reasonForConsultation',
   preferredDate: 'preferredDate',
   preferredTime: 'preferredTime',
   status: 'status',
@@ -1278,6 +1368,7 @@ export type ConsultationScalarFieldEnum = (typeof ConsultationScalarFieldEnum)[k
 export const ConsultationNoteScalarFieldEnum = {
   id: 'id',
   consultationId: 'consultationId',
+  reasonForConsultation: 'reasonForConsultation',
   symptoms: 'symptoms',
   diagnosis: 'diagnosis',
   prescription: 'prescription',
@@ -1426,6 +1517,41 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'VideoSessionStatus'
+ */
+export type EnumVideoSessionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VideoSessionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'VideoSessionStatus[]'
+ */
+export type ListEnumVideoSessionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VideoSessionStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'UserRole'
  */
 export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
@@ -1450,27 +1576,6 @@ export type EnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'UserStatus[]'
  */
 export type ListEnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime'
- */
-export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime[]'
- */
-export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -1737,6 +1842,7 @@ export type PrismaClientOptions = ({
   queryPlanCacheMaxSize?: number
 }
 export type GlobalOmitConfig = {
+  videoSession?: Prisma.VideoSessionOmit
   user?: Prisma.UserOmit
   patient?: Prisma.PatientOmit
   healthcareProfessional?: Prisma.HealthcareProfessionalOmit

@@ -27,6 +27,7 @@ export type AggregateConsultationNote = {
 export type ConsultationNoteMinAggregateOutputType = {
   id: string | null
   consultationId: string | null
+  reasonForConsultation: string | null
   symptoms: string | null
   diagnosis: string | null
   prescription: string | null
@@ -40,6 +41,7 @@ export type ConsultationNoteMinAggregateOutputType = {
 export type ConsultationNoteMaxAggregateOutputType = {
   id: string | null
   consultationId: string | null
+  reasonForConsultation: string | null
   symptoms: string | null
   diagnosis: string | null
   prescription: string | null
@@ -53,6 +55,7 @@ export type ConsultationNoteMaxAggregateOutputType = {
 export type ConsultationNoteCountAggregateOutputType = {
   id: number
   consultationId: number
+  reasonForConsultation: number
   symptoms: number
   diagnosis: number
   prescription: number
@@ -68,6 +71,7 @@ export type ConsultationNoteCountAggregateOutputType = {
 export type ConsultationNoteMinAggregateInputType = {
   id?: true
   consultationId?: true
+  reasonForConsultation?: true
   symptoms?: true
   diagnosis?: true
   prescription?: true
@@ -81,6 +85,7 @@ export type ConsultationNoteMinAggregateInputType = {
 export type ConsultationNoteMaxAggregateInputType = {
   id?: true
   consultationId?: true
+  reasonForConsultation?: true
   symptoms?: true
   diagnosis?: true
   prescription?: true
@@ -94,6 +99,7 @@ export type ConsultationNoteMaxAggregateInputType = {
 export type ConsultationNoteCountAggregateInputType = {
   id?: true
   consultationId?: true
+  reasonForConsultation?: true
   symptoms?: true
   diagnosis?: true
   prescription?: true
@@ -180,6 +186,7 @@ export type ConsultationNoteGroupByArgs<ExtArgs extends runtime.Types.Extensions
 export type ConsultationNoteGroupByOutputType = {
   id: string
   consultationId: string
+  reasonForConsultation: string
   symptoms: string | null
   diagnosis: string | null
   prescription: string | null
@@ -214,6 +221,7 @@ export type ConsultationNoteWhereInput = {
   NOT?: Prisma.ConsultationNoteWhereInput | Prisma.ConsultationNoteWhereInput[]
   id?: Prisma.StringFilter<"ConsultationNote"> | string
   consultationId?: Prisma.StringFilter<"ConsultationNote"> | string
+  reasonForConsultation?: Prisma.StringFilter<"ConsultationNote"> | string
   symptoms?: Prisma.StringNullableFilter<"ConsultationNote"> | string | null
   diagnosis?: Prisma.StringNullableFilter<"ConsultationNote"> | string | null
   prescription?: Prisma.StringNullableFilter<"ConsultationNote"> | string | null
@@ -228,6 +236,7 @@ export type ConsultationNoteWhereInput = {
 export type ConsultationNoteOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   consultationId?: Prisma.SortOrder
+  reasonForConsultation?: Prisma.SortOrder
   symptoms?: Prisma.SortOrderInput | Prisma.SortOrder
   diagnosis?: Prisma.SortOrderInput | Prisma.SortOrder
   prescription?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -245,6 +254,7 @@ export type ConsultationNoteWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ConsultationNoteWhereInput | Prisma.ConsultationNoteWhereInput[]
   OR?: Prisma.ConsultationNoteWhereInput[]
   NOT?: Prisma.ConsultationNoteWhereInput | Prisma.ConsultationNoteWhereInput[]
+  reasonForConsultation?: Prisma.StringFilter<"ConsultationNote"> | string
   symptoms?: Prisma.StringNullableFilter<"ConsultationNote"> | string | null
   diagnosis?: Prisma.StringNullableFilter<"ConsultationNote"> | string | null
   prescription?: Prisma.StringNullableFilter<"ConsultationNote"> | string | null
@@ -259,6 +269,7 @@ export type ConsultationNoteWhereUniqueInput = Prisma.AtLeast<{
 export type ConsultationNoteOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   consultationId?: Prisma.SortOrder
+  reasonForConsultation?: Prisma.SortOrder
   symptoms?: Prisma.SortOrderInput | Prisma.SortOrder
   diagnosis?: Prisma.SortOrderInput | Prisma.SortOrder
   prescription?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -278,6 +289,7 @@ export type ConsultationNoteScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ConsultationNoteScalarWhereWithAggregatesInput | Prisma.ConsultationNoteScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"ConsultationNote"> | string
   consultationId?: Prisma.StringWithAggregatesFilter<"ConsultationNote"> | string
+  reasonForConsultation?: Prisma.StringWithAggregatesFilter<"ConsultationNote"> | string
   symptoms?: Prisma.StringNullableWithAggregatesFilter<"ConsultationNote"> | string | null
   diagnosis?: Prisma.StringNullableWithAggregatesFilter<"ConsultationNote"> | string | null
   prescription?: Prisma.StringNullableWithAggregatesFilter<"ConsultationNote"> | string | null
@@ -290,6 +302,7 @@ export type ConsultationNoteScalarWhereWithAggregatesInput = {
 
 export type ConsultationNoteCreateInput = {
   id?: string
+  reasonForConsultation: string
   symptoms?: string | null
   diagnosis?: string | null
   prescription?: string | null
@@ -304,6 +317,7 @@ export type ConsultationNoteCreateInput = {
 export type ConsultationNoteUncheckedCreateInput = {
   id?: string
   consultationId: string
+  reasonForConsultation: string
   symptoms?: string | null
   diagnosis?: string | null
   prescription?: string | null
@@ -316,6 +330,7 @@ export type ConsultationNoteUncheckedCreateInput = {
 
 export type ConsultationNoteUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   symptoms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -330,6 +345,7 @@ export type ConsultationNoteUpdateInput = {
 export type ConsultationNoteUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   consultationId?: Prisma.StringFieldUpdateOperationsInput | string
+  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   symptoms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -343,6 +359,7 @@ export type ConsultationNoteUncheckedUpdateInput = {
 export type ConsultationNoteCreateManyInput = {
   id?: string
   consultationId: string
+  reasonForConsultation: string
   symptoms?: string | null
   diagnosis?: string | null
   prescription?: string | null
@@ -355,6 +372,7 @@ export type ConsultationNoteCreateManyInput = {
 
 export type ConsultationNoteUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   symptoms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -368,6 +386,7 @@ export type ConsultationNoteUpdateManyMutationInput = {
 export type ConsultationNoteUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   consultationId?: Prisma.StringFieldUpdateOperationsInput | string
+  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   symptoms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -386,6 +405,7 @@ export type ConsultationNoteNullableScalarRelationFilter = {
 export type ConsultationNoteCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   consultationId?: Prisma.SortOrder
+  reasonForConsultation?: Prisma.SortOrder
   symptoms?: Prisma.SortOrder
   diagnosis?: Prisma.SortOrder
   prescription?: Prisma.SortOrder
@@ -399,6 +419,7 @@ export type ConsultationNoteCountOrderByAggregateInput = {
 export type ConsultationNoteMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   consultationId?: Prisma.SortOrder
+  reasonForConsultation?: Prisma.SortOrder
   symptoms?: Prisma.SortOrder
   diagnosis?: Prisma.SortOrder
   prescription?: Prisma.SortOrder
@@ -412,6 +433,7 @@ export type ConsultationNoteMaxOrderByAggregateInput = {
 export type ConsultationNoteMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   consultationId?: Prisma.SortOrder
+  reasonForConsultation?: Prisma.SortOrder
   symptoms?: Prisma.SortOrder
   diagnosis?: Prisma.SortOrder
   prescription?: Prisma.SortOrder
@@ -456,6 +478,7 @@ export type ConsultationNoteUncheckedUpdateOneWithoutConsultationNestedInput = {
 
 export type ConsultationNoteCreateWithoutConsultationInput = {
   id?: string
+  reasonForConsultation: string
   symptoms?: string | null
   diagnosis?: string | null
   prescription?: string | null
@@ -468,6 +491,7 @@ export type ConsultationNoteCreateWithoutConsultationInput = {
 
 export type ConsultationNoteUncheckedCreateWithoutConsultationInput = {
   id?: string
+  reasonForConsultation: string
   symptoms?: string | null
   diagnosis?: string | null
   prescription?: string | null
@@ -496,6 +520,7 @@ export type ConsultationNoteUpdateToOneWithWhereWithoutConsultationInput = {
 
 export type ConsultationNoteUpdateWithoutConsultationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   symptoms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -508,6 +533,7 @@ export type ConsultationNoteUpdateWithoutConsultationInput = {
 
 export type ConsultationNoteUncheckedUpdateWithoutConsultationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  reasonForConsultation?: Prisma.StringFieldUpdateOperationsInput | string
   symptoms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -523,6 +549,7 @@ export type ConsultationNoteUncheckedUpdateWithoutConsultationInput = {
 export type ConsultationNoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   consultationId?: boolean
+  reasonForConsultation?: boolean
   symptoms?: boolean
   diagnosis?: boolean
   prescription?: boolean
@@ -537,6 +564,7 @@ export type ConsultationNoteSelect<ExtArgs extends runtime.Types.Extensions.Inte
 export type ConsultationNoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   consultationId?: boolean
+  reasonForConsultation?: boolean
   symptoms?: boolean
   diagnosis?: boolean
   prescription?: boolean
@@ -551,6 +579,7 @@ export type ConsultationNoteSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
 export type ConsultationNoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   consultationId?: boolean
+  reasonForConsultation?: boolean
   symptoms?: boolean
   diagnosis?: boolean
   prescription?: boolean
@@ -565,6 +594,7 @@ export type ConsultationNoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
 export type ConsultationNoteSelectScalar = {
   id?: boolean
   consultationId?: boolean
+  reasonForConsultation?: boolean
   symptoms?: boolean
   diagnosis?: boolean
   prescription?: boolean
@@ -575,7 +605,7 @@ export type ConsultationNoteSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ConsultationNoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "consultationId" | "symptoms" | "diagnosis" | "prescription" | "notes" | "followUpDate" | "createdBy" | "createdAt" | "updatedAt", ExtArgs["result"]["consultationNote"]>
+export type ConsultationNoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "consultationId" | "reasonForConsultation" | "symptoms" | "diagnosis" | "prescription" | "notes" | "followUpDate" | "createdBy" | "createdAt" | "updatedAt", ExtArgs["result"]["consultationNote"]>
 export type ConsultationNoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   consultation?: boolean | Prisma.ConsultationDefaultArgs<ExtArgs>
 }
@@ -594,6 +624,7 @@ export type $ConsultationNotePayload<ExtArgs extends runtime.Types.Extensions.In
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     consultationId: string
+    reasonForConsultation: string
     symptoms: string | null
     diagnosis: string | null
     prescription: string | null
@@ -1028,6 +1059,7 @@ export interface Prisma__ConsultationNoteClient<T, Null = never, ExtArgs extends
 export interface ConsultationNoteFieldRefs {
   readonly id: Prisma.FieldRef<"ConsultationNote", 'String'>
   readonly consultationId: Prisma.FieldRef<"ConsultationNote", 'String'>
+  readonly reasonForConsultation: Prisma.FieldRef<"ConsultationNote", 'String'>
   readonly symptoms: Prisma.FieldRef<"ConsultationNote", 'String'>
   readonly diagnosis: Prisma.FieldRef<"ConsultationNote", 'String'>
   readonly prescription: Prisma.FieldRef<"ConsultationNote", 'String'>

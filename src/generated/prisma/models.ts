@@ -8,6 +8,7 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/VideoSession.js'
 export type * from './models/User.js'
 export type * from './models/Patient.js'
 export type * from './models/HealthcareProfessional.js'
