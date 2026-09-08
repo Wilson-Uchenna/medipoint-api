@@ -77,6 +77,30 @@ enum NotificationType {
   ACCOUNT_SUSPENSION
 }
 
+enum VideoSessionStatus {
+  CREATED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+model VideoSession {
+  id             String             @id @default(uuid())
+  consultationId String             @unique @map("consultation_id")
+  roomSid        String             @unique @map("room_sid")       // Twilio Room SID
+  roomName       String             @map("room_name")
+  status         VideoSessionStatus @default(CREATED)
+  startedAt      DateTime?          @map("started_at")
+  endedAt        DateTime?          @map("ended_at")
+  recordingEnabled Boolean          @default(false) @map("recording_enabled")
+  createdAt      DateTime           @default(now()) @map("created_at")
+  updatedAt      DateTime           @updatedAt @map("updated_at")
+
+  consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+
+  @@map("video_sessions")
+}
+
 model User {
   id              String     @id @default(uuid())
   email           String     @unique
@@ -152,7 +176,6 @@ model Consultation {
   patientId             String             @map("patient_id")
   professionalId        String             @map("professional_id")
   consultationType      ConsultationType   @map("consultation_type")
-  reasonForConsultation String             @map("reason_for_consultation")
   preferredDate         DateTime           @map("preferred_date")
   preferredTime         String             @map("preferred_time")
   status                ConsultationStatus @default(PENDING_PAYMENT)
@@ -169,25 +192,27 @@ model Consultation {
   createdAt             DateTime           @default(now()) @map("created_at")
   updatedAt             DateTime           @updatedAt @map("updated_at")
 
-  patient  Patient            @relation(fields: [patientId], references: [id])
+  patient      Patient                @relation(fields: [patientId], references: [id])
   professional HealthcareProfessional @relation(fields: [professionalId], references: [id])
-  notes    ConsultationNote?
-  payment  Payment?
+  notes        ConsultationNote?
+  payment      Payment?
+  videoSession VideoSession?
 
   @@map("consultations")
 }
 
 model ConsultationNote {
-  id           String    @id @default(uuid())
-  consultationId String  @unique @map("consultation_id")
-  symptoms     String?
-  diagnosis    String?
-  prescription String?
-  notes        String?
-  followUpDate DateTime? @map("follow_up_date")
-  createdBy    String    @map("created_by")
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
+  id                    String    @id @default(uuid())
+  consultationId        String    @unique @map("consultation_id")
+  reasonForConsultation String    @map("reason_for_consultation")   // moved here
+  symptoms              String?
+  diagnosis             String?
+  prescription          String?
+  notes                 String?
+  followUpDate          DateTime? @map("follow_up_date")
+  createdBy             String    @map("created_by")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
 
   consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
 
