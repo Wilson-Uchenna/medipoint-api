@@ -19,23 +19,30 @@ export class ConsultationNotesService {
       throw new ForbiddenException('Can only document completed consultations');
     }
 
+    // A note record already exists from booking time (holding reasonForConsultation
+    // and reportedBy). This call fills in the clinical fields on that same record
+    // for the first time.
     const existing = await this.prisma.consultationNote.findUnique({
       where: { consultationId },
     });
 
-    if (existing) {
-      throw new ForbiddenException('Notes already exist for this consultation');
+    if (!existing) {
+      throw new NotFoundException('No note record found for this consultation — expected one to exist from booking.');
     }
 
-    return this.prisma.consultationNote.create({
+    if (existing.documentedBy) {
+      throw new ForbiddenException('Clinical documentation already exists — use the update endpoint to revise it.');
+    }
+
+    return this.prisma.consultationNote.update({
+      where: { consultationId },
       data: {
-        consultationId,
         symptoms: dto.symptoms,
         diagnosis: dto.diagnosis,
         prescription: dto.prescription,
         notes: dto.notes,
         followUpDate: dto.followUpDate ? new Date(dto.followUpDate) : null,
-        createdBy: professionalId,
+        documentedBy: professionalId,
       },
     });
   }
@@ -50,6 +57,8 @@ export class ConsultationNotesService {
       throw new ForbiddenException('Not authorized to update these notes');
     }
 
+    // Real clinical work needs revision — diagnoses get refined, prescriptions
+    // change, follow-up notes get added. No restriction on repeat updates here.
     return this.prisma.consultationNote.update({
       where: { id: noteId },
       data: {
@@ -70,7 +79,6 @@ export class ConsultationNotesService {
 
     if (!consultation) throw new NotFoundException('Consultation not found');
 
-    // Authorization check
     const isPatient = consultation.patient.userId === userId;
     const isProfessional = consultation.professional.userId === userId;
 

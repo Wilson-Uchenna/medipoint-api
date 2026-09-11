@@ -182,12 +182,13 @@ export const ConsultationNoteScalarFieldEnum = {
   id: 'id',
   consultationId: 'consultationId',
   reasonForConsultation: 'reasonForConsultation',
+  reportedBy: 'reportedBy',
   symptoms: 'symptoms',
   diagnosis: 'diagnosis',
   prescription: 'prescription',
   notes: 'notes',
   followUpDate: 'followUpDate',
-  createdBy: 'createdBy',
+  documentedBy: 'documentedBy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

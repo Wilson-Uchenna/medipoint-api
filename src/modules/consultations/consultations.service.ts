@@ -17,24 +17,24 @@ export class ConsultationsService {
     }
 
     const consultation = await this.prisma.consultation.create({
-      data: {
-        patientId,
-        professionalId: dto.professionalId,
-        consultationType: dto.consultationType,
-        preferredDate: new Date(dto.preferredDate),
-        preferredTime: dto.preferredTime,
-        amount: dto.amount,
-        currency: dto.currency || 'NGN',
-        status: ConsultationStatus.PENDING_PAYMENT,
-        notes: {
-          create: {
-            reasonForConsultation: dto.reasonForConsultation,
-            createdBy: patientId,
-          },
-        },
+  data: {
+    patientId,
+    professionalId: dto.professionalId,
+    consultationType: dto.consultationType,
+    preferredDate: new Date(dto.preferredDate),
+    preferredTime: dto.preferredTime,
+    amount: dto.amount,
+    currency: dto.currency || 'NGN',
+    status: ConsultationStatus.PENDING_PAYMENT,
+    notes: {
+      create: {
+        reasonForConsultation: dto.reasonForConsultation,
+        reportedBy: patientId,
       },
-      include: { notes: true },
-    });
+    },
+  },
+  include: { notes: true },
+});
 
     return consultation;
   }

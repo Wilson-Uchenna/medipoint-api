@@ -202,17 +202,18 @@ model Consultation {
 }
 
 model ConsultationNote {
-  id                    String    @id @default(uuid())
-  consultationId        String    @unique @map("consultation_id")
-  reasonForConsultation String    @map("reason_for_consultation")   // moved here
-  symptoms              String?
-  diagnosis             String?
-  prescription          String?
-  notes                 String?
-  followUpDate          DateTime? @map("follow_up_date")
-  createdBy             String    @map("created_by")
-  createdAt             DateTime  @default(now()) @map("created_at")
-  updatedAt             DateTime  @updatedAt @map("updated_at")
+  id                     String    @id @default(uuid())
+  consultationId         String    @unique @map("consultation_id")
+  reasonForConsultation  String    @map("reason_for_consultation")
+  reportedBy             String    @map("reported_by")
+  symptoms               String?
+  diagnosis              String?
+  prescription           String?
+  notes                  String?
+  followUpDate           DateTime? @map("follow_up_date")
+  documentedBy           String?   @map("documented_by")
+  createdAt              DateTime  @default(now()) @map("created_at")
+  updatedAt              DateTime  @updatedAt @map("updated_at")
 
   consultation Consultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
 
