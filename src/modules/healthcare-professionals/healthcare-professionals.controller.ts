@@ -17,7 +17,6 @@ import {
 } from '@nestjs/swagger';
 import {
   HealthcareProfessionalsService,
-  CreateProfessionalProfileDto,
 } from './healthcare-professionals.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -28,6 +27,7 @@ import {
 } from '../auth/decorators/current-user.decorator';
 import { UserRole } from '../../generated/prisma/client';
 import type { ActiveUserData } from '../auth/interfaces/active-user-data.interface';
+import { CreateProfessionalProfileDto } from './dtos/create-professional-profile.dto';
 
 @ApiTags('Healthcare Professionals')
 @ApiBearerAuth()

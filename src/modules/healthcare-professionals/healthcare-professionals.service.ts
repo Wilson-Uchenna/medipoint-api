@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserRole, VerificationStatus, ConsultationStatus } from '../../generated/prisma/client';
+import { CreateProfessionalProfileDto } from './dtos/create-professional-profile.dto';
 
 @Injectable()
 export class HealthcareProfessionalsService {
@@ -182,10 +183,3 @@ export class HealthcareProfessionalsService {
   }
 }
 
-export class CreateProfessionalProfileDto {
-  professionalType!: 'DOCTOR' | 'PHARMACIST';
-  licenseNumber!: string;
-  specialty?: string;
-  bio?: string;
-  yearsOfExperience?: number;
-}
