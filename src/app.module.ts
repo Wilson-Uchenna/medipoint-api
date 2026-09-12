@@ -13,7 +13,6 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
 import { AdminModule } from './modules/admin/admin.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
-import { VideoModule } from './video/video/video.module';
 import { VideoModule } from './modules/video/video.module';
 
 @Module({
