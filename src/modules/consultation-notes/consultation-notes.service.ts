@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { ConsultationStatus } from '../../generated/prisma/client';
+import { CreateNotesDto } from './dtos/create-note.dto';
+import { UpdateNotesDto } from './dtos/update-notes.dto';
 
 @Injectable()
 export class ConsultationNotesService {
@@ -92,18 +94,5 @@ export class ConsultationNotesService {
   }
 }
 
-export class CreateNotesDto {
-  symptoms?: string;
-  diagnosis?: string;
-  prescription?: string;
-  notes?: string;
-  followUpDate?: string;
-}
 
-export class UpdateNotesDto {
-  symptoms?: string;
-  diagnosis?: string;
-  prescription?: string;
-  notes?: string;
-  followUpDate?: string;
-}
+

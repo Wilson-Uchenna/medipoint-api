@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, ForbiddenException, BadRequestException 
 import { PrismaService } from '../../prisma/prisma.service';
 import { ConsultationStatus, PaymentStatus, UserRole } from '../../generated/prisma/client';
 import { CreateBookingDto } from './dtos/create-booking.dto';
+import { RescheduleDto } from './dtos/reschedule.dto';
 
 @Injectable()
 export class ConsultationsService {
@@ -129,10 +130,4 @@ export class ConsultationsService {
       },
     });
   }
-}
-
-
-export class RescheduleDto {
-  preferredDate!: string;
-  preferredTime!: string;
 }

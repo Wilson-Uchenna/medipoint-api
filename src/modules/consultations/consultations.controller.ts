@@ -1,12 +1,13 @@
 import { Controller, Get, Post, Put, Body, Param, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
-import { ConsultationsService, RescheduleDto } from './consultations.service';
+import { ConsultationsService, } from './consultations.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { ActiveUser, CurrentUser } from '../auth/decorators/current-user.decorator';
 import { UserRole } from '../../generated/prisma/client';
 import { CreateBookingDto } from './dtos/create-booking.dto';
+import { RescheduleDto } from './dtos/reschedule.dto';
 
 @ApiTags('Consultations')
 @ApiBearerAuth()
