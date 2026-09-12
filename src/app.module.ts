@@ -13,6 +13,8 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
 import { AdminModule } from './modules/admin/admin.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
+import { VideoModule } from './video/video/video.module';
+import { VideoModule } from './modules/video/video.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -20,7 +22,7 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: '.env',
     }),
     PrismaModule,
-    AuthModule, UsersModule, PatientModule, HealthcareProfessionalsModule, ConsultationsModule, ConsultationNotesModule, PaymentsModule, NotificationsModule, AdminModule],
+    AuthModule, UsersModule, PatientModule, HealthcareProfessionalsModule, ConsultationsModule, ConsultationNotesModule, PaymentsModule, NotificationsModule, AdminModule, VideoModule],
   controllers: [AppController],
   providers: [AppService],
 })

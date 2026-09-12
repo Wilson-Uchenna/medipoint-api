@@ -1,12 +1,14 @@
 import { Controller, Get, Post, Put, Body, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
-import { PatientsService, CreatePatientProfileDto, UpdatePatientProfileDto } from './patient.service';
+import { PatientsService } from './patient.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { ActiveUser } from '../auth/decorators/current-user.decorator';
 import { UserRole } from '../../generated/prisma/client';
 import type { ActiveUserData } from '../auth/interfaces/active-user-data.interface';
+import { CreatePatientProfileDto } from './dtos/create-patient-profile.dto';
+import { UpdatePatientProfileDto } from './dtos/update-patient-profile.dto';
 
 @ApiTags('Patients')
 @ApiBearerAuth()

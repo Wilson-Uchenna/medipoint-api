@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserRole } from '../../generated/prisma/client';
+import { CreatePatientProfileDto } from './dtos/create-patient-profile.dto';
+import { UpdatePatientProfileDto } from './dtos/update-patient-profile.dto';
 
 @Injectable()
 export class PatientsService {
@@ -124,30 +126,5 @@ export class PatientsService {
   }
 }
 
-export class CreatePatientProfileDto {
-  dateOfBirth?: string;
-  gender?: string;
-  address?: string;
-  occupation?: string;
-  bloodGroup?: string;
-  genotype?: string;
-  height?: number;
-  weight?: number;
-  emergencyContactName?: string;
-  emergencyContactRelationship?: string;
-  emergencyContactPhone?: string;
-}
 
-export class UpdatePatientProfileDto {
-  dateOfBirth?: string;
-  gender?: string;
-  address?: string;
-  occupation?: string;
-  bloodGroup?: string;
-  genotype?: string;
-  height?: number;
-  weight?: number;
-  emergencyContactName?: string;
-  emergencyContactRelationship?: string;
-  emergencyContactPhone?: string;
-}
+
