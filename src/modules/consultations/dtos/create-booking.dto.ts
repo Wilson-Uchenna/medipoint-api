@@ -12,6 +12,10 @@ export class CreateBookingDto {
   @IsEnum(ConsultationType)
   consultationType!: ConsultationType;
 
+  @ApiProperty({ example: 'I have been experiencing headaches and would like to consult a doctor.' })
+  @IsString()
+  @IsNotEmpty()
+  reasonForConsultation!: string;
 
 
   @ApiProperty({ example: '2024-07-15' })

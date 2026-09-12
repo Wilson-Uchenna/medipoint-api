@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { ConsultationStatus, PaymentStatus, UserRole } from '../../generated/prisma/client';
+import { CreateBookingDto } from './dtos/create-booking.dto';
 
 @Injectable()
 export class ConsultationsService {
@@ -130,15 +131,6 @@ export class ConsultationsService {
   }
 }
 
-export class CreateBookingDto {
-  professionalId!: string;
-  consultationType!: 'VIRTUAL';
-  reasonForConsultation!: string;
-  preferredDate!: string;
-  preferredTime!: string;
-  amount!: number;
-  currency?: string;
-}
 
 export class RescheduleDto {
   preferredDate!: string;
