@@ -71,6 +71,10 @@ export class AuthService {
                 : null,
               gender: dto.patientData.gender,
               bloodGroup: dto.patientData.bloodGroup,
+              genotype: dto.patientData.genotype,
+              height: dto.patientData.height,
+              weight: dto.patientData.weight,
+              occupation: dto.patientData.occupation,
               address: dto.patientData.address,
               emergencyContactName: dto.patientData.emergencyContactName,
               emergencyContactPhone: dto.patientData.emergencyContactPhone,
@@ -286,7 +290,9 @@ export class AuthService {
 
     if (
       verification.user.role === UserRole.DOCTOR ||
-      verification.user.role === UserRole.PHARMACIST
+      verification.user.role === UserRole.PHARMACIST ||
+      verification.user.role === UserRole.DIETITIAN ||
+      verification.user.role === UserRole.OPTOMETRIST
     ) {
       await this.emailService.sendProfessionalWelcomeEmail(
         verification.user.email,

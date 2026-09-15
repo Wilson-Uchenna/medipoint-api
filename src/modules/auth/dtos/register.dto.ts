@@ -22,6 +22,25 @@ class PatientDataDto {
   @IsOptional()
   gender?: string;
 
+  @ApiPropertyOptional({ description: 'Height in centimeters', example: 170 })
+  @IsOptional()
+  @IsNumber()
+  height?: number;
+
+  @ApiPropertyOptional({ description: 'Weight in kilograms', example: 65 })
+  @IsOptional()
+  @IsNumber()
+  weight?: number;
+
+  @ApiPropertyOptional({ description: 'Occupation', example: 'Software Engineer' })
+  @IsOptional()
+  occupation?: string;
+
+  @ApiPropertyOptional({ description: 'Genotype', example: 'AA' })
+  @IsOptional()
+  genotype?: string;
+
+
   @ApiPropertyOptional({ description: 'Blood group', example: 'O+' })
   @IsOptional()
   bloodGroup?: string;
