@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserRole } from '../../generated/prisma/client';
 import { CreatePatientProfileDto } from './dtos/create-patient-profile.dto';
@@ -125,6 +129,3 @@ export class PatientsService {
     });
   }
 }
-
-
-
