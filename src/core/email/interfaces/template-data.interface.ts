@@ -10,7 +10,6 @@ export interface BaseTemplateData {
   customFooter?: string;
 }
 
-
 /**
  * Password reset template data
  */
@@ -42,6 +41,25 @@ export interface SystemNotificationTemplateData extends BaseTemplateData {
 }
 
 /**
+ * Admin approval required template data
+ */
+export interface AdminApprovalTemplateData extends BaseTemplateData {
+  adminName: string;
+  professionalName: string;
+  professionalEmail: string;
+  professionalType: string;
+  
+  reviewUrl: string;
+  licenseNumber: string;
+
+  specialty: string;
+  yearsOfExperience: number;
+  bio: string;
+  submittedAt?: string; // ISO string format or formatted date
+  currentYear: number;
+}
+
+/**
  * Patient welcome email template data
  */
 export interface PatientWelcomeTemplateData extends BaseTemplateData {
@@ -66,8 +84,7 @@ export interface ProfessionalWelcomeTemplateData extends BaseTemplateData {
   activationDeadline?: string; // ISO string format or formatted date
 }
 
-
-export type TemplateData = 
+export type TemplateData =
   | PasswordResetTemplateData
   | EmailVerificationTemplateData
   | SystemNotificationTemplateData
@@ -83,7 +100,7 @@ export interface TemplateDataMap {
   'system-notification': SystemNotificationTemplateData;
   'patient-welcome': PatientWelcomeTemplateData;
   'professional-welcome': ProfessionalWelcomeTemplateData;
-
+  'admin-approval': AdminApprovalTemplateData;
 }
 
 /**
@@ -101,7 +118,6 @@ export interface TemplateConfig {
   defaultData?: Record<string, any>;
   previewData?: Record<string, any>;
 }
-
 
 /**
  * Template validation result

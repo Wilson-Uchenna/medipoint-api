@@ -295,6 +295,56 @@ export class EmailService {
     }
   }
 
+  async sendAdminApprovalRequiredEmail(
+  email: string,
+  adminName: string,
+  professionalName: string,
+  professionalType: string,
+  professionalEmail: string,
+  licenseNumber: string,
+  reviewUrl: string,
+  options: {
+    specialty?: string;
+    yearsOfExperience?: number;
+    bio?: string;
+  } = {},
+): Promise<EmailResult> {
+  try {
+    // Use new type-safe template rendering
+    const rendered = await this.templateService.renderTypedTemplate(
+      'admin-approval',
+      {
+        adminName,
+        professionalName,
+        professionalType,
+        professionalEmail,
+        licenseNumber,
+        reviewUrl,
+        specialty: options.specialty ?? '',
+        yearsOfExperience: options.yearsOfExperience ?? 0,
+        bio: options.bio ?? '',
+        submittedAt: new Date().toISOString(),
+        currentYear: new Date().getFullYear(),
+      },
+    );
+
+    return await this.sendEmail({
+      to: email,
+      subject: rendered.subject,
+      html: rendered.html,
+      text: rendered.text,
+      tags: ['admin', 'approval-required'],
+      priority: 'high' as EmailPriority,
+    });
+  } catch (error) {
+    this.logger.warn(
+      'Admin approval required email template failed, skipping',
+      error,
+    );
+    throw error;
+  }
+}
+
   /**
    * Send password reset email (using new template system)
    */

@@ -12,11 +12,12 @@ import { ResendProvider } from 'src/core/email/providers/resend.provider';
 import { DebugProvider } from 'src/core/email/providers/debug-provider';
 import { TemplateService } from 'src/core/email/templates/template.service';
 import { TemplateEngineService } from 'src/core/email/templates/template-engine/template-engine.service';
+import { NotificationsService } from '../notifications/notifications.service';
 
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, EmailService, ResendProvider, DebugProvider, TemplateService, TemplateEngineService],
+  providers: [AuthService, JwtStrategy, EmailService, ResendProvider, DebugProvider, TemplateService, TemplateEngineService, NotificationsService],
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt'}),
     JwtModule.registerAsync({

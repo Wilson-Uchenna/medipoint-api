@@ -15,7 +15,8 @@ import { RegisterDto } from './dtos/register.dto';
 import { LoginDto } from './dtos/login.dto';
 import { TokenPayload } from './interfaces/token.interface';
 import { EmailService } from 'src/core/email/email.service';
-import { ProfessionalType } from 'src/generated/prisma/enums';
+import { NotificationType, ProfessionalType } from 'src/generated/prisma/enums';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
 export class AuthService {
@@ -24,6 +25,7 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private emailService: EmailService, // ← INJECTED
+    private notificationsService: NotificationsService, // ← INJECTED
     // private readonly logger = new Logger(),
   ) {}
 
@@ -128,6 +130,14 @@ export class AuthService {
         verificationUrl, // → maps to {{verificationUrl}}
         48, // → maps to {{expiryHours}}
       );
+
+      await this.notificationsService.createNotification(
+        user.id,
+        NotificationType.EMAIL_VERIFICATION,
+        'Verify your email',
+        'Please check your inbox to verify your email address.',
+        { verificationUrl },
+      );
     } catch (error) {
       // this.logger.error('Failed to send verification email', error);
       // Don't fail registration if email fails — user can resend
@@ -135,8 +145,43 @@ export class AuthService {
 
     // 7. If provider, notify admins for approval
     if (dto.role === UserRole.DOCTOR || dto.role === UserRole.PHARMACIST || dto.role === UserRole.DIETITIAN || dto.role === UserRole.OPTOMETRIST) {
-      // TODO: Send admin notification email
-      // await this.emailService.sendProfessionalApprovalPendingEmail(...);
+      try {
+    const admins = await this.prisma.user.findMany({
+      where: { role: UserRole.ADMIN },
+      select: { id: true, email: true, firstName: true, lastName: true },
+    });
+
+    const reviewUrl = `${this.configService.get('ADMIN_URL')}/professionals/${user.id}/review`;
+
+    await Promise.allSettled(
+      admins.map(async (admin) => {
+        await this.emailService.sendAdminApprovalRequiredEmail(
+          admin.email,
+          `${admin.firstName} ${admin.lastName}`,
+          `${user.firstName} ${user.lastName}`,
+          dto.professionalData!.professionalType,
+          user.email,
+          dto.professionalData!.licenseNumber,
+          reviewUrl,
+          {
+            specialty: dto.professionalData!.specialty,
+            yearsOfExperience: dto.professionalData!.yearsOfExperience,
+            bio: dto.professionalData!.bio,
+          },
+        );
+
+        await this.notificationsService.createNotification(
+          admin.id,
+          NotificationType.PROFESSIONAL_APPROVAL, // still recommend splitting this — see below
+          'New professional pending approval',
+          `${user.firstName} ${user.lastName} registered as a ${dto.role} and needs approval.`,
+          { pendingUserId: user.id, reviewUrl },
+        );
+      }),
+    );
+  } catch (error) {
+    // don't fail registration if admin email/notification fails
+  }
     }
 
     // 8. Generate tokens (optional — some apps require verification first)

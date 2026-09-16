@@ -1,0 +1,19 @@
+{
+    "name": "admin-approval",
+    "description": "Email sent to admins when a new professional account requires approval",
+    "category": "notifications",
+    "tags": ["admin", "approval", "professional", "account"],
+    "version": "1.0.0",
+    "subject": "New Professional Account Approval Request",
+    "requiredVariables": [
+        "adminName",
+        "professionalName",
+        "professionalEmail",
+        "professionalType",
+        "reviewUrl",
+        "currentYear"
+    ],
+    "optionalVariables": [
+        "submittedAt"
+    ]
+}
