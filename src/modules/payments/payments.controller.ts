@@ -7,6 +7,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { ActiveUser, CurrentUser } from '../auth/decorators/current-user.decorator';
 import { UserRole, PaymentMethod } from '../../generated/prisma/client';
 import { InitializePaymentDto } from './dtos/initialize-payment.dto';
+import type { ActiveUserData } from '../auth/interfaces/active-user-data.interface';
 
 @ApiTags('Payments')
 @ApiBearerAuth()
@@ -51,7 +52,7 @@ export class PaymentsController {
   @Roles(UserRole.PATIENT)
   @ApiOperation({ summary: 'Get payment history', description: "Get payment records" })
   @ApiResponse({status: 200, description: "Payment record has been retrieved successfully"})
-  async getHistory(@ActiveUser() userId: string) {
-    return this.paymentsService.getPaymentHistory(userId);
+  async getHistory(@ActiveUser() currentUser: ActiveUserData) {
+    return this.paymentsService.getPaymentHistory(currentUser.sub);
   }
 }
