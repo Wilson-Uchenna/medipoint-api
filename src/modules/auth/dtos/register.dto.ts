@@ -13,6 +13,14 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { UserRole } from '../../../generated/prisma/client';
 import { ProfessionalType } from 'src/generated/prisma/enums';
 
+export enum RegistrableRole {
+  PATIENT = 'PATIENT',
+  DOCTOR = 'DOCTOR',
+  PHARMACIST = 'PHARMACIST',
+  DIETITIAN = 'DIETITIAN',
+  OPTOMETRIST = 'OPTOMETRIST',
+}
+
 class PatientDataDto {
   @ApiPropertyOptional({ description: 'Date of birth (ISO 8601)', example: '1990-05-15' })
   @IsOptional()
@@ -117,11 +125,11 @@ export class RegisterDto {
 
   @ApiProperty({
     description: 'Account role. ADMIN cannot be self-registered.',
-    enum: UserRole,
-    example: UserRole.PATIENT,
+    enum: RegistrableRole,
+    example: RegistrableRole.PATIENT,
   })
-  @IsEnum(UserRole)
-  role: UserRole;
+  @IsEnum(RegistrableRole)
+  role: RegistrableRole;
 
   @ApiPropertyOptional({
     description: 'Required when role is PATIENT',

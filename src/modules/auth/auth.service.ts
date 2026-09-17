@@ -5,6 +5,7 @@ import {
   NotFoundException,
   BadRequestException,
   Logger,
+  ForbiddenException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -62,6 +63,10 @@ export class AuthService {
             status: UserStatus.PENDING_VERIFICATION,
           },
         });
+
+        if ((dto.role as string) === UserRole.ADMIN) {
+  throw new ForbiddenException('Cannot self-register as admin');
+}
 
         // Create role-specific profile
         if (dto.role === UserRole.PATIENT && dto.patientData) {
@@ -243,10 +248,6 @@ export class AuthService {
 
         dto.professionalData.professionalType = mappedType;
       }
-    }
-
-    if (dto.role === UserRole.ADMIN) {
-      throw new BadRequestException('Admin accounts cannot be self-registered');
     }
   }
 
