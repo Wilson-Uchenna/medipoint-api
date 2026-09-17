@@ -6,6 +6,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { ActiveUser, CurrentUser } from '../auth/decorators/current-user.decorator';
 import { UserRole, UserStatus } from '../../generated/prisma/client';
+import type { ActiveUserData } from '../auth/interfaces/active-user-data.interface';
 
 @ApiTags('Admin')
 @ApiBearerAuth()
@@ -35,11 +36,11 @@ export class AdminController {
   @Put('users/:id/role')
 @ApiOperation({ summary: 'Update user role' })
 async updateUserRole(
-  @ActiveUser() adminId: string,
+  @ActiveUser() currentUser: ActiveUserData,
   @Param('id') userId: string,
   @Body('role') role: UserRole,
 ) {
-  return this.adminService.updateUserRole(adminId, userId, role);
+  return this.adminService.updateUserRole(currentUser.sub, userId, role);
 }
 
   @Get('professionals/pending')
@@ -51,20 +52,20 @@ async updateUserRole(
   @Put('professionals/:id/approve')
   @ApiOperation({ summary: 'Approve a healthcare professional' })
   async approveProfessional(
-    @ActiveUser() adminId: string,
+    @ActiveUser() currentUser: ActiveUserData,
     @Param('id') professionalId: string,
   ) {
-    return this.adminService.approveProfessional(adminId, professionalId);
+    return this.adminService.approveProfessional(currentUser.sub, professionalId);
   }
 
   @Put('professionals/:id/reject')
   @ApiOperation({ summary: 'Reject a healthcare professional' })
   async rejectProfessional(
-    @ActiveUser() adminId: string,
+    @ActiveUser() currentUser: ActiveUserData,
     @Param('id') professionalId: string,
     @Body('reason') reason?: string,
   ) {
-    return this.adminService.rejectProfessional(adminId, professionalId, reason);
+    return this.adminService.rejectProfessional(currentUser.sub, professionalId, reason);
   }
 
   @Get('consultations')
