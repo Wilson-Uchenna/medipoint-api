@@ -156,7 +156,7 @@ export class AuthService {
       select: { id: true, email: true, firstName: true, lastName: true },
     });
 
-    const reviewUrl = `${this.configService.get('ADMIN_URL')}/professionals/${user.id}/review`;
+    const reviewUrl = `${this.configService.get('FRONTEND_URL')}/dashboard/admin/professionals/`;
 
     await Promise.allSettled(
       admins.map(async (admin) => {
