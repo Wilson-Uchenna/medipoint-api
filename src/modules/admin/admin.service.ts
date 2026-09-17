@@ -265,4 +265,24 @@ export class AdminService {
 
     return { payments, total, page, limit };
   }
+
+  async deleteUser(adminId: string, userId: string) {
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new NotFoundException('User not found');
+
+    await this.prisma.$transaction([
+      this.prisma.user.delete({ where: { id: userId } }),
+      this.prisma.adminAction.create({
+        data: {
+          adminId,
+          actionType: 'DELETE_USER',
+          targetType: 'USER',
+          targetId: userId,
+        },
+      }),
+    ]);
+
+    return { message: 'User deleted successfully' };
+  }
 }
+

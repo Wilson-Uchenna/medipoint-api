@@ -1,10 +1,22 @@
-import { Controller, Get, Put, Param, Body, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Put,
+  Param,
+  Body,
+  Query,
+  UseGuards,
+  Delete,
+} from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { ActiveUser, CurrentUser } from '../auth/decorators/current-user.decorator';
+import {
+  ActiveUser,
+  CurrentUser,
+} from '../auth/decorators/current-user.decorator';
 import { UserRole, UserStatus } from '../../generated/prisma/client';
 import type { ActiveUserData } from '../auth/interfaces/active-user-data.interface';
 
@@ -34,14 +46,14 @@ export class AdminController {
   }
 
   @Put('users/:id/role')
-@ApiOperation({ summary: 'Update user role' })
-async updateUserRole(
-  @ActiveUser() currentUser: ActiveUserData,
-  @Param('id') userId: string,
-  @Body('role') role: UserRole,
-) {
-  return this.adminService.updateUserRole(currentUser.sub, userId, role);
-}
+  @ApiOperation({ summary: 'Update user role' })
+  async updateUserRole(
+    @ActiveUser() currentUser: ActiveUserData,
+    @Param('id') userId: string,
+    @Body('role') role: UserRole,
+  ) {
+    return this.adminService.updateUserRole(currentUser.sub, userId, role);
+  }
 
   @Get('professionals/pending')
   @ApiOperation({ summary: 'Get pending professional approvals' })
@@ -55,7 +67,10 @@ async updateUserRole(
     @ActiveUser() currentUser: ActiveUserData,
     @Param('id') professionalId: string,
   ) {
-    return this.adminService.approveProfessional(currentUser.sub, professionalId);
+    return this.adminService.approveProfessional(
+      currentUser.sub,
+      professionalId,
+    );
   }
 
   @Put('professionals/:id/reject')
@@ -65,7 +80,11 @@ async updateUserRole(
     @Param('id') professionalId: string,
     @Body('reason') reason?: string,
   ) {
-    return this.adminService.rejectProfessional(currentUser.sub, professionalId, reason);
+    return this.adminService.rejectProfessional(
+      currentUser.sub,
+      professionalId,
+      reason,
+    );
   }
 
   @Get('consultations')
@@ -86,5 +105,14 @@ async updateUserRole(
     @Query('limit') limit?: number,
   ) {
     return this.adminService.getPayments({ status, page, limit });
+  }
+
+  @Delete('users/:id')
+  @ApiOperation({ summary: 'Delete a user' })
+  async deleteUser(
+    @ActiveUser() currentUser: ActiveUserData,
+    @Param('id') userId: string,
+  ) {
+    return this.adminService.deleteUser(currentUser.sub, userId);
   }
 }
