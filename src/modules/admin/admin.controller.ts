@@ -32,16 +32,15 @@ export class AdminController {
     return this.adminService.getUsers({ role, status, page, limit });
   }
 
-  @Put('users/:id/status')
-  @ApiOperation({ summary: 'Update user status' })
-  async updateUserStatus(
-    @ActiveUser() adminId: string,
-    @Param('id') userId: string,
-    @Body('status') status: UserStatus,
-    @Body('reason') reason?: string,
-  ) {
-    return this.adminService.updateUserStatus(adminId, userId, status, reason);
-  }
+  @Put('users/:id/role')
+@ApiOperation({ summary: 'Update user role' })
+async updateUserRole(
+  @ActiveUser() adminId: string,
+  @Param('id') userId: string,
+  @Body('role') role: UserRole,
+) {
+  return this.adminService.updateUserRole(adminId, userId, role);
+}
 
   @Get('professionals/pending')
   @ApiOperation({ summary: 'Get pending professional approvals' })

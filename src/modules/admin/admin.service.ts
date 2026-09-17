@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { UserStatus, VerificationStatus } from '../../generated/prisma/client';
+import { UserRole, UserStatus, VerificationStatus } from '../../generated/prisma/client';
 
 @Injectable()
 export class AdminService {
@@ -28,7 +28,11 @@ export class AdminService {
       include: {
         consultation: {
           include: {
-            patient: { include: { user: { select: { firstName: true, lastName: true } } } },
+            patient: {
+              include: {
+                user: { select: { firstName: true, lastName: true } },
+              },
+            },
           },
         },
       },
@@ -44,7 +48,12 @@ export class AdminService {
     };
   }
 
-  async getUsers(query?: { role?: string; status?: string; page?: number; limit?: number }) {
+  async getUsers(query?: {
+    role?: string;
+    status?: string;
+    page?: number;
+    limit?: number;
+  }) {
     const where: any = {};
     if (query?.role) where.role = query.role.toUpperCase();
     if (query?.status) where.status = query.status.toUpperCase();
@@ -77,27 +86,31 @@ export class AdminService {
     return { users, total, page, limit };
   }
 
-  async updateUserStatus(adminId: string, userId: string, status: UserStatus, reason?: string) {
+  async updateUserRole(
+    adminId: string,
+    userId: string,
+    role: UserRole,
+  ) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new NotFoundException('User not found');
 
     await this.prisma.$transaction([
       this.prisma.user.update({
         where: { id: userId },
-        data: { status },
+        data: { role },
       }),
       this.prisma.adminAction.create({
         data: {
           adminId,
-          actionType: `UPDATE_USER_STATUS_${status}`,
+          actionType: `UPDATE_USER_ROLE_${role}`,
           targetType: 'USER',
           targetId: userId,
-          reason,
+          
         },
       }),
     ]);
 
-    return { message: `User status updated to ${status}` };
+    return { message: `User role updated to ${role}` };
   }
 
   async getPendingProfessionals() {
@@ -129,9 +142,20 @@ export class AdminService {
       this.prisma.healthcareProfessional.update({
         where: { id: professionalId },
         data: {
-          verificationStatus: VerificationStatus.APPROVED,
-          approvedBy: adminId,
+          verificationStatus: 'APPROVED',
+          approvedBy: adminId, // or approver: { connect: { id: adminId } }
           approvedAt: new Date(),
+        },
+        include: {
+          approver: {
+            select: {
+              id: true,
+              email: true,
+              role: true,
+              firstName: true,
+              lastName: true,
+            },
+          },
         },
       }),
       this.prisma.adminAction.create({
@@ -147,7 +171,11 @@ export class AdminService {
     return { message: 'Professional approved successfully' };
   }
 
-  async rejectProfessional(adminId: string, professionalId: string, reason?: string) {
+  async rejectProfessional(
+    adminId: string,
+    professionalId: string,
+    reason?: string,
+  ) {
     await this.prisma.$transaction([
       this.prisma.healthcareProfessional.update({
         where: { id: professionalId },
@@ -167,7 +195,11 @@ export class AdminService {
     return { message: 'Professional rejected' };
   }
 
-  async getConsultations(query?: { status?: string; page?: number; limit?: number }) {
+  async getConsultations(query?: {
+    status?: string;
+    page?: number;
+    limit?: number;
+  }) {
     const where: any = {};
     if (query?.status) where.status = query.status.toUpperCase();
 
@@ -182,8 +214,12 @@ export class AdminService {
         take: limit,
         orderBy: { createdAt: 'desc' },
         include: {
-          patient: { include: { user: { select: { firstName: true, lastName: true } } } },
-          professional: { include: { user: { select: { firstName: true, lastName: true } } } },
+          patient: {
+            include: { user: { select: { firstName: true, lastName: true } } },
+          },
+          professional: {
+            include: { user: { select: { firstName: true, lastName: true } } },
+          },
           notes: true,
           payment: true,
         },
@@ -194,7 +230,11 @@ export class AdminService {
     return { consultations, total, page, limit };
   }
 
-  async getPayments(query?: { status?: string; page?: number; limit?: number }) {
+  async getPayments(query?: {
+    status?: string;
+    page?: number;
+    limit?: number;
+  }) {
     const where: any = {};
     if (query?.status) where.status = query.status.toUpperCase();
 
@@ -211,7 +251,11 @@ export class AdminService {
         include: {
           consultation: {
             include: {
-              patient: { include: { user: { select: { firstName: true, lastName: true } } } },
+              patient: {
+                include: {
+                  user: { select: { firstName: true, lastName: true } },
+                },
+              },
             },
           },
         },
