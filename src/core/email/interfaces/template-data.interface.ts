@@ -60,6 +60,25 @@ export interface AdminApprovalTemplateData extends BaseTemplateData {
 }
 
 /**
+ * Professional approval email template data
+ */
+export interface ProfessionalApprovalTemplateData extends BaseTemplateData {
+  professionalName: string;
+  approvalDate: string; // ISO string format or formatted date
+  loginUrl: string;
+  professionalEmail: string;
+}
+
+
+/**
+ * Professional rejection email template data
+ */
+export interface ProfessionalRejectionTemplateData extends BaseTemplateData {
+  professionalName: string;
+  reason: string;
+}
+
+/**
  * Patient welcome email template data
  */
 export interface PatientWelcomeTemplateData extends BaseTemplateData {
@@ -101,6 +120,8 @@ export interface TemplateDataMap {
   'patient-welcome': PatientWelcomeTemplateData;
   'professional-welcome': ProfessionalWelcomeTemplateData;
   'admin-approval': AdminApprovalTemplateData;
+  'professional-rejection': ProfessionalRejectionTemplateData;
+  'approval-confirmed': ProfessionalApprovalTemplateData; // Assuming the same data structure as professional welcome
 }
 
 /**

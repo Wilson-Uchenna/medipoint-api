@@ -345,6 +345,76 @@ export class EmailService {
   }
 }
 
+async sendProfessionalApprovalEmail(
+  
+  professionalEmail: string,
+  professionalName: string,
+): Promise<EmailResult> {
+  try {
+    // Use new type-safe template rendering
+    const rendered = await this.templateService.renderTypedTemplate(
+      'approval-confirmed',
+      {
+        professionalEmail,
+        professionalName,
+        approvalDate: new Date().toISOString(),
+        loginUrl: 'https://yourapp.com/login', // Replace with actual login URL
+        currentYear: new Date().getFullYear(),
+      },
+    );
+
+    return await this.sendEmail({
+      to: professionalEmail,
+      subject: rendered.subject,
+      html: rendered.html,
+      text: rendered.text,
+      tags: ['admin', 'approval-required'],
+      priority: 'high' as EmailPriority,
+    });
+} catch (error) {
+    this.logger.warn(
+      'Professional approval email template failed, skipping',
+      error,
+    );
+    throw error;
+  }
+}
+  
+
+async sendProfessionalRejectionEmail(
+  professionalEmail: string,
+  professionalName: string,
+  reason: string,
+): Promise<EmailResult> {
+  try {
+    // Use new type-safe template rendering
+    const rendered = await this.templateService.renderTypedTemplate(
+      'professional-rejection',
+      {
+        professionalName,
+        reason,
+        currentYear: new Date().getFullYear(),
+      },
+    );
+
+    return await this.sendEmail({
+      to: professionalEmail,
+      subject: rendered.subject,
+      html: rendered.html,
+      text: rendered.text,
+      tags: ['admin', 'professional-rejection'],
+      priority: 'high' as EmailPriority,
+    });
+  } catch (error) {
+    this.logger.warn(
+      'Professional rejection email template failed, skipping',
+      error,
+    );
+    throw error;
+  }
+}
+
+
   /**
    * Send password reset email (using new template system)
    */
