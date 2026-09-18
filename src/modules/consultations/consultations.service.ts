@@ -1,8 +1,14 @@
 import { Injectable, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { ConsultationStatus, PaymentStatus, UserRole } from '../../generated/prisma/client';
+import { ConsultationDuration, ConsultationStatus, PaymentStatus, UserRole } from '../../generated/prisma/client';
 import { CreateBookingDto } from './dtos/create-booking.dto';
 import { RescheduleDto } from './dtos/reschedule.dto';
+
+const CONSULTATION_PRICING: Record<ConsultationDuration, number> = {
+  MIN_15: 2000,
+  MIN_30: 3000,
+  HOUR_1: 5000,
+};
 
 @Injectable()
 export class ConsultationsService {
@@ -18,14 +24,17 @@ export class ConsultationsService {
       throw new BadRequestException('Healthcare professional not available');
     }
 
+     const amount = CONSULTATION_PRICING[dto.duration];
+
     const consultation = await this.prisma.consultation.create({
   data: {
     patientId,
     professionalId: dto.professionalId,
     consultationType: dto.consultationType,
     preferredDate: new Date(dto.preferredDate),
+    duration: dto.duration,
     preferredTime: dto.preferredTime,
-    amount: dto.amount,
+    amount,
     currency: dto.currency || 'NGN',
     status: ConsultationStatus.PENDING_PAYMENT,
     notes: {

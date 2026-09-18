@@ -1,0 +1,55 @@
+{{#> layouts/base 
+    title="Approval Confirmed"
+    headerIcon="✅" 
+    headerTitle="Approval Confirmed"
+    headerColor="#16a34a"
+    buttonColor="#16a34a"
+}}
+
+<div class="card">
+    <h2>Hello Dr. {{providerName}},</h2>
+    <p>Great news — your provider account on MedipointHQ has been <strong>reviewed and approved</strong>.</p>
+    <p>You now have full access to the provider portal and can begin managing your practice on MedipointHQ.</p>
+</div>
+
+<div class="highlight">
+    <p><strong>✅ Account Status:</strong> Approved</p>
+    {{#if approvalDate}}
+    <p><strong>📅 Approved on:</strong> {{formatDate approvalDate 'MMMM Do, YYYY'}}</p>
+    {{/if}}
+    {{#if specialty}}
+    <p><strong>🩺 Specialty:</strong> {{specialty}}</p>
+    {{/if}}
+    {{#if licenseNumber}}
+    <p><strong>🔖 License #:</strong> {{licenseNumber}}</p>
+    {{/if}}
+</div>
+
+<div class="card">
+    <h3>Get Started</h3>
+    <ol>
+        <li>Log in to your provider dashboard</li>
+        <li>Complete your profile — add your credentials, availability, and consultation preferences</li>
+        <li>Set up your schedule — define your working hours and appointment slots</li>
+        <li>Connect payment details — for receiving consultation payments</li>
+    </ol>
+</div>
+
+{{> button url=loginUrl text="Log In to Your Dashboard" arrow=true}}
+
+<div class="card">
+    <h3>What you can do as a provider</h3>
+    <ul>
+        <li><strong>Patient Management</strong> — view and manage your patient list and records</li>
+        <li><strong>Appointments</strong> — accept, reschedule, or manage your visit calendar</li>
+        <li><strong>Secure Messaging</strong> — communicate directly with your patients</li>
+        <li><strong>Prescriptions</strong> — issue and manage prescriptions digitally</li>
+        <li><strong>Earnings & Payouts</strong> — track consultations and payments</li>
+    </ul>
+</div>
+
+<div class="warning">
+    <p><strong>⚠️ Need help getting set up?</strong> Reach out to our provider support team — we're happy to walk you through onboarding.</p>
+</div>
+
+{{/layouts/base}}

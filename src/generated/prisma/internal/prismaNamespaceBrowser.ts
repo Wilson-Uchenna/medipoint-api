@@ -158,6 +158,7 @@ export const ConsultationScalarFieldEnum = {
   patientId: 'patientId',
   professionalId: 'professionalId',
   consultationType: 'consultationType',
+  duration: 'duration',
   preferredDate: 'preferredDate',
   preferredTime: 'preferredTime',
   status: 'status',

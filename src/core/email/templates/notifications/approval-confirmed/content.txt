@@ -1,0 +1,48 @@
+
+
+
+    Hello Dr. {{providerName}},
+    Great news — your provider account on MedipointHQ has been reviewed and approved.
+    You now have full access to the provider portal and can begin managing your practice on MedipointHQ.
+
+
+ 
+    ✅ Account Status: Approved
+    {{#if approvalDate}}
+  📅 Approved on: {{formatDate approvalDate 'MMMM Do, YYYY'}}
+    {{/if}}
+    {{#if specialty}}
+    🩺 Specialty: {{specialty}}
+    {{/if}}
+    {{#if licenseNumber}}
+    🔖 License #: {{licenseNumber}}
+    {{/if}}
+
+
+ 
+    Get Started
+    
+        Log in to your provider dashboard
+        Complete your profile — add your credentials, availability, and consultation preferences
+        Set up your schedule — define your working hours and appointment slots
+        Connect payment details — for receiving consultation payments
+    
+
+
+{{> button url=loginUrl text="Log In to Your Dashboard" arrow=true}}
+
+
+    What you can do as a provider
+   
+        Patient Management — view and manage your patient list and records
+        Appointments — accept, reschedule, or manage your visit calendar
+        Secure Messaging — communicate directly with your patients
+        Prescriptions — issue and manage prescriptions digitally
+        Earnings & Payouts — track consultations and payments
+    
+
+
+
+    ⚠️ Need help getting set up? Reach out to our provider support team — we're happy to walk you through onboarding.
+
+{{/layouts/base}}

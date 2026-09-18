@@ -113,3 +113,12 @@ export const VideoSessionStatus = {
 } as const
 
 export type VideoSessionStatus = (typeof VideoSessionStatus)[keyof typeof VideoSessionStatus]
+
+
+export const ConsultationDuration = {
+  MIN_15: 'MIN_15',
+  MIN_30: 'MIN_30',
+  HOUR_1: 'HOUR_1'
+} as const
+
+export type ConsultationDuration = (typeof ConsultationDuration)[keyof typeof ConsultationDuration]

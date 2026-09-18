@@ -1345,6 +1345,7 @@ export const ConsultationScalarFieldEnum = {
   patientId: 'patientId',
   professionalId: 'professionalId',
   consultationType: 'consultationType',
+  duration: 'duration',
   preferredDate: 'preferredDate',
   preferredTime: 'preferredTime',
   status: 'status',
@@ -1647,6 +1648,20 @@ export type EnumConsultationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'ConsultationType[]'
  */
 export type ListEnumConsultationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConsultationType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ConsultationDuration'
+ */
+export type EnumConsultationDurationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConsultationDuration'>
+    
+
+
+/**
+ * Reference to a field of type 'ConsultationDuration[]'
+ */
+export type ListEnumConsultationDurationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConsultationDuration[]'>
     
 
 

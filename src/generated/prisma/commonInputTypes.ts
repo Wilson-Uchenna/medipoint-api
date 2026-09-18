@@ -294,6 +294,13 @@ export type EnumConsultationTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumConsultationTypeFilter<$PrismaModel> | $Enums.ConsultationType
 }
 
+export type EnumConsultationDurationFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConsultationDuration | Prisma.EnumConsultationDurationFieldRefInput<$PrismaModel>
+  in?: $Enums.ConsultationDuration[] | Prisma.ListEnumConsultationDurationFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConsultationDuration[] | Prisma.ListEnumConsultationDurationFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConsultationDurationFilter<$PrismaModel> | $Enums.ConsultationDuration
+}
+
 export type EnumConsultationStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.ConsultationStatus | Prisma.EnumConsultationStatusFieldRefInput<$PrismaModel>
   in?: $Enums.ConsultationStatus[] | Prisma.ListEnumConsultationStatusFieldRefInput<$PrismaModel>
@@ -334,6 +341,16 @@ export type EnumConsultationTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumConsultationTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumConsultationTypeFilter<$PrismaModel>
+}
+
+export type EnumConsultationDurationWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConsultationDuration | Prisma.EnumConsultationDurationFieldRefInput<$PrismaModel>
+  in?: $Enums.ConsultationDuration[] | Prisma.ListEnumConsultationDurationFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConsultationDuration[] | Prisma.ListEnumConsultationDurationFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConsultationDurationWithAggregatesFilter<$PrismaModel> | $Enums.ConsultationDuration
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumConsultationDurationFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumConsultationDurationFilter<$PrismaModel>
 }
 
 export type EnumConsultationStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -766,6 +783,13 @@ export type NestedEnumConsultationTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumConsultationTypeFilter<$PrismaModel> | $Enums.ConsultationType
 }
 
+export type NestedEnumConsultationDurationFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConsultationDuration | Prisma.EnumConsultationDurationFieldRefInput<$PrismaModel>
+  in?: $Enums.ConsultationDuration[] | Prisma.ListEnumConsultationDurationFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConsultationDuration[] | Prisma.ListEnumConsultationDurationFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConsultationDurationFilter<$PrismaModel> | $Enums.ConsultationDuration
+}
+
 export type NestedEnumConsultationStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.ConsultationStatus | Prisma.EnumConsultationStatusFieldRefInput<$PrismaModel>
   in?: $Enums.ConsultationStatus[] | Prisma.ListEnumConsultationStatusFieldRefInput<$PrismaModel>
@@ -806,6 +830,16 @@ export type NestedEnumConsultationTypeWithAggregatesFilter<$PrismaModel = never>
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumConsultationTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumConsultationTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumConsultationDurationWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConsultationDuration | Prisma.EnumConsultationDurationFieldRefInput<$PrismaModel>
+  in?: $Enums.ConsultationDuration[] | Prisma.ListEnumConsultationDurationFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConsultationDuration[] | Prisma.ListEnumConsultationDurationFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConsultationDurationWithAggregatesFilter<$PrismaModel> | $Enums.ConsultationDuration
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumConsultationDurationFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumConsultationDurationFilter<$PrismaModel>
 }
 
 export type NestedEnumConsultationStatusWithAggregatesFilter<$PrismaModel = never> = {

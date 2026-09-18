@@ -173,26 +173,33 @@ model HealthcareProfessional {
   @@map("healthcare_professionals")
 }
 
+enum ConsultationDuration {
+  MIN_15
+  MIN_30
+  HOUR_1
+}
+
 model Consultation {
-  id                    String             @id @default(uuid())
-  patientId             String             @map("patient_id")
-  professionalId        String             @map("professional_id")
-  consultationType      ConsultationType   @map("consultation_type")
-  preferredDate         DateTime           @map("preferred_date")
-  preferredTime         String             @map("preferred_time")
-  status                ConsultationStatus @default(PENDING_PAYMENT)
-  amount                Decimal            @db.Decimal(10, 2)
-  currency              String             @default("NGN")
-  paymentReference      String?            @map("payment_reference")
-  paymentMethod         PaymentMethod?     @map("payment_method")
-  paymentStatus         PaymentStatus?     @map("payment_status")
-  paidAt                DateTime?          @map("paid_at")
-  acceptedAt            DateTime?          @map("accepted_at")
-  completedAt           DateTime?          @map("completed_at")
-  cancelledAt           DateTime?          @map("cancelled_at")
-  cancellationReason    String?            @map("cancellation_reason")
-  createdAt             DateTime           @default(now()) @map("created_at")
-  updatedAt             DateTime           @updatedAt @map("updated_at")
+  id                String               @id @default(uuid())
+  patientId         String               @map("patient_id")
+  professionalId    String               @map("professional_id")
+  consultationType  ConsultationType     @map("consultation_type")
+  duration          ConsultationDuration @map("duration")
+  preferredDate     DateTime             @map("preferred_date")
+  preferredTime     String               @map("preferred_time")
+  status            ConsultationStatus   @default(PENDING_PAYMENT)
+  amount            Decimal              @db.Decimal(10, 2)
+  currency          String               @default("NGN")
+  paymentReference  String?              @map("payment_reference")
+  paymentMethod     PaymentMethod?       @map("payment_method")
+  paymentStatus     PaymentStatus?       @map("payment_status")
+  paidAt            DateTime?            @map("paid_at")
+  acceptedAt        DateTime?            @map("accepted_at")
+  completedAt       DateTime?            @map("completed_at")
+  cancelledAt       DateTime?            @map("cancelled_at")
+  cancellationReason String?             @map("cancellation_reason")
+  createdAt         DateTime             @default(now()) @map("created_at")
+  updatedAt         DateTime             @updatedAt @map("updated_at")
 
   patient      Patient                @relation(fields: [patientId], references: [id])
   professional HealthcareProfessional @relation(fields: [professionalId], references: [id])

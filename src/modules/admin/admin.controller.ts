@@ -8,7 +8,13 @@ import {
   UseGuards,
   Delete,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -46,7 +52,15 @@ export class AdminController {
   }
 
   @Put('users/:id/role')
-  @ApiOperation({ summary: 'Update user role' })
+  @ApiOperation({
+    summary: 'Promote an existing user to ADMIN',
+    description:
+      'Elevates an existing, already-registered user to the ADMIN role.',
+  })
+  @ApiParam({ name: 'id', description: 'ID of the user to promote' })
+  @ApiResponse({ status: 200, description: 'User promoted to admin.' })
+  @ApiResponse({ status: 404, description: 'User not found.' })
+  @ApiResponse({ status: 409, description: 'User is already an admin.' })
   async updateUserRole(
     @ActiveUser() currentUser: ActiveUserData,
     @Param('id') userId: string,
