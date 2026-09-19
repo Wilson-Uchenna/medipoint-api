@@ -529,11 +529,6 @@ export type HealthcareProfessionalSumOrderByAggregateInput = {
   yearsOfExperience?: Prisma.SortOrder
 }
 
-export type HealthcareProfessionalScalarRelationFilter = {
-  is?: Prisma.HealthcareProfessionalWhereInput
-  isNot?: Prisma.HealthcareProfessionalWhereInput
-}
-
 export type HealthcareProfessionalCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.HealthcareProfessionalCreateWithoutUserInput, Prisma.HealthcareProfessionalUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.HealthcareProfessionalCreateOrConnectWithoutUserInput
@@ -630,10 +625,12 @@ export type HealthcareProfessionalCreateNestedOneWithoutConsultationsInput = {
   connect?: Prisma.HealthcareProfessionalWhereUniqueInput
 }
 
-export type HealthcareProfessionalUpdateOneRequiredWithoutConsultationsNestedInput = {
+export type HealthcareProfessionalUpdateOneWithoutConsultationsNestedInput = {
   create?: Prisma.XOR<Prisma.HealthcareProfessionalCreateWithoutConsultationsInput, Prisma.HealthcareProfessionalUncheckedCreateWithoutConsultationsInput>
   connectOrCreate?: Prisma.HealthcareProfessionalCreateOrConnectWithoutConsultationsInput
   upsert?: Prisma.HealthcareProfessionalUpsertWithoutConsultationsInput
+  disconnect?: Prisma.HealthcareProfessionalWhereInput | boolean
+  delete?: Prisma.HealthcareProfessionalWhereInput | boolean
   connect?: Prisma.HealthcareProfessionalWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.HealthcareProfessionalUpdateToOneWithWhereWithoutConsultationsInput, Prisma.HealthcareProfessionalUpdateWithoutConsultationsInput>, Prisma.HealthcareProfessionalUncheckedUpdateWithoutConsultationsInput>
 }

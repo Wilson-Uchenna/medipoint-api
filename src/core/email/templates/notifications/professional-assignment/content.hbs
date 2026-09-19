@@ -1,0 +1,36 @@
+{{ #> layouts/base 
+    title="New Patient Assignment"
+    headerIcon="📅" 
+    headerTitle="New Patient Assignment"
+    headerColor="#0284c7"
+    buttonColor="#0284c7"
+}}
+
+<div class="card">
+    <h2>Hello {{professionalName}},</h2>
+    <p>You have been assigned a new patient consultation.</p>
+    <p><strong>Patient Name:</strong> {{patientName}}</p>
+    <p><strong>Consultation Date:</strong> {{formatDate consultationDate 'MMMM Do, YYYY'}} at {{consultationTime}}</p>
+    
+    {{> button url=loginUrl text="View Consultation Details" arrow=true}}
+</div>
+
+{{#if supportEmail}}
+<div class="highlight">
+    <p><strong>Need help?</strong> Contact our medical staff services team at <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>.</p>
+</div>
+{{else if supportUrl}}
+<div class="highlight">
+    <p><strong>Need help?</strong> Visit our <a href="{{supportUrl}}">provider support center</a>.</p>
+</div>
+{{/if}}
+
+{{#if unsubscribeUrl}}
+<div class="warning">
+    <p><small>© {{currentYear}} {{#if companyName}}{{companyName}}{{else}}{{organizationName}}{{/if}}. Don't want these emails? <a href="{{unsubscribeUrl}}">Unsubscribe</a>. All rights reserved.</small></p>
+    <p><small><em>Confidentiality Notice: This transmission is intended for healthcare professionals only and may contain privileged or protected health information (PHI).</em></small></p>
+</div>
+{{/if}}
+
+{{/layouts/base}}
+

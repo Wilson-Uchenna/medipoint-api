@@ -48,7 +48,7 @@ export interface AdminApprovalTemplateData extends BaseTemplateData {
   professionalName: string;
   professionalEmail: string;
   professionalType: string;
-  
+
   reviewUrl: string;
   licenseNumber: string;
 
@@ -68,7 +68,6 @@ export interface ProfessionalApprovalTemplateData extends BaseTemplateData {
   loginUrl: string;
   professionalEmail: string;
 }
-
 
 /**
  * Professional rejection email template data
@@ -103,12 +102,40 @@ export interface ProfessionalWelcomeTemplateData extends BaseTemplateData {
   activationDeadline?: string; // ISO string format or formatted date
 }
 
+export interface AdminPatientBookingTemplateData extends BaseTemplateData {
+  patientName: string;
+  loginUrl: string;
+  consultationId: string;
+}
+
+export interface ProfessionalAssignmentTemplateData extends BaseTemplateData {
+  professionalName: string;
+  patientName: string;
+  consultationDate: string;
+  consultationTime: string;
+  loginUrl: string;
+}
+
+export interface patientBookingConfirmationTemplateData extends BaseTemplateData {
+  patientName: string;
+  professionalName: string;
+  consultationDate: string;
+  consultationTime: string;
+  loginUrl: string;
+}
+
 export type TemplateData =
   | PasswordResetTemplateData
   | EmailVerificationTemplateData
   | SystemNotificationTemplateData
   | ProfessionalWelcomeTemplateData
-  | PatientWelcomeTemplateData;
+  | PatientWelcomeTemplateData
+  | AdminApprovalTemplateData
+  | ProfessionalRejectionTemplateData
+  | ProfessionalApprovalTemplateData
+  | AdminPatientBookingTemplateData
+  | ProfessionalAssignmentTemplateData
+  | patientBookingConfirmationTemplateData;
 
 /**
  * Template data type mapping for type-safe template usage
@@ -122,6 +149,9 @@ export interface TemplateDataMap {
   'admin-approval': AdminApprovalTemplateData;
   'professional-rejection': ProfessionalRejectionTemplateData;
   'approval-confirmed': ProfessionalApprovalTemplateData; // Assuming the same data structure as professional welcome
+  'admin-patient-booking': AdminPatientBookingTemplateData;
+  'professional-assignment': ProfessionalAssignmentTemplateData;
+  'patient-booking-confirmation': patientBookingConfirmationTemplateData;
 }
 
 /**

@@ -14,10 +14,9 @@ import {
   ApiOperation,
   ApiBody,
   ApiResponse,
+  ApiParam,
 } from '@nestjs/swagger';
-import {
-  HealthcareProfessionalsService,
-} from './healthcare-professionals.service';
+import { HealthcareProfessionalsService } from './healthcare-professionals.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -182,5 +181,30 @@ export class HealthcareProfessionalsController {
   @ApiOperation({ summary: 'Get available professionals (public)' })
   async getAvailableProfessionals(@Query('type') type?: string) {
     return this.professionalsService.getAvailableProfessionals(type);
+  }
+
+  // healthcare-professionals.controller.ts — add alongside the existing accept endpoint
+  @Post('consultations/:id/reject')
+  @Roles(UserRole.DOCTOR, UserRole.PHARMACIST)
+  @ApiOperation({ summary: 'Reject an assigned consultation' })
+  @ApiParam({ name: 'id', description: 'Consultation ID' })
+  @ApiBody({
+    schema: {
+      example: { reason: 'Outside my specialty availability this week' },
+    },
+  })
+  async rejectConsultation(
+    @ActiveUser() currentUser: ActiveUserData,
+    @Param('id') consultationId: string,
+    @Body('reason') reason?: string,
+  ) {
+    const professional = await this.professionalsService.getProfile(
+      currentUser.sub,
+    );
+    return this.professionalsService.rejectConsultation(
+      professional.id,
+      consultationId,
+      reason,
+    );
   }
 }

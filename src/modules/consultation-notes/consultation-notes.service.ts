@@ -82,7 +82,7 @@ export class ConsultationNotesService {
     if (!consultation) throw new NotFoundException('Consultation not found');
 
     const isPatient = consultation.patient.userId === userId;
-    const isProfessional = consultation.professional.userId === userId;
+    const isProfessional = consultation.professional?.userId === userId;
 
     if (!isPatient && !isProfessional && userRole !== 'ADMIN') {
       throw new ForbiddenException('Not authorized to view these notes');

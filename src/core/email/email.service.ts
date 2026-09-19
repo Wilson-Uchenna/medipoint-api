@@ -165,7 +165,6 @@ export class EmailService {
       };
     }
   }
-  
 
   async sendTemplateEmail(
     templateName: string,
@@ -295,125 +294,235 @@ export class EmailService {
     }
   }
 
+  async sendAdminPatientBookingNotification(
+    adminEmail: string,
+    patientName: string,
+    loginUrl: string,
+    consultationId: string,
+  ): Promise<EmailResult> {
+    try {
+      // Use new type-safe template rendering
+      const rendered = await this.templateService.renderTypedTemplate(
+        'admin-patient-booking',
+        {
+          patientName,
+          loginUrl,
+          consultationId,
+          currentYear: new Date().getFullYear(),
+        },
+      );
+
+      return await this.sendEmail({
+        to: adminEmail,
+        subject: rendered.subject,
+        html: rendered.html,
+        text: rendered.text,
+        tags: ['admin', 'patient-booking'],
+        priority: 'high' as EmailPriority,
+      });
+    } catch (error) {
+      this.logger.warn(
+        'Admin patient booking notification template failed, skipping',
+        error,
+      );
+      throw error;
+    }
+  }
+
+  async sendProfessionalAssignmentNotification(
+    professionalEmail: string,
+    professionalName: string,
+    patientName: string,
+    consultationDate: string,
+    consultationTime: string,
+    loginUrl: string,
+  ): Promise<EmailResult> {
+    try {
+      // Use new type-safe template rendering
+      const rendered = await this.templateService.renderTypedTemplate(
+        'professional-assignment',
+        {
+          professionalName,
+          patientName,
+          consultationDate,
+          consultationTime,
+          loginUrl,
+          currentYear: new Date().getFullYear(),
+        },
+      );
+
+      return await this.sendEmail({
+        to: professionalEmail,
+        subject: rendered.subject,
+        html: rendered.html,
+        text: rendered.text,
+        tags: ['professional', 'assignment-notification'],
+        priority: 'high' as EmailPriority,
+      });
+    } catch (error) {
+      this.logger.warn(
+        'Professional assignment notification template failed, skipping',
+        error,
+      );
+      throw error;
+    }
+  }
+
+  async sendPatientBookingConfirmation(
+    patientEmail: string,
+    professionalName: string,
+    patientName: string,
+
+    consultationDate: string,
+    consultationTime: string,
+  ): Promise<EmailResult> {
+    try {
+      // Use new type-safe template rendering
+      const rendered = await this.templateService.renderTypedTemplate(
+        'patient-booking-confirmation',
+        {
+          patientName,
+          loginUrl: `${this.configService.get('FRONTEND_URL')}/login`,
+          professionalName,
+          consultationDate,
+          consultationTime,
+          currentYear: new Date().getFullYear(),
+        },
+      );
+
+      return await this.sendEmail({
+        to: patientEmail,
+        subject: rendered.subject,
+        html: rendered.html,
+        text: rendered.text,
+        tags: ['patient', 'booking-confirmation'],
+        priority: 'high' as EmailPriority,
+      });
+    } catch (error) {
+      this.logger.warn(
+        'Patient booking confirmation email template failed, skipping',
+        error,
+      );
+      throw error;
+    }
+  }
+
   async sendAdminApprovalRequiredEmail(
-  email: string,
-  adminName: string,
-  professionalName: string,
-  professionalType: string,
-  professionalEmail: string,
-  licenseNumber: string,
-  reviewUrl: string,
-  options: {
-    specialty?: string;
-    yearsOfExperience?: number;
-    bio?: string;
-  } = {},
-): Promise<EmailResult> {
-  try {
-    // Use new type-safe template rendering
-    const rendered = await this.templateService.renderTypedTemplate(
-      'admin-approval',
-      {
-        adminName,
-        professionalName,
-        professionalType,
-        professionalEmail,
-        licenseNumber,
-        reviewUrl,
-        specialty: options.specialty ?? '',
-        yearsOfExperience: options.yearsOfExperience ?? 0,
-        bio: options.bio ?? '',
-        submittedAt: new Date().toISOString(),
-        currentYear: new Date().getFullYear(),
-      },
-    );
+    email: string,
+    adminName: string,
+    professionalName: string,
+    professionalType: string,
+    professionalEmail: string,
+    licenseNumber: string,
+    reviewUrl: string,
+    options: {
+      specialty?: string;
+      yearsOfExperience?: number;
+      bio?: string;
+    } = {},
+  ): Promise<EmailResult> {
+    try {
+      // Use new type-safe template rendering
+      const rendered = await this.templateService.renderTypedTemplate(
+        'admin-approval',
+        {
+          adminName,
+          professionalName,
+          professionalType,
+          professionalEmail,
+          licenseNumber,
+          reviewUrl,
+          specialty: options.specialty ?? '',
+          yearsOfExperience: options.yearsOfExperience ?? 0,
+          bio: options.bio ?? '',
+          submittedAt: new Date().toISOString(),
+          currentYear: new Date().getFullYear(),
+        },
+      );
 
-    return await this.sendEmail({
-      to: email,
-      subject: rendered.subject,
-      html: rendered.html,
-      text: rendered.text,
-      tags: ['admin', 'approval-required'],
-      priority: 'high' as EmailPriority,
-    });
-  } catch (error) {
-    this.logger.warn(
-      'Admin approval required email template failed, skipping',
-      error,
-    );
-    throw error;
+      return await this.sendEmail({
+        to: email,
+        subject: rendered.subject,
+        html: rendered.html,
+        text: rendered.text,
+        tags: ['admin', 'approval-required'],
+        priority: 'high' as EmailPriority,
+      });
+    } catch (error) {
+      this.logger.warn(
+        'Admin approval required email template failed, skipping',
+        error,
+      );
+      throw error;
+    }
   }
-}
 
-async sendProfessionalApprovalEmail(
-  
-  professionalEmail: string,
-  professionalName: string,
-): Promise<EmailResult> {
-  try {
-    // Use new type-safe template rendering
-    const rendered = await this.templateService.renderTypedTemplate(
-      'approval-confirmed',
-      {
-        professionalEmail,
-        professionalName,
-        approvalDate: new Date().toISOString(),
-        loginUrl: 'https://yourapp.com/login', // Replace with actual login URL
-        currentYear: new Date().getFullYear(),
-      },
-    );
+  async sendProfessionalApprovalEmail(
+    professionalEmail: string,
+    professionalName: string,
+  ): Promise<EmailResult> {
+    try {
+      // Use new type-safe template rendering
+      const rendered = await this.templateService.renderTypedTemplate(
+        'approval-confirmed',
+        {
+          professionalEmail,
+          professionalName,
+          approvalDate: new Date().toISOString(),
+          loginUrl: 'https://medipoint-tau.vercel.app/login', // Replace with actual login URL
+          currentYear: new Date().getFullYear(),
+        },
+      );
 
-    return await this.sendEmail({
-      to: professionalEmail,
-      subject: rendered.subject,
-      html: rendered.html,
-      text: rendered.text,
-      tags: ['admin', 'approval-required'],
-      priority: 'high' as EmailPriority,
-    });
-} catch (error) {
-    this.logger.warn(
-      'Professional approval email template failed, skipping',
-      error,
-    );
-    throw error;
+      return await this.sendEmail({
+        to: professionalEmail,
+        subject: rendered.subject,
+        html: rendered.html,
+        text: rendered.text,
+        tags: ['admin', 'approval-required'],
+        priority: 'high' as EmailPriority,
+      });
+    } catch (error) {
+      this.logger.warn(
+        'Professional approval email template failed, skipping',
+        error,
+      );
+      throw error;
+    }
   }
-}
-  
 
-async sendProfessionalRejectionEmail(
-  professionalEmail: string,
-  professionalName: string,
-  reason: string,
-): Promise<EmailResult> {
-  try {
-    // Use new type-safe template rendering
-    const rendered = await this.templateService.renderTypedTemplate(
-      'professional-rejection',
-      {
-        professionalName,
-        reason,
-        currentYear: new Date().getFullYear(),
-      },
-    );
+  async sendProfessionalRejectionEmail(
+    professionalEmail: string,
+    professionalName: string,
+    reason: string,
+  ): Promise<EmailResult> {
+    try {
+      // Use new type-safe template rendering
+      const rendered = await this.templateService.renderTypedTemplate(
+        'professional-rejection',
+        {
+          professionalName,
+          reason,
+          currentYear: new Date().getFullYear(),
+        },
+      );
 
-    return await this.sendEmail({
-      to: professionalEmail,
-      subject: rendered.subject,
-      html: rendered.html,
-      text: rendered.text,
-      tags: ['admin', 'professional-rejection'],
-      priority: 'high' as EmailPriority,
-    });
-  } catch (error) {
-    this.logger.warn(
-      'Professional rejection email template failed, skipping',
-      error,
-    );
-    throw error;
+      return await this.sendEmail({
+        to: professionalEmail,
+        subject: rendered.subject,
+        html: rendered.html,
+        text: rendered.text,
+        tags: ['admin', 'professional-rejection'],
+        priority: 'high' as EmailPriority,
+      });
+    } catch (error) {
+      this.logger.warn(
+        'Professional rejection email template failed, skipping',
+        error,
+      );
+      throw error;
+    }
   }
-}
-
 
   /**
    * Send password reset email (using new template system)

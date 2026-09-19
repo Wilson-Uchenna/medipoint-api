@@ -1,0 +1,23 @@
+Hello {{professionalName}}
+    You have been assigned a new patient consultation.
+    Patient Name: {{patientName}}
+    Consultation Date: {{formatDate consultationDate 'MMMM Do, YYYY'}} at {{consultationTime}}
+    
+    {{> button url=loginUrl text="View Consultation Details" arrow=true}}
+
+
+{{#if supportEmail}}
+
+    Need help? Contact our medical staff services team at <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>.
+
+{{else if supportUrl}}
+    Need help? Visit our <a href="{{supportUrl}}">provider support center</a>.
+
+{{/if}}
+
+{{#if unsubscribeUrl}}
+
+    © {{currentYear}} {{#if companyName}}{{companyName}}{{else}}{{organizationName}}{{/if}}. Don't want these emails? <a href="{{unsubscribeUrl}}">Unsubscribe</a>. All rights reserved.
+    Confidentiality Notice: This transmission is intended for healthcare professionals only and may contain privileged or protected health information (PHI).
+
+{{/if}}

@@ -59,6 +59,7 @@ export type ConsultationType = (typeof ConsultationType)[keyof typeof Consultati
 export const ConsultationStatus = {
   PENDING_PAYMENT: 'PENDING_PAYMENT',
   PAID: 'PAID',
+  PENDING_ACCEPTANCE: 'PENDING_ACCEPTANCE',
   ACCEPTED: 'ACCEPTED',
   IN_PROGRESS: 'IN_PROGRESS',
   COMPLETED: 'COMPLETED',

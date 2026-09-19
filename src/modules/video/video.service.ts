@@ -23,7 +23,7 @@ export class VideoService {
 
     const isParticipant =
       consultation.patient.userId === userId ||
-      consultation.professional.userId === userId;
+      consultation.professional?.userId === userId;
     if (!isParticipant) {
       throw new ForbiddenException('Not a participant in this consultation');
     }

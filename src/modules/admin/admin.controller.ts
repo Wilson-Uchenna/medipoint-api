@@ -7,6 +7,7 @@ import {
   Query,
   UseGuards,
   Delete,
+  Patch,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -14,6 +15,7 @@ import {
   ApiOperation,
   ApiParam,
   ApiResponse,
+  ApiBody,
 } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
@@ -129,4 +131,19 @@ export class AdminController {
   ) {
     return this.adminService.deleteUser(currentUser.sub, userId);
   }
+  
+// admin.controller.ts
+@Patch('consultations/:id/assign')
+@ApiOperation({ summary: 'Assign a healthcare professional to a paid consultation' })
+@ApiBody({ schema: { example: { professionalId: 'professional-uuid' } } })
+@ApiResponse({ status: 200, description: 'Provider assigned; they have been notified.' })
+@ApiResponse({ status: 400, description: 'Consultation is not in a state that can be assigned, or professional specialty does not match.' })
+@ApiResponse({ status: 404, description: 'Consultation or professional not found.' })
+async assignProfessional(
+  @ActiveUser() currentUser: ActiveUserData,
+  @Param('id') consultationId: string,
+  @Body('professionalId') professionalId: string,
+) {
+  return this.adminService.assignProfessional(currentUser.sub, consultationId, professionalId);
+}
 }

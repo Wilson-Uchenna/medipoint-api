@@ -1,0 +1,25 @@
+
+    Hello {{adminName}},
+    A new patient booking has been made in the system.
+    Patient Name:</strong> {{patientName}}
+    Consultation ID:     {{consultationId}}
+    
+    {{> button url=loginUrl text="View Booking Details" arrow=true}}
+
+
+{{#if supportEmail}}
+
+    Need help? Contact our medical staff services team at <a href="mailto:{{supportEmail}}">{{supportEmail}}
+
+{{else if supportUrl}}
+
+    Need help?</strong> Visit our <a href="{{supportUrl}}">provider support center
+
+{{/if}}
+
+{{#if unsubscribeUrl}}
+
+    © {{currentYear}} {{#if companyName}}{{companyName}}{{else}}{{organizationName}}{{/if}}. Don't want these emails? {{unsubscribeUrl}}">Unsubscribe. All rights reserved.
+    Confidentiality Notice: This transmission is intended for healthcare professionals only and may contain privileged or protected health information (PHI).
+
+{{/if}}

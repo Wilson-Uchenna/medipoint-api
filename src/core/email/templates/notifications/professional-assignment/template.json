@@ -1,0 +1,28 @@
+{
+    "name": "professional-assignment",
+    "description": "Notification email sent to healthcare providers when they are assigned to a patient for a consultation",
+    "category": "notifications",
+    "tags": ["professional", "assignment", "patient", "consultation"],
+    "version": "1.0.0",
+    "subject": "New Patient Assignment for Your Consultation",
+    "requiredVariables": [
+        "professionalEmail",
+        "professionalName",
+        "patientName",
+        "consultationDate",
+        "consultationTime",
+        "loginUrl"
+    ],
+    "optionalVariables": [
+        "supportEmail",
+        "supportUrl",
+        "unsubscribeUrl",
+        "customFooter"
+    ],
+    "defaultData": {
+        "headerIcon": "📌",
+        "headerColor": "#1e3a8a",
+        "buttonColor": "#1e3a8a",
+        "supportUrl": "https://medicalorg.com"
+    }
+}

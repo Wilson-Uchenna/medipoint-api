@@ -1,0 +1,28 @@
+{
+"name": "admin-patient-booking",
+  "description": "Notification email sent to admin when a patient books a consultation",
+  "category": "notifications",
+  "tags": ["admin", "patient", "booking", "consultation"],
+  "version": "1.0.0",
+  "subject": "New Patient Booking Notification",
+  "requiredVariables": [
+    "adminName",
+    "patientName",
+    "loginUrl",
+    "consultationId"
+  ],
+  "optionalVariables": [
+    "bookingDate",
+    "bookingTime",
+    "supportEmail",
+    "supportUrl",
+    "unsubscribeUrl",
+    "customFooter"
+  ],
+  "defaultData": {
+    "headerIcon": "📅",
+    "headerColor": "#1e3a8a",
+    "buttonColor": "#1e3a8a",
+    "supportUrl": "https://medicalorg.com"
+  }
+}

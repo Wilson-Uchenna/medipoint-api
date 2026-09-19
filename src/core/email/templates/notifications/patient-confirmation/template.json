@@ -1,0 +1,27 @@
+{
+    "name": "patient-booking-confirmation",
+    "description": "Confirmation email sent to patients when they book a consultation",
+    "category": "notifications",
+    "tags": ["patient", "booking", "confirmation", "consultation"],
+    "version": "1.0.0",
+    "subject": "Your Consultation Booking Confirmation",
+    "requiredVariables": [
+        "patientName",
+        "professionalName",
+        "consultationDate",
+        "consultationTime",
+        "loginUrl"
+    ],
+    "optionalVariables": [
+        "supportEmail",
+        "supportUrl",
+        "unsubscribeUrl",
+        "customFooter"
+    ],
+    "defaultData": {
+        "headerIcon": "📅",
+        "headerColor": "#1e3a8a",
+        "buttonColor": "#1e3a8a",
+        "supportUrl": "https://medicalorg.com"
+    }
+}

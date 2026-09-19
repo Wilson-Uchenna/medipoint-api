@@ -1,0 +1,35 @@
+{{ #> layouts/base 
+    title="New Patient Booking"
+    headerIcon="📅" 
+    headerTitle="New Patient Booking"
+    headerColor="#0284c7"
+    buttonColor="#0284c7"
+}}
+
+<div class="card">
+    <h2>Hello {{adminName}},</h2>
+    <p>A new patient booking has been made in the system.</p>
+    <p><strong>Patient Name:</strong> {{patientName}}</p>
+    <p><strong>Consultation ID:</strong> {{consultationId}}</p>
+    
+    {{> button url=loginUrl text="View Booking Details" arrow=true}}
+</div>
+
+{{#if supportEmail}}
+<div class="highlight">
+    <p><strong>Need help?</strong> Contact our medical staff services team at <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>.</p>
+</div>
+{{else if supportUrl}}
+<div class="highlight">
+    <p><strong>Need help?</strong> Visit our <a href="{{supportUrl}}">provider support center</a>.</p>
+</div>
+{{/if}}
+
+{{#if unsubscribeUrl}}
+<div class="warning">
+    <p><small>© {{currentYear}} {{#if companyName}}{{companyName}}{{else}}{{organizationName}}{{/if}}. Don't want these emails? <a href="{{unsubscribeUrl}}">Unsubscribe</a>. All rights reserved.</small></p>
+    <p><small><em>Confidentiality Notice: This transmission is intended for healthcare professionals only and may contain privileged or protected health information (PHI).</em></small></p>
+</div>
+{{/if}}
+
+{{/layouts/base}}

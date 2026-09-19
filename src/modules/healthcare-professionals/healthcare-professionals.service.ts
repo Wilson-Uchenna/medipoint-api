@@ -1,11 +1,29 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { UserRole, VerificationStatus, ConsultationStatus } from '../../generated/prisma/client';
+import {
+  UserRole,
+  VerificationStatus,
+  ConsultationStatus,
+  NotificationType,
+} from '../../generated/prisma/client';
 import { CreateProfessionalProfileDto } from './dtos/create-professional-profile.dto';
+import { NotificationsService } from '../notifications/notifications.service';
+import { EmailService } from 'src/core/email/email.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class HealthcareProfessionalsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private notificationsService: NotificationsService,
+    private emailService: EmailService,
+    private configService: ConfigService,
+  ) {}
 
   async createProfile(userId: string, dto: CreateProfessionalProfileDto) {
     const existing = await this.prisma.healthcareProfessional.findUnique({
@@ -84,7 +102,9 @@ export class HealthcareProfessionalsService {
       where: {
         professionalId,
         patientId,
-        status: { in: [ConsultationStatus.COMPLETED, ConsultationStatus.ACCEPTED] },
+        status: {
+          in: [ConsultationStatus.COMPLETED, ConsultationStatus.ACCEPTED],
+        },
       },
     });
 
@@ -111,26 +131,105 @@ export class HealthcareProfessionalsService {
     });
   }
 
+  // healthcare-professionals.service.ts
   async acceptConsultation(professionalId: string, consultationId: string) {
-    const consultation = await this.prisma.consultation.findFirst({
-      where: {
-        id: consultationId,
-        professionalId,
-        status: ConsultationStatus.PAID,
+    const consultation = await this.prisma.consultation.findUnique({
+      where: { id: consultationId },
+      include: {
+        patient: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                email: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
       },
     });
-
-    if (!consultation) {
-      throw new NotFoundException('Consultation not found or not eligible for acceptance');
+    if (!consultation) throw new NotFoundException('Consultation not found');
+    if (consultation.professionalId !== professionalId) {
+      throw new ForbiddenException('This consultation is not assigned to you');
+    }
+    if (consultation.status !== 'PENDING_ACCEPTANCE') {
+      throw new BadRequestException('Consultation is not awaiting acceptance');
     }
 
-    return this.prisma.consultation.update({
+    const updated = await this.prisma.consultation.update({
+      where: { id: consultationId },
+      data: { status: 'ACCEPTED', acceptedAt: new Date() },
+    });
+
+    try {
+      await this.notificationsService.createNotification(
+        consultation.patient.user.id,
+        NotificationType.APPOINTMENT_ACCEPTANCE,
+        'Your booking has been confirmed',
+        'A healthcare provider has accepted your consultation request.',
+        { consultationId },
+      );
+
+      this.emailService.sendPatientBookingConfirmation(
+        consultation.patient.user.email,
+        `${consultation.patient.user.firstName} ${consultation.patient.user.lastName}`,
+        consultationId,
+        consultation.preferredDate.toISOString(),
+        consultation.preferredTime,
+      );
+    } catch (error) {
+      // don't fail acceptance if notification fails
+    }
+
+    return updated;
+  }
+
+  async rejectConsultation(
+    professionalId: string,
+    consultationId: string,
+    reason?: string,
+  ) {
+    const consultation = await this.prisma.consultation.findUnique({
+      where: { id: consultationId },
+    });
+    if (!consultation) throw new NotFoundException('Consultation not found');
+    if (consultation.professionalId !== professionalId) {
+      throw new ForbiddenException('This consultation is not assigned to you');
+    }
+    if (consultation.status !== 'PENDING_ACCEPTANCE') {
+      throw new BadRequestException('Consultation is not awaiting acceptance');
+    }
+
+    // Back to PAID and unassigned — so admin can reassign to someone else
+    const updated = await this.prisma.consultation.update({
       where: { id: consultationId },
       data: {
-        status: ConsultationStatus.ACCEPTED,
-        acceptedAt: new Date(),
+        professionalId: null,
+        status: 'PAID',
+        assignedAt: null,
+        assignedBy: null,
       },
     });
+
+    const admins = await this.prisma.user.findMany({
+      where: { role: 'ADMIN' },
+      select: { id: true },
+    });
+    await Promise.allSettled(
+      admins.map((admin) =>
+        this.notificationsService.createNotification(
+          admin.id,
+          NotificationType.APPOINTMENT_BOOKING,
+          'Provider rejected assignment — needs reassignment',
+          `A provider rejected consultation ${consultationId}.${reason ? ` Reason: ${reason}` : ''}`,
+          { consultationId },
+        ),
+      ),
+    );
+
+    return updated;
   }
 
   async completeConsultation(professionalId: string, consultationId: string) {
@@ -138,7 +237,9 @@ export class HealthcareProfessionalsService {
       where: {
         id: consultationId,
         professionalId,
-        status: { in: [ConsultationStatus.ACCEPTED, ConsultationStatus.IN_PROGRESS] },
+        status: {
+          in: [ConsultationStatus.ACCEPTED, ConsultationStatus.IN_PROGRESS],
+        },
       },
     });
 
@@ -182,4 +283,3 @@ export class HealthcareProfessionalsService {
     });
   }
 }
-

@@ -1,7 +1,5 @@
 
-
-
-    Hello Dr. {{providerName}},
+Hello Dr. {{providerName}},
     Great news — your provider account on MedipointHQ has been reviewed and approved.
     You now have full access to the provider portal and can begin managing your practice on MedipointHQ.
 
@@ -45,4 +43,3 @@
 
     ⚠️ Need help getting set up? Reach out to our provider support team — we're happy to walk you through onboarding.
 
-{{/layouts/base}}
