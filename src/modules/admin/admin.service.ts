@@ -12,6 +12,7 @@ import {
 } from '../../generated/prisma/client';
 import { EmailService } from 'src/core/email/email.service';
 import { NotificationsService } from '../notifications/notifications.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AdminService {
@@ -19,6 +20,7 @@ export class AdminService {
     private prisma: PrismaService,
     private emailService: EmailService,
     private notificationsService: NotificationsService,
+    private configService: ConfigService,
   ) {}
 
   async getDashboardStats() {
@@ -177,6 +179,7 @@ export class AdminService {
       await this.emailService.sendProfessionalApprovalEmail(
         professional.user.email,
         `${professional.user.firstName} ${professional.user.lastName}`,
+        this.configService.get<string>('EMAIL_FROM_NAME') || 'MediPointHQ',
       );
     } catch (error) {
       // Don't fail the approval if the notification email fails to send

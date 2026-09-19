@@ -131,7 +131,7 @@ export class AdminController {
   ) {
     return this.adminService.deleteUser(currentUser.sub, userId);
   }
-  
+
 // admin.controller.ts
 @Patch('consultations/:id/assign')
 @ApiOperation({ summary: 'Assign a healthcare professional to a paid consultation' })

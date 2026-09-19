@@ -64,6 +64,7 @@ export interface AdminApprovalTemplateData extends BaseTemplateData {
  */
 export interface ProfessionalApprovalTemplateData extends BaseTemplateData {
   professionalName: string;
+  organizationName: string;
   approvalDate: string; // ISO string format or formatted date
   loginUrl: string;
   professionalEmail: string;

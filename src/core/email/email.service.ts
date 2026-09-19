@@ -460,6 +460,7 @@ export class EmailService {
   async sendProfessionalApprovalEmail(
     professionalEmail: string,
     professionalName: string,
+    organizationName: string,
   ): Promise<EmailResult> {
     try {
       // Use new type-safe template rendering
@@ -468,6 +469,7 @@ export class EmailService {
         {
           professionalEmail,
           professionalName,
+          organizationName,
           approvalDate: new Date().toISOString(),
           loginUrl: 'https://medipoint-tau.vercel.app/login', // Replace with actual login URL
           currentYear: new Date().getFullYear(),
