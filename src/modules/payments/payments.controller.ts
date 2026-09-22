@@ -34,7 +34,7 @@ async initializePayment(
   @Param('consultationId') consultationId: string,
   @Body() dto: InitializePaymentDto,
 ) {
-  return this.paymentsService.initializePayment(currentUser.sub, consultationId, dto.method, dto.callbackUrl!);
+  return this.paymentsService.initializePayment(currentUser.sub, consultationId, dto.method, dto.callbackUrl);
 }
 
   @Get('verify')

@@ -31,7 +31,7 @@ export class PaymentsService {
     patientUserId: string,
     consultationId: string,
     method: PaymentMethod,
-    callbackUrl: string,
+    callbackUrl?: string,
   ) {
     const patient = await this.prisma.patient.findUnique({
       where: { userId: patientUserId },

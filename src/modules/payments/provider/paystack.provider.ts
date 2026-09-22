@@ -14,7 +14,7 @@ export class PaystackProvider {
 
   async initializeTransaction(email: string, amountInKobo: number, reference: string, requestedCallbackUrl?: string) {
   const frontendUrl = this.configService.get<string>('FRONTEND_URL') || '';
-  const defaultCallback = `${frontendUrl}/payments/callback`;
+  const defaultCallback = `${frontendUrl}/dashboard/patient/payment/callback`;
 
   const callbackUrl =
     requestedCallbackUrl && requestedCallbackUrl.startsWith(frontendUrl)
