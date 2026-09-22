@@ -27,13 +27,15 @@ export class PaymentsController {
   @ApiBody({ type: InitializePaymentDto })
   @ApiResponse({ status: HttpStatus.OK, description: 'Payment initialized; redirect the user to authorizationUrl.' })
   @ApiResponse({ status: 400, description: 'Details provided are invalid.' })
-  async initializePayment(
-    @ActiveUser() currentUser: ActiveUserData,
-    @Param('consultationId') consultationId: string,
-    @Body('method') method: PaymentMethod,
-  ) {
-    return this.paymentsService.initializePayment(currentUser.sub, consultationId, method);
-  }
+ @Post('consultations/:consultationId/pay')
+@Roles(UserRole.PATIENT)
+async initializePayment(
+  @ActiveUser() currentUser: ActiveUserData,
+  @Param('consultationId') consultationId: string,
+  @Body() dto: InitializePaymentDto,
+) {
+  return this.paymentsService.initializePayment(currentUser.sub, consultationId, dto.method, dto.callbackUrl!);
+}
 
   @Get('verify')
   @Roles(UserRole.PATIENT)

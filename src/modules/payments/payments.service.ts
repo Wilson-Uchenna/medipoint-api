@@ -31,6 +31,7 @@ export class PaymentsService {
     patientUserId: string,
     consultationId: string,
     method: PaymentMethod,
+    callbackUrl: string,
   ) {
     const patient = await this.prisma.patient.findUnique({
       where: { userId: patientUserId },
@@ -52,10 +53,11 @@ export class PaymentsService {
     const amountInKobo = Math.round(Number(consultation.amount) * 100);
 
     const paystackResponse = await this.paystackProvider.initializeTransaction(
-      patient.user.email,
-      amountInKobo,
-      reference,
-    );
+    patient.user.email,
+    amountInKobo,
+    reference,
+    callbackUrl,
+  );
 
     const payment = await this.prisma.payment.create({
       data: {

@@ -12,14 +12,22 @@ export class PaystackProvider {
     this.secretKey = this.configService.get<string>('PAYSTACK_SECRET_KEY') || '';
   }
 
-  async initializeTransaction(email: string, amountInKobo: number, reference: string) {
-    const response = await axios.post(
-      `${this.baseUrl}/transaction/initialize`,
-      { email, amount: amountInKobo, reference },
-      { headers: { Authorization: `Bearer ${this.secretKey}` } },
-    );
-    return response.data.data; // { authorization_url, access_code, reference }
-  }
+  async initializeTransaction(email: string, amountInKobo: number, reference: string, requestedCallbackUrl?: string) {
+  const frontendUrl = this.configService.get<string>('FRONTEND_URL') || '';
+  const defaultCallback = `${frontendUrl}/payments/callback`;
+
+  const callbackUrl =
+    requestedCallbackUrl && requestedCallbackUrl.startsWith(frontendUrl)
+      ? requestedCallbackUrl
+      : defaultCallback;
+
+  const response = await axios.post(
+    `${this.baseUrl}/transaction/initialize`,
+    { email, amount: amountInKobo, reference, callback_url: callbackUrl },
+    { headers: { Authorization: `Bearer ${this.secretKey}` } },
+  );
+  return response.data.data;
+}
 
   async verifyTransaction(reference: string) {
     const response = await axios.get(
