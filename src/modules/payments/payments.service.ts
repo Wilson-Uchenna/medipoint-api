@@ -119,25 +119,26 @@ export class PaymentsService {
     }
 
     // Amount mismatch check — never trust the reference alone
-    const expectedKobo = Math.round(Number(payment.amount) * 100);
-    if (paystackData.amount !== expectedKobo) {
-      throw new BadRequestException('Payment amount mismatch');
-    }
+   const expectedKobo = Math.round(Number(payment.amount) * 100);
+  if (paystackData.amount < expectedKobo) {
+    throw new BadRequestException('Payment amount mismatch');
+  }
 
-    await this.prisma.$transaction([
-      this.prisma.payment.update({
-        where: { id: payment.id },
-        data: { status: PaymentStatus.SUCCESS, paidAt: new Date() },
-      }),
-      this.prisma.consultation.update({
-        where: { id: payment.consultationId },
-        data: {
-          status: ConsultationStatus.PAID,
-          paymentStatus: PaymentStatus.SUCCESS,
-          paidAt: new Date(),
-        },
-      }),
-    ]);
+  await this.prisma.$transaction([
+    this.prisma.payment.update({
+      where: { id: payment.id },
+      data: {
+        status: PaymentStatus.SUCCESS,
+        paidAt: new Date(),
+        // Store what was actually charged (including fee) for accurate records/reconciliation
+        metadata: { actualAmountCharged: paystackData.amount, feeBearer: 'customer' },
+      },
+    }),
+    this.prisma.consultation.update({
+      where: { id: payment.consultationId },
+      data: { status: ConsultationStatus.PAID, paymentStatus: PaymentStatus.SUCCESS, paidAt: new Date() },
+    }),
+  ]);
 
     const admins = await this.prisma.user.findMany({
       where: { role: UserRole.ADMIN },
