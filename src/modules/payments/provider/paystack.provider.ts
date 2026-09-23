@@ -14,12 +14,21 @@ export class PaystackProvider {
 
   async initializeTransaction(email: string, amountInKobo: number, reference: string, requestedCallbackUrl?: string) {
   const frontendUrl = this.configService.get<string>('FRONTEND_URL') || '';
-  const defaultCallback = `${frontendUrl}/dashboard/patient/payment/callback`;
+  const defaultCallback = `${frontendUrl}/payments/callback`;
 
-  const callbackUrl =
-    requestedCallbackUrl && requestedCallbackUrl.startsWith(frontendUrl)
-      ? requestedCallbackUrl
-      : defaultCallback;
+  let callbackUrl = defaultCallback;
+
+  if (requestedCallbackUrl) {
+    try {
+      const requested = new URL(requestedCallbackUrl);
+      const allowed = new URL(frontendUrl);
+      if (requested.hostname === allowed.hostname) {
+        callbackUrl = requestedCallbackUrl;
+      }
+    } catch {
+      // invalid URL supplied — fall back to default, don't throw
+    }
+  }
 
   const response = await axios.post(
     `${this.baseUrl}/transaction/initialize`,
