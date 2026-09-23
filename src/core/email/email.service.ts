@@ -295,6 +295,7 @@ export class EmailService {
   }
 
   async sendAdminPatientBookingNotification(
+    adminName: string,
     adminEmail: string,
     patientName: string,
     loginUrl: string,
@@ -305,6 +306,7 @@ export class EmailService {
       const rendered = await this.templateService.renderTypedTemplate(
         'admin-patient-booking',
         {
+          adminName,
           patientName,
           loginUrl,
           consultationId,

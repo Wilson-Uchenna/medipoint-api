@@ -104,6 +104,7 @@ export interface ProfessionalWelcomeTemplateData extends BaseTemplateData {
 }
 
 export interface AdminPatientBookingTemplateData extends BaseTemplateData {
+  adminName: string;
   patientName: string;
   loginUrl: string;
   consultationId: string;

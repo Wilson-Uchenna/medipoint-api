@@ -144,11 +144,12 @@ export class PaymentsService {
       where: { role: UserRole.ADMIN },
       select: { id: true, email: true, firstName: true, lastName: true },
     });
-    const loginUrl = `${this.configService.get('ADMIN_URL')}/login`;
+    const loginUrl = `${this.configService.get('FRONTEND_URL')}/login`;
 
     await Promise.allSettled(
       admins.map(async (admin) => {
         await this.emailService.sendAdminPatientBookingNotification(
+          `${admin.firstName} ${admin.lastName}`,
           admin.email,
           `${payment.consultation.patient.user.firstName} ${payment.consultation.patient.user.lastName}`,
           loginUrl,
