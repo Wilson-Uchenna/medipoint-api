@@ -340,8 +340,10 @@ export class AdminService {
       );
     }
 
-    const professional = await this.prisma.healthcareProfessional.findUnique({
-      where: { id: professionalId },
+    const professional = await this.prisma.healthcareProfessional.findFirst({
+      where: {
+        OR: [{ id: professionalId }, { userId: professionalId }],
+      },
       include: {
         user: {
           select: { id: true, email: true, firstName: true, lastName: true },
@@ -366,7 +368,7 @@ export class AdminService {
       this.prisma.consultation.update({
         where: { id: consultationId },
         data: {
-          professionalId,
+          professionalId: professional.id, // was professionalId
           status: 'PENDING_ACCEPTANCE',
           assignedAt: new Date(),
           assignedBy: adminId,
@@ -378,7 +380,7 @@ export class AdminService {
           actionType: 'ASSIGN_PROFESSIONAL',
           targetType: 'Consultation',
           targetId: consultationId,
-          metadata: { professionalId },
+          metadata: { professionalId: professional.id }, // was professionalId
         },
       }),
     ]);
@@ -391,10 +393,8 @@ export class AdminService {
         `You have been assigned a ${consultation.requestedSpecialty} consultation. Please accept or reject.`,
         { consultationId },
       );
-
-    
     } catch (error) {
-      // don't fail assignment if notification fails
+      console.error('Failed to send assignment notification', error);
     }
 
     return { message: 'Professional assigned successfully' };
