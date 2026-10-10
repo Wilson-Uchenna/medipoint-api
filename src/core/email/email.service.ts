@@ -335,7 +335,7 @@ export class EmailService {
     professionalEmail: string,
     professionalName: string,
     patientName: string,
-    consultationDate: string,
+    consultationDate: Date,
     consultationTime: string,
     loginUrl: string,
   ): Promise<EmailResult> {

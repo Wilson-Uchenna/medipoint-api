@@ -332,6 +332,14 @@ export class AdminService {
   ) {
     const consultation = await this.prisma.consultation.findUnique({
       where: { id: consultationId },
+      include: {
+        patient: {
+          include: {
+            user: { select: { firstName: true, lastName: true } },
+          },
+        },
+      },
+
     });
     if (!consultation) throw new NotFoundException('Consultation not found');
     if (consultation.status !== 'PAID') {
@@ -345,6 +353,7 @@ export class AdminService {
         OR: [{ id: professionalId }, { userId: professionalId }],
       },
       include: {
+        
         user: {
           select: { id: true, email: true, firstName: true, lastName: true },
         },
@@ -393,6 +402,10 @@ export class AdminService {
         `You have been assigned a ${consultation.requestedSpecialty} consultation. Please accept or reject.`,
         { consultationId },
       );
+       const loginUrl = `${this.configService.get('FRONTEND_URL')}/login`;
+
+
+      this.emailService.sendProfessionalAssignmentNotification(professional.user.email, `${professional.user.firstName} ${professional.user.lastName}`, `${consultation.patient.user.firstName} ${consultation.patient.user.lastName}`, consultation.preferredDate, consultation.preferredTime, loginUrl);
     } catch (error) {
       console.error('Failed to send assignment notification', error);
     }

@@ -113,7 +113,7 @@ export interface AdminPatientBookingTemplateData extends BaseTemplateData {
 export interface ProfessionalAssignmentTemplateData extends BaseTemplateData {
   professionalName: string;
   patientName: string;
-  consultationDate: string;
+  consultationDate: Date;
   consultationTime: string;
   loginUrl: string;
 }

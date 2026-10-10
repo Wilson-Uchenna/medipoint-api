@@ -148,6 +148,19 @@ export class HealthcareProfessionalsService {
             },
           },
         },
+        professional: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                email: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
+
       },
     });
     if (!consultation) throw new NotFoundException('Consultation not found');
@@ -172,13 +185,15 @@ export class HealthcareProfessionalsService {
         { consultationId },
       );
 
-      this.emailService.sendPatientBookingConfirmation(
-        consultation.patient.user.email,
-        `${consultation.patient.user.firstName} ${consultation.patient.user.lastName}`,
-        consultationId,
-        consultation.preferredDate.toISOString(),
-        consultation.preferredTime,
-      );
+      if (consultation.professional) {
+        this.emailService.sendPatientBookingConfirmation(
+          consultation.patient.user.email,
+          `${consultation.professional.user.firstName} ${consultation.professional.user.lastName}`,
+          `${consultation.patient.user.firstName} ${consultation.patient.user.lastName}`,
+          consultation.preferredDate.toISOString(),
+          consultation.preferredTime,
+        );
+      }
     } catch (error) {
       // don't fail acceptance if notification fails
     }
