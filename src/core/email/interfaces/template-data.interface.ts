@@ -126,6 +126,7 @@ export interface AdminPatientBookingTemplateData extends BaseTemplateData {
 }
 
 export interface ProfessionalAssignmentTemplateData extends BaseTemplateData {
+  professionalEmail: string;
   professionalName: string;
   patientName: string;
   consultationDate: Date;

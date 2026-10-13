@@ -344,6 +344,7 @@ export class EmailService {
       const rendered = await this.templateService.renderTypedTemplate(
         'professional-assignment',
         {
+          professionalEmail,
           professionalName,
           patientName,
           consultationDate,
