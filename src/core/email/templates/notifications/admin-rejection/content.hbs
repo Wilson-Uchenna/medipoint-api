@@ -1,0 +1,35 @@
+{{#> layouts/base 
+    title="Admin Rejection Notification"
+    headerIcon="❌" 
+    headerTitle="Admin Rejection Notification"
+    headerColor="#ef4444"
+    buttonColor="#ef4444"
+
+}}
+
+<div class="card">
+    <h2>Hello {{professionalName}},</h2>
+    <p>We regret to inform you that your application for your provider account has been rejected by {{adminName}}.</p>
+    <p> Your application did not meet the required criteria. Therefore, your account will not be activated and will be deleted.</p>
+    <p><strong>Reason for Rejection:</strong> {{reason}}</p>
+
+</div>
+
+{{#if supportEmail}}
+<div class="highlight">
+    <p><strong>Need help?</strong> Contact our medical staff services team at <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>.</p>
+</div>
+{{else if supportUrl}}
+<div class="highlight">
+    <p><strong>Need help?</strong> Visit our <a href="{{supportUrl}}">provider support center</a>.</p>
+</div>
+{{/if}}
+
+{{#if unsubscribeUrl}}
+<div class="warning">
+    <p><small>© {{currentYear}} {{#if companyName}}{{companyName}}{{else}}{{organizationName}}{{/if}}. Don't want these emails? <a href="{{unsubscribeUrl}}">Unsubscribe</a>. All rights reserved.</small></p>
+    <p><small><em>Confidentiality Notice: This transmission is intended for healthcare professionals only and may contain privileged or protected health information (PHI).</em></small></p>
+</div>
+{{/if}}
+
+{{/layouts/base}}

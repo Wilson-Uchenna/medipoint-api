@@ -548,6 +548,42 @@ export class EmailService {
     }
   }
 
+  async sendAdminRejectionEmail(params: {
+    recipientEmail: string;
+    professionalName: string;
+    adminName: string;
+    reason?: string;
+  }): Promise<EmailResult> {
+    const { recipientEmail, professionalName, adminName, reason } = params;
+    try {
+      const rendered = await this.templateService.renderTypedTemplate(
+        'admin-rejection',
+        {
+          professionalEmail: recipientEmail,
+          professionalName,
+          adminName,
+          reason,
+          currentYear: new Date().getFullYear(),
+        },
+      );
+
+      return await this.sendEmail({
+        to: recipientEmail,
+        subject: rendered.subject,
+        html: rendered.html,
+        text: rendered.text,
+        tags: ['admin', 'rejection'],
+        priority: 'high' as EmailPriority,
+      });
+    } catch (error) {
+      this.logger.warn(
+        'Admin rejection email template failed, skipping',
+        error,
+      );
+      throw error;
+    }
+  }
+
   /**
    * Send password reset email (using new template system)
    */

@@ -221,11 +221,12 @@ export class AdminService {
     ]);
 
     try {
-      await this.emailService.sendProfessionalRejectionEmail(
-        professional.user.email,
-        `${professional.user.firstName} ${professional.user.lastName}`,
-        reason ?? 'No reason provided',
-      );
+      await this.emailService.sendAdminRejectionEmail({
+        recipientEmail: professional.user.email,
+        professionalName: `${professional.user.firstName} ${professional.user.lastName}`,
+        adminName: this.configService.get<string>('EMAIL_FROM_NAME') || 'MediPointHQ',
+        reason: reason ?? 'No reason provided',
+      });
     } catch (error) {
       // Don't fail the rejection if the notification email fails to send
     }

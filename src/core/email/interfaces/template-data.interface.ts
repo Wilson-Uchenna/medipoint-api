@@ -85,6 +85,14 @@ export interface ProfessionalRejectionTemplateData extends BaseTemplateData {
   currentYear: number;
 };
 
+export interface AdminRejectionTemplateData extends BaseTemplateData {
+  professionalEmail: string;
+  professionalName: string;
+  adminName: string;
+  reason?: string;
+  currentYear: number;
+}
+
 /**
  * Patient welcome email template data
  */
@@ -161,6 +169,7 @@ export interface TemplateDataMap {
   'admin-patient-booking': AdminPatientBookingTemplateData;
   'professional-assignment': ProfessionalAssignmentTemplateData;
   'patient-booking-confirmation': patientBookingConfirmationTemplateData;
+  'admin-rejection': AdminRejectionTemplateData;
 }
 
 /**

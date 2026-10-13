@@ -1,0 +1,48 @@
+{{#> layouts/base 
+    title="Admin Approval Required"
+    headerIcon="⚠️" 
+    headerTitle="Admin Approval Required"
+    headerColor="#facc15"
+    buttonColor="#facc15"
+}}
+
+<div class="card">
+    <h2>Hello {{adminName}},</h2>
+    <p>A new healthcare professional has registered on MedipointHQ and is awaiting your review before they can be activated on the platform.</p>
+</div>
+
+<div class="card">
+    <h3>Applicant Details</h3>
+    <ul>
+        <li><strong>Name:</strong> {{professionalName}}</li>
+        <li><strong>Role:</strong> {{professionalType}}</li>
+        {{#if specialty}}
+        <li><strong>Specialty:</strong> {{specialty}}</li>
+        {{/if}}
+        <li><strong>License Number:</strong> {{licenseNumber}}</li>
+        {{#if yearsOfExperience}}
+        <li><strong>Years of Experience:</strong> {{yearsOfExperience}}</li>
+        {{/if}}
+        <li><strong>Email:</strong> {{professionalEmail}}</li>
+        <li><strong>Submitted:</strong> {{formatDate submittedAt 'MMMM Do, YYYY'}}</li>
+    </ul>
+</div>
+
+{{#if bio}}
+<div class="card">
+    <h3>Bio</h3>
+    <p>{{bio}}</p>
+</div>
+{{/if}}
+
+{{> button url=reviewUrl text="Review Application" arrow=true}}
+
+<div class="highlight">
+    <p><strong>📋 Next steps:</strong> Please verify the submitted license number and credentials before approving this account. Approved professionals gain immediate access to patient-facing features.</p>
+</div>
+
+<div class="warning">
+    <p><strong>⚠️ Pending review:</strong> This professional's account remains inactive and cannot accept consultations until an administrator approves it.</p>
+</div>
+
+{{/layouts/base}}

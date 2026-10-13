@@ -1,0 +1,27 @@
+{
+    "name": "admin-rejection",
+    "description": "Notification email sent to professionals when their account application has been rejected by an admin",
+    "category": "notifications",
+    "tags": ["admin", "rejection", "notification", "account"],
+    "version": "1.0.0",
+    "subject": "Your {{organizationName}} Provider Account Application Has Been Rejected ❌",    
+    "requiredVariables": [
+        "professionalName",
+        "adminName",
+        "reason"
+    ],
+    "optionalVariables": [
+        "organizationName",
+        "supportEmail",
+        "supportUrl",
+        "unsubscribeUrl",
+        "customFooter"
+    ],
+    "defaultData": {
+        "headerIcon": "❌",
+        "headerColor": "#b91c1c",
+        "buttonColor": "#b91c1c",
+        "supportUrl": "https://medicalorg.com"
+    }
+
+}
