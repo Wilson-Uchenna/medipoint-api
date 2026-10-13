@@ -495,33 +495,53 @@ export class EmailService {
     }
   }
 
-  async sendProfessionalRejectionEmail(
-    professionalEmail: string,
-    professionalName: string,
-    reason: string,
-  ): Promise<EmailResult> {
+  async sendProfessionalRejectionEmail(params: {
+    recipientType: 'admin' | 'patient';
+    recipientEmail: string;
+    recipientName?: string;
+    professionalName: string;
+    consultationId: string;
+    reason?: string;
+  }): Promise<EmailResult> {
+    const {
+      recipientType,
+      recipientEmail,
+      recipientName,
+      professionalName,
+      consultationId,
+      reason,
+    } = params;
+
+    const isAdmin = recipientType === 'admin';
+
     try {
-      // Use new type-safe template rendering
       const rendered = await this.templateService.renderTypedTemplate(
         'professional-rejection',
         {
+          isAdmin,
+          isPatient: !isAdmin,
+          patientName: isAdmin ? undefined : recipientName,
+          adminName: isAdmin ? recipientName : undefined,
           professionalName,
-          reason,
+          consultationId,
+          reason: isAdmin ? reason : undefined, // patients never see the reason
           currentYear: new Date().getFullYear(),
         },
       );
 
       return await this.sendEmail({
-        to: professionalEmail,
-        subject: rendered.subject,
+        to: recipientEmail,
+        subject: isAdmin
+          ? 'Provider rejected assignment: needs reassignment'
+          : 'Update on your consultation',
         html: rendered.html,
         text: rendered.text,
-        tags: ['admin', 'professional-rejection'],
+        tags: [recipientType, 'professional-rejection'],
         priority: 'high' as EmailPriority,
       });
     } catch (error) {
       this.logger.warn(
-        'Professional rejection email template failed, skipping',
+        `Professional rejection email (${recipientType}) failed`,
         error,
       );
       throw error;

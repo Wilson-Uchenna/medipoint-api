@@ -1,0 +1,32 @@
+PROFESSIONAL REJECTION NOTIFICATION
+===================================
+
+{{#if patientName}}
+Hello {{{patientName}}},
+
+We regret to inform you that your consultation request has been rejected by {{{professionalName}}}.
+
+Reason for Rejection: {{{reason}}}
+
+View Consultation Details: {{{loginUrl}}}
+{{else if adminName}}
+Hello {{{adminName}}},
+
+We regret to inform you that the consultation request for your patient has been rejected by {{{professionalName}}}.
+
+Reason for Rejection: {{{reason}}}
+
+View Consultation Details: {{{loginUrl}}}
+{{/if}}
+
+{{#if supportEmail}}
+If you have any questions, please contact our support team at {{{supportEmail}}}.
+{{/if}}
+
+{{#if unsubscribeUrl}}
+-----------------------------------
+(c) {{currentYear}} {{#if companyName}}{{{companyName}}}{{else}}{{{organizationName}}}{{/if}}. All rights reserved.
+Don't want these emails? Unsubscribe: {{{unsubscribeUrl}}}
+
+Confidentiality Notice: This transmission is intended for healthcare professionals only and may contain privileged or protected health information (PHI).
+{{/if}}

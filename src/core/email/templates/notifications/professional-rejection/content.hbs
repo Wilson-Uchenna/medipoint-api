@@ -1,0 +1,39 @@
+{{ #> layouts/base 
+    title="Professional Rejection Notification"
+    headerIcon="❌" 
+    headerTitle="Professional Rejection Notification"
+    headerColor="#ef4444"
+    buttonColor="#ef4444"
+}}
+
+{{#if patientName}}
+<div class="card">
+    <h2>Hello {{patientName}},</h2>
+    <p>We regret to inform you that your consultation request has been rejected by {{professionalName}}.</p>
+    <p><strong>Reason for Rejection:</strong> {{reason}}</p>
+    
+    {{> button url=loginUrl text="View Consultation Details" arrow=true}}
+</div>
+{{else if adminName}}
+<div class="card">
+    <h2>Hello {{adminName}},</h2>
+    <p>We regret to inform you that the consultation request for your patient has been rejected by {{professionalName}}.</p>
+    <p><strong>Reason for Rejection:</strong> {{reason}}</p>
+    
+    {{> button url=loginUrl text="View Consultation Details" arrow=true}}
+</div>
+{{/if}}
+
+{{#if supportEmail}}
+<div class="card">
+    <p>If you have any questions, please contact our support team at <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>.</p>
+</div>
+{{/if}}
+{{#if unsubscribeUrl}}
+<div class="warning">
+    <p><small>© {{currentYear}} {{#if companyName}}{{companyName}}{{else}}{{organizationName}}{{/if}}. Don't want these emails? <a href="{{unsubscribeUrl}}">Unsubscribe</a>. All rights reserved.</small></p>
+    <p><small><em>Confidentiality Notice: This transmission is intended for healthcare professionals only and may contain privileged or protected health information (PHI).</em></small></p>
+</div>
+{{/if}}
+
+{{/layouts/base}}

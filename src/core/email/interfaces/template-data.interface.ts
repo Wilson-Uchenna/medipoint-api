@@ -74,9 +74,16 @@ export interface ProfessionalApprovalTemplateData extends BaseTemplateData {
  * Professional rejection email template data
  */
 export interface ProfessionalRejectionTemplateData extends BaseTemplateData {
-  professionalName: string;
-  reason: string;
-}
+
+   professionalName: string;
+  isAdmin?: boolean;
+  isPatient?: boolean;
+  consultationId?: string;
+  reason?: string;
+  patientName?: string;
+  adminName?: string;
+  currentYear: number;
+};
 
 /**
  * Patient welcome email template data

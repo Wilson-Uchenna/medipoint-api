@@ -1,0 +1,29 @@
+{
+    "name": "professional-rejection",
+    "description": "Notification email sent to patients and admins when a professional rejects a consultation",
+    "category": "notifications",
+    "tags": ["professional", "rejection", "notification", "consultation"],
+    "version": "1.1.0",
+    "subject": "Consultation Rejection Notification",
+    "requiredVariables": [
+        "professionalName"
+    ],
+    "optionalVariables": [
+        "isAdmin",
+        "isPatient",
+        "consultationId",
+        "reason",
+        "patientName",
+        "adminName",
+        "supportEmail",
+        "supportUrl",
+        "unsubscribeUrl",
+        "customFooter"
+    ],
+    "defaultData": {
+        "headerIcon": "❌",
+        "headerColor": "#b91c1c",
+        "buttonColor": "#b91c1c",
+        "supportUrl": "https://medicalorg.com"
+    }
+}

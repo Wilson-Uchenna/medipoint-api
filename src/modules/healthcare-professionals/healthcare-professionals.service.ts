@@ -202,50 +202,116 @@ export class HealthcareProfessionalsService {
   }
 
   async rejectConsultation(
-    professionalId: string,
-    consultationId: string,
-    reason?: string,
-  ) {
-    const consultation = await this.prisma.consultation.findUnique({
-      where: { id: consultationId },
-    });
-    if (!consultation) throw new NotFoundException('Consultation not found');
-    if (consultation.professionalId !== professionalId) {
-      throw new ForbiddenException('This consultation is not assigned to you');
-    }
-    if (consultation.status !== 'PENDING_ACCEPTANCE') {
-      throw new BadRequestException('Consultation is not awaiting acceptance');
-    }
-
-    // Back to PAID and unassigned — so admin can reassign to someone else
-    const updated = await this.prisma.consultation.update({
-      where: { id: consultationId },
-      data: {
-        professionalId: null,
-        status: 'PAID',
-        assignedAt: null,
-        assignedBy: null,
+  professionalId: string,
+  consultationId: string,
+  reason?: string,
+) {
+  const consultation = await this.prisma.consultation.findUnique({
+    where: { id: consultationId },
+    include: {
+      patient: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              firstName: true,
+              lastName: true,
+            },
+          },
+        },
       },
-    });
-
-    const admins = await this.prisma.user.findMany({
-      where: { role: 'ADMIN' },
-      select: { id: true },
-    });
-    await Promise.allSettled(
-      admins.map((admin) =>
-        this.notificationsService.createNotification(
-          admin.id,
-          NotificationType.APPOINTMENT_BOOKING,
-          'Provider rejected assignment — needs reassignment',
-          `A provider rejected consultation ${consultationId}.${reason ? ` Reason: ${reason}` : ''}`,
-          { consultationId },
-        ),
-      ),
-    );
-
-    return updated;
+      professional: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              firstName: true,
+              lastName: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  if (!consultation) throw new NotFoundException('Consultation not found');
+  if (consultation.professionalId !== professionalId) {
+    throw new ForbiddenException('This consultation is not assigned to you');
   }
+  if (consultation.status !== 'PENDING_ACCEPTANCE') {
+    throw new BadRequestException('Consultation is not awaiting acceptance');
+  }
+
+  // Back to PAID and unassigned so admin can reassign
+  const updated = await this.prisma.consultation.update({
+    where: { id: consultationId },
+    data: {
+      professionalId: null,
+      status: 'PAID',
+      assignedAt: null,
+      assignedBy: null,
+    },
+  });
+
+  const [patient, professional, admins] = await Promise.all([
+    this.prisma.user.findUnique({
+      where: { id: consultation.patient.userId }, // adjust field name
+      select: { email: true, firstName: true, lastName: true },
+    }),
+    this.prisma.user.findUnique({
+      where: { id: professionalId },
+      select: { firstName: true, lastName: true },
+    }),
+    this.prisma.user.findMany({
+      where: { role: 'ADMIN' },
+      select: { id: true, email: true, firstName: true, lastName: true },
+    }),
+  ]);
+
+  const professionalName = `${professional?.firstName} ${professional?.lastName}`;
+
+  // In-app notifications (unchanged)
+  await Promise.allSettled(
+    admins.map((admin) =>
+      this.notificationsService.createNotification(
+        admin.id,
+        NotificationType.APPOINTMENT_BOOKING,
+        'Provider rejected assignment — needs reassignment',
+        `A provider rejected consultation ${consultationId}.${reason ? ` Reason: ${reason}` : ''}`,
+        { consultationId },
+      ),
+    ),
+  );
+
+  // Emails
+  const emailJobs: Promise<unknown>[] = admins.map((admin) =>
+    this.emailService.sendProfessionalRejectionEmail({
+      recipientType: 'admin',
+      recipientEmail: admin.email,
+      recipientName: `${admin.firstName} ${admin.lastName}`,
+      professionalName,
+      consultationId,
+      reason,
+    }),
+  );
+
+  if (patient?.email) {
+    emailJobs.push(
+      this.emailService.sendProfessionalRejectionEmail({
+        recipientType: 'patient',
+        recipientEmail: patient.email,
+        recipientName: `${patient.firstName} ${patient.lastName}`,
+        professionalName,
+        consultationId,
+      }),
+    );
+  }
+
+  await Promise.allSettled(emailJobs);
+
+  return updated;
+}
 
   async completeConsultation(professionalId: string, consultationId: string) {
     const consultation = await this.prisma.consultation.findFirst({
